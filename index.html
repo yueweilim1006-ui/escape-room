@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[你的店名] · 密室逃脱在线预约</title>
+<meta name="description" content="实景密室逃脱，在线选择主题和时段，一分钟完成预约。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07050F;--panel:rgba(16,11,34,.94);--panel-solid:#100B22;--line:#2C2352;--line2:#3D2F70;--line3:#4A3A8A;--text:#E6E8EC;--muted:#A69ECB;--dim:#857CB0;--pink:#FF2BD6;--cyan:#00F0FF;--track:#231A44;--mono:'JetBrains Mono',monospace;--disp:'ZCOOL QingKe HuangYou',sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);background-image:linear-gradient(#1A1236 1px,transparent 1px),linear-gradient(90deg,#1A1236 1px,transparent 1px);background-size:48px 48px;color:var(--text);font-family:'Noto Sans SC',system-ui,sans-serif;overflow-x:hidden}
+a{color:var(--pink)}
+.wrap{max-width:1320px;margin:0 auto;padding:0 20px}
+.mono{font-family:var(--mono)}
+.disp{font-family:var(--disp);font-weight:400}
+.kicker{margin:0;font-family:var(--mono);color:var(--pink);font-size:13px;letter-spacing:3px}
+h2.title{margin:8px 0 0;font-family:var(--disp);font-weight:400;font-size:clamp(40px,6vw,64px);letter-spacing:3px}
+section.block{border-top:1px solid var(--line);padding:96px 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--cyan);color:var(--bg);text-decoration:none;font-weight:700;font-size:17px;padding:18px 36px;border:0;cursor:pointer;font-family:inherit;clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px);transition:background .2s,transform .2s}
+.btn:hover{background:#8CF8FF;transform:translateY(-2px)}
+.btn:disabled{background:var(--track);color:var(--muted);cursor:not-allowed;transform:none}
+.btn-line{display:inline-flex;align-items:center;border:1px solid var(--line3);background:rgba(7,5,15,.8);color:var(--text);text-decoration:none;font-family:var(--mono);font-size:15px;padding:17px 30px;transition:border-color .2s,color .2s}
+.btn-line:hover{border-color:var(--pink);color:var(--pink)}
+.outline{color:transparent;-webkit-text-stroke:1.5px var(--line2)}
+.outline-pink{color:transparent;-webkit-text-stroke:1.5px var(--pink)}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes marqueeR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes scan{from{transform:translateY(-100%)}to{transform:translateY(1000px)}}
+@keyframes glitch{0%,92%,100%{transform:none}93%{transform:translateX(-4px)}95%{transform:translateX(4px)}97%{transform:translateX(-1px)}}
+@keyframes flicker{0%,18%,22%,25%,53%,57%,100%{opacity:1}20%,24%,55%{opacity:.35}}
+@keyframes breathe{0%,100%{opacity:.8}50%{opacity:1}}
+.blink{animation:blink 1s steps(1) infinite}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* warning strip */
+.strip{background:var(--pink);color:var(--bg);overflow:hidden;white-space:nowrap;font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:2px;padding:8px 0}
+.strip-track{display:inline-flex;gap:48px;animation:marquee 28s linear infinite}
+
+/* nav */
+header.nav{border-bottom:1px solid var(--line);background:rgba(7,5,15,.9);position:sticky;top:0;z-index:20;backdrop-filter:blur(6px)}
+header.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px}
+.logo{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+.logo-box{width:34px;height:34px;border:1.5px solid var(--pink);display:flex;align-items:center;justify-content:center;box-shadow:0 0 12px rgba(255,43,214,.5)}
+.logo span{font-family:var(--disp);font-size:26px;letter-spacing:3px}
+.links{display:flex;align-items:center;gap:26px;font-family:var(--mono);font-size:14px}
+.links a{color:var(--text);text-decoration:none}
+.links a:hover{color:var(--pink)}
+.links .btn{font-size:15px;padding:12px 20px;clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px)}
+@media (max-width:860px){.links a:not(.btn){display:none}}
+
+/* hero */
+.hero{position:relative;min-height:820px;display:flex;flex-direction:column;justify-content:center;overflow:hidden;border-bottom:1px solid var(--line)}
+.scanbar{position:absolute;left:0;right:0;top:0;height:180px;background:linear-gradient(transparent,rgba(0,240,255,.07),transparent);pointer-events:none;animation:scan 6s linear infinite}
+.door{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:520px;max-width:86%;height:700px;pointer-events:none}
+.door svg{width:100%;height:100%;animation:breathe 3s ease-in-out infinite;filter:drop-shadow(0 0 14px rgba(255,43,214,.9)) drop-shadow(0 0 40px rgba(255,43,214,.45))}
+.hud{position:absolute;top:28px;font-family:var(--mono);font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:6px;letter-spacing:1px}
+.hud.l{left:28px}.hud.r{right:28px;align-items:flex-end}
+@media (max-width:640px){.hud{display:none}}
+.hero-main{position:relative;padding:96px 20px 64px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:24px}
+.status{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;color:var(--cyan);letter-spacing:3px;border:1px solid var(--line);background:rgba(7,5,15,.8);padding:8px 16px}
+.status i{width:8px;height:8px;background:var(--cyan);display:inline-block}
+.hero h1{margin:0;font-family:var(--disp);font-weight:400;font-size:clamp(60px,10vw,148px);line-height:1;letter-spacing:6px;text-shadow:-3px 0 rgba(0,240,255,.75),3px 0 rgba(255,43,214,.75);animation:glitch 4s infinite}
+.hero .sub{margin:0;font-family:var(--disp);font-size:clamp(34px,5vw,72px);line-height:1;letter-spacing:8px;color:var(--pink);text-shadow:0 0 18px rgba(255,43,214,.8),0 0 46px rgba(255,43,214,.45);animation:flicker 5s infinite}
+.clock-label{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:4px}
+.clock{font-family:var(--mono);font-weight:700;font-size:clamp(56px,7vw,96px);line-height:1;color:var(--cyan);text-shadow:0 0 16px rgba(0,240,255,.7),0 0 36px rgba(0,240,255,.35)}
+.clock-bar{width:280px;max-width:70vw;height:4px;background:var(--track);position:relative}
+.clock-bar div{position:absolute;left:0;top:0;bottom:0;background:var(--cyan);box-shadow:0 0 10px var(--cyan);width:100%}
+.hero p.desc{margin:0;font-size:18px;line-height:1.8;color:var(--muted);max-width:520px;background:rgba(7,5,15,.7)}
+.cta-row{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}
+.infobar{position:relative;border-top:1px solid var(--line);background:rgba(7,5,15,.9)}
+.infobar .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));padding:0}
+.infobar .cell{padding:22px 24px;display:flex;flex-direction:column;gap:6px;border-right:1px solid var(--line)}
+.infobar .cell:last-child{border-right:0}
+.infobar .k{font-family:var(--mono);font-size:11px;color:var(--pink);letter-spacing:2px}
+
+/* big marquee */
+.bigmarq{overflow:hidden;white-space:nowrap;padding:28px 0}
+.bigmarq-track{display:inline-flex;gap:40px;font-family:var(--disp);font-size:clamp(56px,8vw,88px);line-height:1;letter-spacing:4px;animation:marqueeR 40s linear infinite}
+
+/* themes */
+.head-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:48px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px}
+.card{position:relative;background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden;transition:border-color .25s,box-shadow .25s,transform .25s}
+.card:hover{border-color:var(--pink);box-shadow:0 0 36px rgba(255,43,214,.28);transform:translateY(-6px)}
+.poster{height:250px;background:#100A24;position:relative;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);overflow:hidden}
+.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.poster .num{position:absolute;right:-6px;bottom:-28px;font-family:var(--mono);font-weight:700;font-size:160px;line-height:1}
+.poster .code{position:absolute;top:16px;left:16px;font-family:var(--mono);color:var(--pink);font-size:12px}
+.poster .lv{position:absolute;top:16px;right:16px;font-family:var(--mono);color:var(--bg);background:var(--cyan);font-size:11px;font-weight:700;padding:3px 8px}
+.poster svg{position:relative}
+.card-body{padding:26px;display:flex;flex-direction:column;gap:18px;flex-grow:1}
+.card-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.card h3{margin:0;font-family:var(--disp);font-weight:400;font-size:34px;letter-spacing:2px}
+.tag{font-family:var(--mono);color:var(--pink);font-size:12px;border:1px solid var(--pink);padding:4px 10px;white-space:nowrap}
+.card p{margin:0;color:var(--muted);font-size:15px;line-height:1.75}
+.meter{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px}
+.meter span{width:64px;color:var(--muted)}
+.segs{flex:1;display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.segs i{height:8px;background:var(--track)}
+.segs.c i.on{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.segs.p i.on{background:var(--pink);box-shadow:0 0 8px var(--pink)}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;font-family:var(--mono);font-size:14px;border-top:1px dashed var(--line2);padding-top:16px}
+.facts div{display:flex;flex-direction:column;gap:4px}
+.facts small{color:var(--muted);font-size:11px}
+.ghost{margin-top:auto;text-align:center;border:1px solid var(--pink);color:var(--pink);text-decoration:none;font-family:var(--mono);font-weight:700;font-size:14px;padding:15px;letter-spacing:1px;background:transparent;cursor:pointer;transition:background .2s,color .2s}
+.ghost:hover{background:var(--pink);color:var(--bg)}
+
+/* steps */
+.step{position:relative;padding:36px 32px;border:1px solid var(--line);display:flex;flex-direction:column;gap:14px;background:var(--panel);overflow:hidden}
+.step .big{position:absolute;right:16px;top:8px;font-family:var(--mono);font-weight:700;font-size:96px;line-height:1;opacity:.6}
+.step h3{margin:0;font-size:24px}
+.step p{margin:0;color:var(--muted);line-height:1.75;font-size:15px;max-width:260px}
+
+/* split */
+.split{display:flex;flex-wrap:wrap;gap:48px}
+.split>.side{flex:1 1 280px}
+.split>.main{flex:999 1 520px;min-width:0}
+.term{border:1px solid var(--line);background:var(--panel)}
+.term-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--muted)}
+.dots{display:flex;gap:6px}.dots i{width:10px;height:10px;border-radius:50%}
+.term-body{padding:24px 28px;display:flex;flex-direction:column;gap:16px;font-size:16px;line-height:1.75}
+.term-body div{display:flex;gap:16px}
+.term-body b{font-family:var(--mono);color:var(--pink);font-weight:400}
+
+details.faq{border:1px solid var(--line);background:var(--panel);margin-bottom:12px}
+details.faq summary{list-style:none;cursor:pointer;padding:22px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:17px;font-weight:500}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary span{font-family:var(--mono);color:var(--cyan);font-size:24px;transition:transform .2s}
+details.faq[open] summary span{transform:rotate(45deg)}
+details.faq p{margin:0;padding:0 24px 22px;color:var(--muted);line-height:1.8;font-size:15px}
+
+/* booking */
+.book-layout{display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start}
+.book-form{flex:999 1 600px;min-width:0;display:flex;flex-direction:column;gap:40px}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+legend{padding:0;margin-bottom:16px;display:flex;align-items:baseline;gap:12px}
+legend .mono{color:var(--pink);font-size:13px}
+legend b{font-size:20px}
+.opts{display:grid;gap:10px}
+.opts.rooms{grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+.opts.days{grid-template-columns:repeat(auto-fit,minmax(78px,1fr))}
+.opts.times{grid-template-columns:repeat(auto-fit,minmax(110px,1fr))}
+.opt{display:flex;flex-direction:column;gap:4px;padding:14px 8px;align-items:center;background:var(--panel-solid);border:1px solid var(--line);color:var(--text);font-family:inherit;cursor:pointer;min-height:48px;transition:transform .15s,border-color .15s}
+.opt:hover{transform:translateY(-2px);border-color:var(--pink)}
+.opt.on{background:var(--cyan);border-color:var(--cyan);color:var(--bg)}
+.opt.room{align-items:flex-start;text-align:left;padding:18px}
+.opt.room.on{background:#2A0A33;border-color:var(--pink);color:var(--text);box-shadow:0 0 0 1px var(--pink) inset}
+.opt .s{font-size:12px;opacity:.85}
+.opt .n{font-family:var(--mono);font-size:24px;font-weight:700}
+.opt .t{font-family:var(--mono);font-size:19px;font-weight:700}
+.opt .rn{font-family:var(--disp);font-size:26px;letter-spacing:2px}
+.opt .rc{font-family:var(--mono);font-size:11px;color:var(--pink)}
+.stepper{display:flex;align-items:center;border:1px solid var(--line3);width:max-content}
+.stepper button{width:52px;height:52px;border:0;background:var(--panel-solid);color:var(--text);font-size:22px;cursor:pointer}
+.stepper output{font-family:var(--mono);font-size:26px;font-weight:700;min-width:80px;text-align:center}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.fields label{display:flex;flex-direction:column;gap:8px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.fields .full{grid-column:1/-1}
+.fields input,.fields textarea{background:var(--panel-solid);border:1px solid var(--line3);color:var(--text);padding:14px;font-size:16px;font-family:'Noto Sans SC',sans-serif}
+.fields input:focus,.fields textarea:focus{outline:2px solid var(--pink);outline-offset:-1px}
+.ticket{flex:1 1 320px;min-width:0;position:sticky;top:90px;background:rgba(16,11,34,.96);border:1px solid var(--line);padding:28px;display:flex;flex-direction:column;gap:14px}
+.corner{position:absolute;width:18px;height:18px;border-color:var(--pink);border-style:solid;border-width:0}
+.corner.tl{top:-1px;left:-1px;border-top-width:2px;border-left-width:2px}
+.corner.tr{top:-1px;right:-1px;border-top-width:2px;border-right-width:2px}
+.corner.bl{bottom:-1px;left:-1px;border-bottom-width:2px;border-left-width:2px}
+.corner.br{bottom:-1px;right:-1px;border-bottom-width:2px;border-right-width:2px}
+.row{display:flex;justify-content:space-between;gap:12px;font-size:15px}
+.row .mono{color:var(--muted);font-size:13px}
+.hr{border-top:1px dashed var(--line2)}
+.progress{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-width:720px;margin-top:20px}
+.progress div{display:flex;flex-direction:column;gap:8px;font-size:12px;color:var(--dim)}
+.progress i{height:4px;background:var(--track)}
+.progress div.ok{color:var(--text)}
+.progress div.ok i{background:var(--cyan);box-shadow:0 0 10px rgba(0,240,255,.7)}
+.hint{margin:0;color:var(--muted);font-size:13px;line-height:1.7}
+.done{display:none;border:1px solid var(--pink);background:var(--panel);padding:32px;flex-direction:column;gap:16px;max-width:680px}
+.done.show{display:flex}
+
+/* final cta + footer */
+.final{text-align:center;display:flex;flex-direction:column;align-items:center;gap:28px}
+.final h2{margin:0;font-family:var(--disp);font-weight:400;font-size:clamp(44px,7vw,104px);line-height:1.05;letter-spacing:4px}
+footer{border-top:1px solid var(--line);background:rgba(7,5,15,.92);overflow:hidden}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:40px;padding:72px 20px 24px}
+.foot .col{display:flex;flex-direction:column;gap:10px;font-size:15px}
+.foot .col .k{font-family:var(--mono);color:var(--pink);font-size:12px;letter-spacing:2px}
+.escape{font-family:var(--mono);font-weight:700;font-size:clamp(70px,17vw,260px);line-height:.9;text-align:center;letter-spacing:-4px;padding-top:24px;white-space:nowrap}
+
+/* mobile sticky bar */
+.mbar{display:none}
+@media (max-width:720px){
+  section.block{padding:72px 0}
+  .hero{min-height:720px}
+  .mbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;gap:10px;padding:12px 16px 16px;background:rgba(7,5,15,.97);border-top:1px solid var(--line)}
+  .mbar .btn{flex:1;padding:16px;font-size:17px}
+  .mbar .wa{width:54px;height:54px;border:1px solid var(--pink);display:flex;align-items:center;justify-content:center;flex:none}
+  footer{padding-bottom:90px}
+  .ticket{position:static}
+}
+</style>
+</head>
+<body>
+
+<div class="strip" aria-hidden="true"><div class="strip-track">
+<span>WARNING · DOOR LOCKED · 警告：门已锁定 · SECURITY LEVEL 5 · 剩余时间 60 MIN · WARNING · DOOR LOCKED · 警告：门已锁定 · SECURITY LEVEL 5 · 剩余时间 60 MIN ·</span>
+<span>WARNING · DOOR LOCKED · 警告：门已锁定 · SECURITY LEVEL 5 · 剩余时间 60 MIN · WARNING · DOOR LOCKED · 警告：门已锁定 · SECURITY LEVEL 5 · 剩余时间 60 MIN ·</span>
+</div></div>
+
+<header class="nav"><div class="wrap">
+<a class="logo" href="#top">
+<span class="logo-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF2BD6" stroke-width="2" stroke-linecap="square" aria-hidden="true"><rect x="5" y="11" width="14" height="10"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+<span class="shop-name">[你的店名]</span>
+</a>
+<nav class="links">
+<a href="#themes">/主题</a><a href="#how">/流程</a><a href="#rules">/须知</a><a href="#faq">/FAQ</a><a href="#contact">/联系</a>
+<a class="btn" href="#booking">立即预约 →</a>
+</nav>
+</div></header>
+
+<main id="top">
+<section class="hero">
+<div class="scanbar" aria-hidden="true"></div>
+<div class="door" aria-hidden="true">
+<svg viewBox="0 0 520 700" fill="none" preserveAspectRatio="xMidYMid meet">
+<path d="M40 700V140a120 120 0 0 1 120-120h200a120 120 0 0 1 120 120v560" stroke="#FF2BD6" stroke-width="4"/>
+<path d="M80 700V160a90 90 0 0 1 90-90h180a90 90 0 0 1 90 90v540" stroke="#FF2BD6" stroke-width="1.5" opacity=".5"/>
+<circle cx="400" cy="420" r="10" stroke="#00F0FF" stroke-width="3"/>
+<path d="M400 430v22" stroke="#00F0FF" stroke-width="3" stroke-linecap="round"/>
+</svg>
+</div>
+<div class="hud l"><span style="color:var(--pink)"><span class="blink">●</span> REC  CAM_04</span><span>SECTOR // B-02</span></div>
+<div class="hud r"><span>SECURITY LV.5</span><span style="color:var(--cyan)">EXIT: 01 / LOCKED</span></div>
+<div class="hero-main">
+<div class="status"><i class="blink"></i>STATUS: SUBJECTS DETECTED</div>
+<h1>系统已封锁</h1>
+<p class="sub">你 逃 不 出 去</p>
+<div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:8px">
+<span class="clock-label">TIME REMAINING</span>
+<span class="clock" id="clock">60:00</span>
+<div class="clock-bar"><div id="clockBar"></div></div>
+</div>
+<p class="desc">破解线索、重写规则，在倒计时归零前找到出口。选主题、挑时段，一分钟完成预约。</p>
+<div class="cta-row">
+<a class="btn" href="#booking">开始预约 &gt;_</a>
+<a class="btn-line" href="#themes">查看主题档案</a>
+</div>
+</div>
+<div class="infobar"><div class="wrap">
+<div class="cell"><span class="k">OPEN · 营业时间</span><span>[例：每日 10:00 – 24:00]</span></div>
+<div class="cell"><span class="k">LOCATION · 地址</span><span>[你的店铺地址]</span></div>
+<div class="cell"><span class="k">CONTACT · WhatsApp</span><span>[你的联系电话]</span></div>
+</div></div>
+</section>
+
+<div class="bigmarq" aria-hidden="true"><div class="bigmarq-track" id="bigmarq"></div></div>
+
+<section class="block" id="themes"><div class="wrap">
+<div class="head-row">
+<div><p class="kicker">&gt; LOAD /ROOM_FILES</p><h2 class="title">主题档案</h2></div>
+<p class="mono" style="margin:0;color:var(--muted);font-size:13px">每个房间 · 每个时段 · 仅限一组</p>
+</div>
+<div class="grid3" id="roomCards"></div>
+</div></section>
+
+<section class="block" id="how"><div class="wrap">
+<p class="kicker">&gt; RUN booking.exe</p><h2 class="title" style="margin-bottom:48px">三步进入密室</h2>
+<div class="grid3" style="gap:20px">
+<div class="step"><span class="big outline-pink" aria-hidden="true">1</span><span class="mono" style="font-size:13px;color:var(--cyan)">STEP_01</span><h3>选择主题</h3><p>查看难度、恐怖度和人数，挑一个适合你们小队的房间。</p></div>
+<div class="step"><span class="big outline-pink" aria-hidden="true">2</span><span class="mono" style="font-size:13px;color:var(--cyan)">STEP_02</span><h3>挑选时段</h3><p>选好日期、时间和人数，填写联系方式。</p></div>
+<div class="step"><span class="big outline-pink" aria-hidden="true">3</span><span class="mono" style="font-size:13px;color:var(--cyan)">STEP_03</span><h3>WhatsApp 确认</h3><p>预约会直接发到我们的 WhatsApp，我们回复确认后就完成了。</p></div>
+</div>
+</div></section>
+
+<section class="block" id="booking"><div class="wrap">
+<p class="kicker">&gt; RUN booking.exe <span class="blink">█</span></p>
+<h2 class="title">申请进入密室</h2>
+<div class="progress" id="progress"></div>
+
+<div class="done" id="done" style="margin-top:40px">
+<div class="mono" style="font-size:14px;color:var(--muted);display:flex;flex-direction:column;gap:6px"><span>&gt; submit booking ...</span><span>&gt; opening WhatsApp ... <span style="color:var(--pink)">OK</span></span></div>
+<h3 class="disp" style="margin:0;font-size:48px;letter-spacing:3px">预约已发送</h3>
+<div class="mono" id="doneLine" style="border:1px solid var(--line);padding:16px 18px;line-height:1.8"></div>
+<p class="hint" style="font-size:15px">如果 WhatsApp 没有自动打开，请 <a id="waRetry" href="#" target="_blank" rel="noopener">点这里重新发送</a>。我们会尽快回复确认你的场次。</p>
+<button class="btn-line" id="again" type="button" style="align-self:flex-start;cursor:pointer">[ 再预约一场 ]</button>
+</div>
+
+<div class="book-layout" id="bookLayout" style="margin-top:40px">
+<form class="book-form" id="bookForm" novalidate>
+<fieldset><legend><span class="mono">STEP_01</span><b>选择主题</b></legend><div class="opts rooms" id="roomOpts"></div></fieldset>
+<fieldset><legend><span class="mono">STEP_02</span><b>选择日期</b></legend><div class="opts days" id="dayOpts"></div></fieldset>
+<fieldset><legend><span class="mono">STEP_03</span><b>选择时段</b></legend><div class="opts times" id="timeOpts"></div></fieldset>
+<fieldset><legend><span class="mono">STEP_04</span><b>人数</b></legend>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px">
+<div class="stepper"><button type="button" id="minus" aria-label="减少人数">−</button><output id="players">04</output><button type="button" id="plus" aria-label="增加人数">+</button></div>
+<span class="mono" style="color:var(--muted);font-size:13px" id="range"></span>
+</div></fieldset>
+<fieldset><legend><span class="mono">STEP_05</span><b>联系方式</b></legend>
+<div class="fields">
+<label>NAME · 姓名<input id="fname" type="text" autocomplete="name" placeholder="你的名字"></label>
+<label>WHATSAPP · 手机号码<input id="fphone" type="tel" autocomplete="tel" placeholder="例：012-345 6789"></label>
+<label class="full">NOTE · 备注（选填）<textarea id="fnote" rows="3" placeholder="例如：生日惊喜、有玩家怕黑……"></textarea></label>
+</div></fieldset>
+</form>
+
+<aside class="ticket">
+<span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+<div style="display:flex;justify-content:space-between;align-items:center"><h3 class="disp" style="margin:0;font-size:30px;letter-spacing:2px">入场凭证</h3><span class="mono" style="font-size:11px;color:var(--muted)">TICKET</span></div>
+<div class="hr"></div>
+<div class="row"><span class="mono">ROOM</span><span id="sRoom"></span></div>
+<div class="row"><span class="mono">DATE</span><span id="sDay"></span></div>
+<div class="row"><span class="mono">TIME</span><span class="mono" id="sTime" style="color:var(--text);font-size:15px">--:--</span></div>
+<div class="row"><span class="mono">PLAYERS</span><span id="sPlayers"></span></div>
+<div class="hr"></div>
+<div class="row" style="align-items:baseline"><span class="mono">TOTAL</span><span class="mono" id="sTotal" style="font-size:20px;font-weight:700;color:var(--pink)"></span></div>
+<button class="btn" id="submit" type="button" disabled style="margin-top:6px;width:100%">等待选择时段…</button>
+<p class="hint" id="hint">请先选择一个时段。</p>
+</aside>
+</div>
+</div></section>
+
+<section class="block" id="rules"><div class="wrap split">
+<div class="side"><p class="kicker">&gt; CAT rules.txt</p><h2 class="title">玩家协议</h2></div>
+<div class="main term">
+<div class="term-bar"><span>rules.txt</span><span class="dots"><i style="background:var(--pink)"></i><i style="background:var(--cyan)"></i><i style="background:var(--line2)"></i></span></div>
+<div class="term-body">
+<div><b>01</b><span>请提前 [15] 分钟到店，迟到会占用游戏时间。</span></div>
+<div><b>02</b><span>如需取消或改期，请至少提前 [24] 小时联系我们。</span></div>
+<div><b>03</b><span>房间内禁止拍照录影，请勿暴力破坏道具。</span></div>
+<div><b>04</b><span>恐怖主题不建议孕妇、心脏病患者及 [12] 岁以下儿童参加。</span></div>
+<div><b>05</b><span>[在此补充你的其他规则]</span></div>
+<div class="mono" style="color:var(--cyan);font-size:14px">$ <span class="blink">█</span></div>
+</div>
+</div>
+</div></section>
+
+<section class="block" id="faq"><div class="wrap split">
+<div class="side"><p class="kicker">&gt; HELP --faq</p><h2 class="title">常见问题</h2><p style="color:var(--muted);font-size:15px;line-height:1.8">还有其他问题？直接 WhatsApp 我们：[你的联系电话]</p></div>
+<div class="main">
+<details class="faq"><summary>第一次玩密室，会不会太难？<span>+</span></summary><p>[你的回答，例如：每个房间都有提示机制，卡关时可以向主持人求助。新手推荐从难度 3 的主题开始。]</p></details>
+<details class="faq"><summary>胆子小、怕黑可以玩吗？<span>+</span></summary><p>[你的回答，例如：可以选择恐怖度较低的主题；预约时在备注说明，我们会调整演出强度。]</p></details>
+<details class="faq"><summary>可以包场或办生日、公司团建吗？<span>+</span></summary><p>[你的回答，例如：可以，人数较多请提前 [3] 天联系我们安排多个房间同时开场。]</p></details>
+<details class="faq"><summary>怎么付款？需要先付订金吗？<span>+</span></summary><p>[你的回答，例如：到店付款，支持现金、DuitNow 和电子钱包。]</p></details>
+</div>
+</div></section>
+
+<section class="block"><div class="wrap final">
+<p class="mono" style="margin:0;color:var(--cyan);font-size:13px;letter-spacing:4px">READY?</p>
+<h2>门已经关上了<br><span style="color:var(--pink);text-shadow:0 0 18px rgba(255,43,214,.75)">现在轮到你</span></h2>
+<a class="btn" href="#booking" style="font-size:18px;padding:20px 44px">预约场次 &gt;_</a>
+</div></section>
+</main>
+
+<footer id="contact">
+<div class="wrap foot">
+<div class="col" style="max-width:440px"><span class="disp shop-name" style="font-size:34px;letter-spacing:3px">[你的店名]</span><p style="margin:0;color:var(--muted);line-height:1.8">[一句话介绍你的密室，例如：本地原创实景密室，每个房间都是自己设计搭建的。]</p></div>
+<div class="col"><span class="k">// CONTACT</span><span>[电话 / WhatsApp]</span><span>[店铺地址]</span></div>
+<div class="col"><span class="k">// SOCIAL</span><span>[Instagram 账号]</span><span>[Facebook / 小红书 账号]</span></div>
+</div>
+<div class="escape outline" aria-hidden="true">ESCAPE</div>
+<p class="mono" style="margin:0;text-align:center;color:var(--dim);font-size:12px;padding:16px 20px 28px">© 2026 <span class="shop-name">[你的店名]</span> · ALL EXITS MONITORED</p>
+</footer>
+
+<div class="mbar">
+<a class="btn" href="#booking">立即预约 &gt;_</a>
+<a class="wa" id="waIcon" href="#" target="_blank" rel="noopener" aria-label="WhatsApp 联系我们"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF2BD6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.6-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg></a>
+</div>
+
+<script>
+/* ============ 在这里修改你的店铺资料 ============ */
+var CONFIG = {
+  shopName: '[你的店名]',
+  // 你的 WhatsApp 号码：国家代码 + 号码，不要加号、空格或横线。例如 012-345 6789 → 60123456789
+  whatsapp: '60123456789',
+  times: ['10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'],
+  daysAhead: 14,
+  rooms: [
+    { name: '古宅迷踪', genre: '中式恐怖', icon: 'house', level: 4, difficulty: 4, fear: 5, min: 2, max: 6, minutes: 60, price: 0, image: '',
+      desc: '[主题简介：一两句话交代故事背景，例如：民国老宅里失踪的戏班……]' },
+    { name: '失落实验室', genre: '科幻解谜', icon: 'lab', level: 5, difficulty: 5, fear: 1, min: 2, max: 6, minutes: 60, price: 0, image: '',
+      desc: '[主题简介：一两句话交代故事背景，例如：倒计时启动前关掉反应堆……]' },
+    { name: '侦探事务所', genre: '推理', icon: 'detective', level: 3, difficulty: 3, fear: 2, min: 3, max: 8, minutes: 75, price: 0, image: '',
+      desc: '[主题简介：一两句话交代故事背景，例如：在警察到来前找出真凶……]' }
+  ]
+};
+/* price 填每人价格（数字），0 表示还没定，会显示 RM[ ]。image 可以填海报图片网址。 */
+/* =============================================== */
+
+(function () {
+  var ICONS = {
+    house: '<svg width="128" height="128" viewBox="0 0 48 48" fill="none" stroke="#FF2BD6" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 8px rgba(255,43,214,.9))" aria-hidden="true"><path d="M5 22 24 7l19 15"/><path d="M10 18v23h28V18"/><path d="M20 41V30h8v11"/><path d="M14 25h4v4h-4zM30 25h4v4h-4z"/><path d="M33 12V7h4v8"/></svg>',
+    lab: '<svg width="128" height="128" viewBox="0 0 48 48" fill="none" stroke="#00F0FF" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 8px rgba(0,240,255,.9))" aria-hidden="true"><path d="M18 6h12"/><path d="M20 6v13L9 38a3 3 0 0 0 2.6 4.5h24.8A3 3 0 0 0 39 38L28 19V6"/><path d="M14 30h20"/><circle cx="21" cy="36" r="1.5"/><circle cx="28" cy="34" r="2.2"/></svg>',
+    detective: '<svg width="128" height="128" viewBox="0 0 48 48" fill="none" stroke="#FF2BD6" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 8px rgba(255,43,214,.9))" aria-hidden="true"><circle cx="20" cy="20" r="12"/><path d="M29 29l13 13"/><path d="M14 20a6 6 0 0 1 6-6"/></svg>'
+  };
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var pad = function (n) { return String(n).padStart(2, '0'); };
+  var priceText = function (r) { return r.price ? 'RM' + r.price : 'RM[ ]'; };
+
+  document.querySelectorAll('.shop-name').forEach(function (el) { el.textContent = CONFIG.shopName; });
+  $('waIcon').href = 'https://wa.me/' + CONFIG.whatsapp;
+
+  // countdown
+  var left = 3600;
+  setInterval(function () {
+    left = left > 0 ? left - 1 : 3600;
+    $('clock').textContent = pad(Math.floor(left / 60)) + ':' + pad(left % 60);
+    $('clockBar').style.width = (left / 36) + '%';
+  }, 1000);
+
+  // big marquee
+  var bits = '';
+  CONFIG.rooms.forEach(function (r, i) {
+    bits += '<span class="' + (i % 2 ? 'outline-pink' : 'outline') + '">' + esc(r.name) + '</span><span style="color:' + (i % 2 ? 'var(--cyan)' : 'var(--pink)') + '">✦</span>';
+  });
+  bits += '<span class="outline-pink">ESCAPE ROOM</span><span style="color:var(--cyan)">✦</span>';
+  $('bigmarq').innerHTML = bits + bits;
+
+  // room cards
+  var segs = function (n, cls) { var h = '<div class="segs ' + cls + '">'; for (var i = 0; i < 5; i++) h += '<i class="' + (i < n ? 'on' : '') + '"></i>'; return h + '</div>'; };
+  $('roomCards').innerHTML = CONFIG.rooms.map(function (r, i) {
+    return '<article class="card"><div class="poster">' +
+      (r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(r.name) + ' 海报">' : '<span class="num outline" aria-hidden="true">' + pad(i + 1) + '</span>' + (ICONS[r.icon] || ICONS.house)) +
+      '<span class="code">ROOM_' + pad(i + 1) + '</span><span class="lv">LV.' + r.level + '</span></div>' +
+      '<div class="card-body"><div class="card-top"><h3>' + esc(r.name) + '</h3><span class="tag">' + esc(r.genre) + '</span></div>' +
+      '<p>' + esc(r.desc) + '</p>' +
+      '<div style="display:flex;flex-direction:column;gap:10px"><div class="meter"><span>难度</span>' + segs(r.difficulty, 'c') + '</div><div class="meter"><span>恐怖度</span>' + segs(r.fear, 'p') + '</div></div>' +
+      '<div class="facts"><div><small>PLAYERS</small><span>' + r.min + '–' + r.max + '</span></div><div><small>TIME</small><span>' + r.minutes + 'min</span></div><div><small>PRICE</small><span style="color:var(--cyan)">' + priceText(r) + '</span></div></div>' +
+      '<a class="ghost" href="#booking" data-room="' + i + '">[ 预约此主题 ]</a></div></article>';
+  }).join('');
+
+  // booking state
+  var week = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+  var today = new Date();
+  var days = [];
+  for (var d = 0; d < CONFIG.daysAhead; d++) {
+    var dt = new Date(today.getFullYear(), today.getMonth(), today.getDate() + d);
+    days.push({ date: dt, week: d === 0 ? '今天' : week[dt.getDay()], label: (dt.getMonth() + 1) + '月' + dt.getDate() + '日 ' + week[dt.getDay()] });
+  }
+  var S = { room: 0, day: 0, slot: null, players: 4 };
+
+  function isPast(dayIdx, t) {
+    if (dayIdx !== 0) return false;
+    var p = t.split(':'); var now = new Date();
+    return now.getHours() * 60 + now.getMinutes() >= (+p[0]) * 60 + (+p[1]);
+  }
+
+  function render() {
+    var room = CONFIG.rooms[S.room];
+    S.players = Math.min(Math.max(S.players, room.min), room.max);
+
+    $('roomOpts').innerHTML = CONFIG.rooms.map(function (r, i) {
+      return '<button type="button" class="opt room' + (S.room === i ? ' on' : '') + '" data-k="room" data-v="' + i + '" aria-pressed="' + (S.room === i) + '"><span class="rc">ROOM_' + pad(i + 1) + '</span><span class="rn">' + esc(r.name) + '</span><span class="s" style="color:var(--muted)">' + esc(r.genre) + ' · ' + r.min + '–' + r.max + ' 人</span></button>';
+    }).join('');
+    $('dayOpts').innerHTML = days.map(function (x, i) {
+      return '<button type="button" class="opt' + (S.day === i ? ' on' : '') + '" data-k="day" data-v="' + i + '" aria-pressed="' + (S.day === i) + '"><span class="s">' + x.week + '</span><span class="n">' + pad(x.date.getDate()) + '</span><span class="s mono">' + pad(x.date.getMonth() + 1) + '月</span></button>';
+    }).join('');
+    $('timeOpts').innerHTML = CONFIG.times.map(function (t, i) {
+      var past = isPast(S.day, t);
+      if (past && S.slot === i) S.slot = null;
+      return '<button type="button" class="opt' + (S.slot === i ? ' on' : '') + '" data-k="slot" data-v="' + i + '"' + (past ? ' disabled style="opacity:.35;cursor:not-allowed;transform:none"' : '') + ' aria-pressed="' + (S.slot === i) + '"><span class="t">' + t + '</span><span class="s mono">' + (past ? '已过' : 'OPEN') + '</span></button>';
+    }).join('');
+
+    $('players').textContent = pad(S.players);
+    $('range').textContent = 'RANGE ' + room.min + '–' + room.max + ' 人';
+
+    var name = $('fname').value.trim(), phone = $('fphone').value.trim();
+    var slotOk = S.slot !== null, contactOk = name !== '' && phone !== '';
+    var flags = [true, true, slotOk, true, contactOk];
+    var labels = ['主题', '日期', '时段', '人数', '联系方式'];
+    $('progress').innerHTML = flags.map(function (ok, i) { return '<div class="' + (ok ? 'ok' : '') + '"><i></i><span>' + labels[i] + '</span></div>'; }).join('');
+
+    $('sRoom').textContent = room.name;
+    $('sDay').textContent = days[S.day].label;
+    $('sTime').textContent = slotOk ? CONFIG.times[S.slot] : '--:--';
+    $('sPlayers').textContent = S.players + ' 人';
+    $('sTotal').textContent = room.price ? 'RM' + (room.price * S.players) : 'RM[ ] × ' + S.players;
+
+    var ready = slotOk && contactOk;
+    $('submit').disabled = !ready;
+    $('submit').textContent = ready ? '通过 WhatsApp 发送预约 >_' : (slotOk ? '等待填写联系方式…' : '等待选择时段…');
+    $('hint').textContent = ready ? '会打开 WhatsApp 并带好预约内容，按发送即可。到店付款。' : (slotOk ? '请填写姓名和手机号码。' : '请先选择一个时段。');
+  }
+
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-k]');
+    if (b && !b.disabled) {
+      var k = b.getAttribute('data-k'), v = +b.getAttribute('data-v');
+      S[k] = v; if (k === 'day') S.slot = null;
+      render(); return;
+    }
+    var g = e.target.closest('[data-room]');
+    if (g) { S.room = +g.getAttribute('data-room'); render(); }
+  });
+  $('minus').onclick = function () { S.players--; render(); };
+  $('plus').onclick = function () { S.players++; render(); };
+  $('fname').oninput = render; $('fphone').oninput = render;
+
+  $('submit').onclick = function () {
+    var room = CONFIG.rooms[S.room];
+    var lines = [
+      '你好，我想预约密室逃脱：',
+      '主题：' + room.name,
+      '日期：' + days[S.day].label,
+      '时段：' + CONFIG.times[S.slot],
+      '人数：' + S.players + ' 人',
+      '姓名：' + $('fname').value.trim(),
+      '电话：' + $('fphone').value.trim()
+    ];
+    var note = $('fnote').value.trim();
+    if (note) lines.push('备注：' + note);
+    var url = 'https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(lines.join('\n'));
+    $('waRetry').href = url;
+    $('doneLine').textContent = room.name + ' · ' + days[S.day].label + ' ' + CONFIG.times[S.slot] + ' · ' + S.players + ' 人';
+    $('bookLayout').style.display = 'none';
+    $('done').classList.add('show');
+    window.open(url, '_blank');
+  };
+  $('again').onclick = function () {
+    S.slot = null; $('done').classList.remove('show'); $('bookLayout').style.display = ''; render();
+  };
+
+  render();
+})();
+</script>
+</body>
+</html>
