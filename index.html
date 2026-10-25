@@ -3,10 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>[你的店名] · 密室逃脱在线预约</title>
-<meta name="description" content="实景密室逃脱，在线选择主题和时段，一分钟完成预约。">
+<title>密室逃脱在线预约</title>
+<meta name="description" content="实景密室逃脱，在线选择主题和时段，一分钟完成预约。Book your escape room online in one minute.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="系统已封锁 · 你逃不出去 | 密室逃脱在线预约">
+<meta property="og:description" content="选主题、挑时段，一分钟完成预约。Pick a room and a time slot. Booking takes one minute.">
+<meta property="og:image" content="https://raw.githubusercontent.com/yueweilim1006-ui/escape-room/main/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/yueweilim1006-ui/escape-room/main/og.png">
+<meta name="theme-color" content="#07050F">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2307050F'/%3E%3Crect x='3' y='3' width='26' height='26' fill='none' stroke='%23FF2BD6' stroke-width='2'/%3E%3Crect x='10' y='15' width='12' height='9' fill='none' stroke='%23FF2BD6' stroke-width='2'/%3E%3Cpath d='M12.5 15v-3a3.5 3.5 0 0 1 7 0v3' fill='none' stroke='%23FF2BD6' stroke-width='2'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=Orbitron:wght@700;900&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#07050F;--panel:rgba(16,11,34,.94);--panel-solid:#100B22;--line:#2C2352;--line2:#3D2F70;--line3:#4A3A8A;--text:#E6E8EC;--muted:#A69ECB;--dim:#857CB0;--pink:#FF2BD6;--cyan:#00F0FF;--track:#231A44;--mono:'JetBrains Mono',monospace;--disp:'ZCOOL QingKe HuangYou',sans-serif}
 *{box-sizing:border-box}
@@ -50,7 +60,7 @@ header.nav .wrap{display:flex;align-items:center;justify-content:space-between;g
 .links a{color:var(--text);text-decoration:none}
 .links a:hover{color:var(--pink)}
 .links .btn{font-size:15px;padding:12px 20px;clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px)}
-@media (max-width:860px){.links a:not(.btn){display:none}}
+@media (max-width:860px){.links a:not(.btn){display:none}.links{gap:12px}}
 
 /* hero */
 .hero{position:relative;min-height:820px;display:flex;flex-direction:column;justify-content:center;overflow:hidden;border-bottom:1px solid var(--line)}
@@ -129,8 +139,8 @@ header.nav .wrap{display:flex;align-items:center;justify-content:space-between;g
 details.faq{border:1px solid var(--line);background:var(--panel);margin-bottom:12px}
 details.faq summary{list-style:none;cursor:pointer;padding:22px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:17px;font-weight:500}
 details.faq summary::-webkit-details-marker{display:none}
-details.faq summary span{font-family:var(--mono);color:var(--cyan);font-size:24px;transition:transform .2s}
-details.faq[open] summary span{transform:rotate(45deg)}
+details.faq summary span:last-child{font-family:var(--mono);color:var(--cyan);font-size:24px;transition:transform .2s}
+details.faq[open] summary span:last-child{transform:rotate(45deg)}
 details.faq p{margin:0;padding:0 24px 22px;color:var(--muted);line-height:1.8;font-size:15px}
 
 /* booking */
@@ -225,6 +235,22 @@ footer{border-top:1px solid var(--line);background:rgba(7,5,15,.92);overflow:hid
 @keyframes introFlash{0%{opacity:0}35%{opacity:.85}100%{opacity:0}}
 @keyframes introBgOut{to{background-color:transparent;background-image:none}}
 @keyframes introFlick{0%{opacity:1}15%{opacity:.2}30%{opacity:1}45%{opacity:.4}60%,100%{opacity:1}}
+.lang{display:flex;border:1px solid var(--line3)}
+.lang button{background:transparent;color:var(--muted);font-family:var(--mono);font-size:13px;font-weight:700;min-width:44px;height:44px;border:0;cursor:pointer;transition:background .2s,color .2s}
+.lang button:hover{color:var(--pink)}
+.lang button[aria-pressed="true"]{background:var(--pink);color:var(--bg)}
+.lang button:focus-visible,.btn:focus-visible,.opt:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+html[lang="en"] .hero h1{letter-spacing:2px}
+html[lang="en"] .hero .sub{letter-spacing:4px}
+
+@media (max-width:720px){.links .btn{display:none}.logo span.shop-name{font-size:22px;letter-spacing:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:52vw}.logo{min-width:0}header.nav .wrap{gap:10px}}
+html[lang="en"] .hero h1,html[lang="en"] .hero .sub,html[lang="en"] h2.title,html[lang="en"] .final h2,html[lang="en"] .card h3,html[lang="en"] .opt .rn,html[lang="en"] .ticket h3,html[lang="en"] .done h3{font-family:'Orbitron','ZCOOL QingKe HuangYou',sans-serif;font-weight:900;letter-spacing:1px}
+html[lang="en"] .hero h1{font-size:clamp(40px,8vw,118px)}
+html[lang="en"] .hero .sub{font-size:clamp(26px,4vw,56px);letter-spacing:6px}
+html[lang="en"] h2.title{font-size:clamp(32px,4.6vw,52px)}
+html[lang="en"] .card h3{font-size:24px}
+html[lang="en"] .opt .rn{font-size:17px}
+html[lang="en"] .final h2{font-size:clamp(36px,6vw,84px)}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -251,8 +277,11 @@ footer{border-top:1px solid var(--line);background:rgba(7,5,15,.92);overflow:hid
 <span class="shop-name">[你的店名]</span>
 </a>
 <nav class="links">
-<a href="#themes">/主题</a><a href="#how">/流程</a><a href="#rules">/须知</a><a href="#faq">/FAQ</a><a href="#contact">/联系</a>
-<a class="btn" href="#booking">立即预约 →</a>
+<a href="#themes" data-i18n="nav_themes"></a><a href="#how" data-i18n="nav_how"></a><a href="#rules" data-i18n="nav_rules"></a><a href="#faq">/FAQ</a><a href="#contact" data-i18n="nav_contact"></a>
+<div class="lang" role="group" aria-label="Language / 语言">
+<button type="button" data-lang="zh" lang="zh-CN">中</button><button type="button" data-lang="en" lang="en">EN</button>
+</div>
+<a class="btn" href="#booking" data-i18n="nav_book"></a>
 </nav>
 </div></header>
 
@@ -271,23 +300,23 @@ footer{border-top:1px solid var(--line);background:rgba(7,5,15,.92);overflow:hid
 <div class="hud r"><span>SECURITY LV.5</span><span style="color:var(--cyan)">EXIT: 01 / LOCKED</span></div>
 <div class="hero-main">
 <div class="status"><i class="blink"></i>STATUS: SUBJECTS DETECTED</div>
-<h1>系统已封锁</h1>
-<p class="sub">你 逃 不 出 去</p>
+<h1 data-i18n="hero_h1"></h1>
+<p class="sub" data-i18n="hero_sub"></p>
 <div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:8px">
 <span class="clock-label">TIME REMAINING</span>
 <span class="clock" id="clock">60:00</span>
 <div class="clock-bar"><div id="clockBar"></div></div>
 </div>
-<p class="desc">破解线索、重写规则，在倒计时归零前找到出口。选主题、挑时段，一分钟完成预约。</p>
+<p class="desc" data-i18n="hero_desc"></p>
 <div class="cta-row">
-<a class="btn" href="#booking">开始预约 &gt;_</a>
-<a class="btn-line" href="#themes">查看主题档案</a>
+<a class="btn" href="#booking" data-i18n="cta_book"></a>
+<a class="btn-line" href="#themes" data-i18n="cta_rooms"></a>
 </div>
 </div>
 <div class="infobar"><div class="wrap">
-<div class="cell"><span class="k">OPEN · 营业时间</span><span>[例：每日 10:00 – 24:00]</span></div>
-<div class="cell"><span class="k">LOCATION · 地址</span><span>[你的店铺地址]</span></div>
-<div class="cell"><span class="k">CONTACT · WhatsApp</span><span>[你的联系电话]</span></div>
+<div class="cell"><span class="k" data-i18n="info_open_k"></span><span data-i18n="info_open"></span></div>
+<div class="cell"><span class="k" data-i18n="info_loc_k"></span><span data-i18n="info_loc"></span></div>
+<div class="cell"><span class="k">CONTACT · WhatsApp</span><span data-i18n="info_tel"></span></div>
 </div></div>
 </section>
 
@@ -295,55 +324,55 @@ footer{border-top:1px solid var(--line);background:rgba(7,5,15,.92);overflow:hid
 
 <section class="block" id="themes"><div class="wrap">
 <div class="head-row">
-<div><p class="kicker">&gt; LOAD /ROOM_FILES</p><h2 class="title">主题档案</h2></div>
-<p class="mono" style="margin:0;color:var(--muted);font-size:13px">每个房间 · 每个时段 · 仅限一组</p>
+<div><p class="kicker">&gt; LOAD /ROOM_FILES</p><h2 class="title" data-i18n="themes_title"></h2></div>
+<p class="mono" style="margin:0;color:var(--muted);font-size:13px" data-i18n="themes_note"></p>
 </div>
 <div class="grid3" id="roomCards"></div>
 </div></section>
 
 <section class="block" id="how"><div class="wrap">
-<p class="kicker">&gt; RUN booking.exe</p><h2 class="title" style="margin-bottom:48px">三步进入密室</h2>
+<p class="kicker">&gt; RUN booking.exe</p><h2 class="title" style="margin-bottom:48px" data-i18n="how_title"></h2>
 <div class="grid3" style="gap:20px">
-<div class="step"><span class="big outline-pink" aria-hidden="true">1</span><span class="mono" style="font-size:13px;color:var(--cyan)">STEP_01</span><h3>选择主题</h3><p>查看难度、恐怖度和人数，挑一个适合你们小队的房间。</p></div>
-<div class="step"><span class="big outline-pink" aria-hidden="true">2</span><span class="mono" style="font-size:13px;color:var(--cyan)">STEP_02</span><h3>挑选时段</h3><p>选好日期、时间和人数，填写联系方式。</p></div>
-<div class="step"><span class="big outline-pink" aria-hidden="true">3</span><span class="mono" style="font-size:13px;color:var(--cyan)">STEP_03</span><h3>WhatsApp 确认</h3><p>预约会直接发到我们的 WhatsApp，我们回复确认后就完成了。</p></div>
+<div class="step"><span class="big outline-pink" aria-hidden="true">1</span><span class="mono" style="font-size:13px;color:var(--cyan)">STEP_01</span><h3 data-i18n="how1_h"></h3><p data-i18n="how1_p"></p></div>
+<div class="step"><span class="big outline-pink" aria-hidden="true">2</span><span class="mono" style="font-size:13px;color:var(--cyan)">STEP_02</span><h3 data-i18n="how2_h"></h3><p data-i18n="how2_p"></p></div>
+<div class="step"><span class="big outline-pink" aria-hidden="true">3</span><span class="mono" style="font-size:13px;color:var(--cyan)">STEP_03</span><h3 data-i18n="how3_h"></h3><p data-i18n="how3_p"></p></div>
 </div>
 </div></section>
 
 <section class="block" id="booking"><div class="wrap">
 <p class="kicker">&gt; RUN booking.exe <span class="blink">█</span></p>
-<h2 class="title">申请进入密室</h2>
+<h2 class="title" data-i18n="book_title"></h2>
 <div class="progress" id="progress"></div>
 
 <div class="done" id="done" style="margin-top:40px">
 <div class="mono" style="font-size:14px;color:var(--muted);display:flex;flex-direction:column;gap:6px"><span>&gt; submit booking ...</span><span>&gt; opening WhatsApp ... <span style="color:var(--pink)">OK</span></span></div>
-<h3 class="disp" style="margin:0;font-size:48px;letter-spacing:3px">预约已发送</h3>
+<h3 class="disp" style="margin:0;font-size:48px;letter-spacing:3px" data-i18n="done_h"></h3>
 <div class="mono" id="doneLine" style="border:1px solid var(--line);padding:16px 18px;line-height:1.8"></div>
-<p class="hint" style="font-size:15px">如果 WhatsApp 没有自动打开，请 <a id="waRetry" href="#" target="_blank" rel="noopener">点这里重新发送</a>。我们会尽快回复确认你的场次。</p>
-<button class="btn-line" id="again" type="button" style="align-self:flex-start;cursor:pointer">[ 再预约一场 ]</button>
+<p class="hint" style="font-size:15px"><span data-i18n="retry_a"></span> <a id="waRetry" href="#" target="_blank" rel="noopener" data-i18n="retry_link"></a><span data-i18n="retry_b"></span></p>
+<button class="btn-line" id="again" type="button" style="align-self:flex-start;cursor:pointer" data-i18n="again"></button>
 </div>
 
 <div class="book-layout" id="bookLayout" style="margin-top:40px">
 <form class="book-form" id="bookForm" novalidate>
-<fieldset><legend><span class="mono">STEP_01</span><b>选择主题</b></legend><div class="opts rooms" id="roomOpts"></div></fieldset>
-<fieldset><legend><span class="mono">STEP_02</span><b>选择日期</b></legend><div class="opts days" id="dayOpts"></div></fieldset>
-<fieldset><legend><span class="mono">STEP_03</span><b>选择时段</b></legend><div class="opts times" id="timeOpts"></div></fieldset>
-<fieldset><legend><span class="mono">STEP_04</span><b>人数</b></legend>
+<fieldset><legend><span class="mono">STEP_01</span><b data-i18n="lg_room"></b></legend><div class="opts rooms" id="roomOpts"></div></fieldset>
+<fieldset><legend><span class="mono">STEP_02</span><b data-i18n="lg_date"></b></legend><div class="opts days" id="dayOpts"></div></fieldset>
+<fieldset><legend><span class="mono">STEP_03</span><b data-i18n="lg_time"></b></legend><div class="opts times" id="timeOpts"></div></fieldset>
+<fieldset><legend><span class="mono">STEP_04</span><b data-i18n="lg_players"></b></legend>
 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px">
-<div class="stepper"><button type="button" id="minus" aria-label="减少人数">−</button><output id="players">04</output><button type="button" id="plus" aria-label="增加人数">+</button></div>
+<div class="stepper"><button type="button" id="minus" data-i18n-aria="minus">−</button><output id="players">04</output><button type="button" id="plus" data-i18n-aria="plus">+</button></div>
 <span class="mono" style="color:var(--muted);font-size:13px" id="range"></span>
 </div></fieldset>
-<fieldset><legend><span class="mono">STEP_05</span><b>联系方式</b></legend>
+<fieldset><legend><span class="mono">STEP_05</span><b data-i18n="lg_contact"></b></legend>
 <div class="fields">
-<label>NAME · 姓名<input id="fname" type="text" autocomplete="name" placeholder="你的名字"></label>
-<label>WHATSAPP · 手机号码<input id="fphone" type="tel" autocomplete="tel" placeholder="例：012-345 6789"></label>
-<label class="full">NOTE · 备注（选填）<textarea id="fnote" rows="3" placeholder="例如：生日惊喜、有玩家怕黑……"></textarea></label>
+<label><span data-i18n="f_name"></span><input id="fname" type="text" autocomplete="name" data-i18n-ph="ph_name"></label>
+<label><span data-i18n="f_phone"></span><input id="fphone" type="tel" autocomplete="tel" data-i18n-ph="ph_phone"></label>
+<label class="full"><span data-i18n="f_note"></span><textarea id="fnote" rows="3" data-i18n-ph="ph_note"></textarea></label>
 </div></fieldset>
 </form>
 
 <aside class="ticket">
 <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
-<div style="display:flex;justify-content:space-between;align-items:center"><h3 class="disp" style="margin:0;font-size:30px;letter-spacing:2px">入场凭证</h3><span class="mono" style="font-size:11px;color:var(--muted)">TICKET</span></div>
+<div style="display:flex;justify-content:space-between;align-items:center"><h3 class="disp" style="margin:0;font-size:30px;letter-spacing:2px" data-i18n="ticket"></h3><span class="mono" style="font-size:11px;color:var(--muted)">TICKET</span></div>
 <div class="hr"></div>
 <div class="row"><span class="mono">ROOM</span><span id="sRoom"></span></div>
 <div class="row"><span class="mono">DATE</span><span id="sDay"></span></div>
@@ -351,78 +380,187 @@ footer{border-top:1px solid var(--line);background:rgba(7,5,15,.92);overflow:hid
 <div class="row"><span class="mono">PLAYERS</span><span id="sPlayers"></span></div>
 <div class="hr"></div>
 <div class="row" style="align-items:baseline"><span class="mono">TOTAL</span><span class="mono" id="sTotal" style="font-size:20px;font-weight:700;color:var(--pink)"></span></div>
-<button class="btn" id="submit" type="button" disabled style="margin-top:6px;width:100%">等待选择时段…</button>
-<p class="hint" id="hint">请先选择一个时段。</p>
+<button class="btn" id="submit" type="button" disabled style="margin-top:6px;width:100%"></button>
+<p class="hint" id="hint"></p>
 </aside>
 </div>
 </div></section>
 
 <section class="block" id="rules"><div class="wrap split">
-<div class="side"><p class="kicker">&gt; CAT rules.txt</p><h2 class="title">玩家协议</h2></div>
+<div class="side"><p class="kicker">&gt; CAT rules.txt</p><h2 class="title" data-i18n="rules_title"></h2></div>
 <div class="main term">
 <div class="term-bar"><span>rules.txt</span><span class="dots"><i style="background:var(--pink)"></i><i style="background:var(--cyan)"></i><i style="background:var(--line2)"></i></span></div>
 <div class="term-body">
-<div><b>01</b><span>请提前 [15] 分钟到店，迟到会占用游戏时间。</span></div>
-<div><b>02</b><span>如需取消或改期，请至少提前 [24] 小时联系我们。</span></div>
-<div><b>03</b><span>房间内禁止拍照录影，请勿暴力破坏道具。</span></div>
-<div><b>04</b><span>恐怖主题不建议孕妇、心脏病患者及 [12] 岁以下儿童参加。</span></div>
-<div><b>05</b><span>[在此补充你的其他规则]</span></div>
+<div><b>01</b><span data-i18n="rule1"></span></div>
+<div><b>02</b><span data-i18n="rule2"></span></div>
+<div><b>03</b><span data-i18n="rule3"></span></div>
+<div><b>04</b><span data-i18n="rule4"></span></div>
+<div><b>05</b><span data-i18n="rule5"></span></div>
 <div class="mono" style="color:var(--cyan);font-size:14px">$ <span class="blink">█</span></div>
 </div>
 </div>
 </div></section>
 
 <section class="block" id="faq"><div class="wrap split">
-<div class="side"><p class="kicker">&gt; HELP --faq</p><h2 class="title">常见问题</h2><p style="color:var(--muted);font-size:15px;line-height:1.8">还有其他问题？直接 WhatsApp 我们：[你的联系电话]</p></div>
+<div class="side"><p class="kicker">&gt; HELP --faq</p><h2 class="title" data-i18n="faq_title"></h2><p style="color:var(--muted);font-size:15px;line-height:1.8" data-i18n="faq_note"></p></div>
 <div class="main">
-<details class="faq"><summary>第一次玩密室，会不会太难？<span>+</span></summary><p>[你的回答，例如：每个房间都有提示机制，卡关时可以向主持人求助。新手推荐从难度 3 的主题开始。]</p></details>
-<details class="faq"><summary>胆子小、怕黑可以玩吗？<span>+</span></summary><p>[你的回答，例如：可以选择恐怖度较低的主题；预约时在备注说明，我们会调整演出强度。]</p></details>
-<details class="faq"><summary>可以包场或办生日、公司团建吗？<span>+</span></summary><p>[你的回答，例如：可以，人数较多请提前 [3] 天联系我们安排多个房间同时开场。]</p></details>
-<details class="faq"><summary>怎么付款？需要先付订金吗？<span>+</span></summary><p>[你的回答，例如：到店付款，支持现金、DuitNow 和电子钱包。]</p></details>
+<details class="faq"><summary><span data-i18n="q1" style="font-family:inherit;color:inherit;font-size:inherit"></span><span>+</span></summary><p data-i18n="a1"></p></details>
+<details class="faq"><summary><span data-i18n="q2" style="font-family:inherit;color:inherit;font-size:inherit"></span><span>+</span></summary><p data-i18n="a2"></p></details>
+<details class="faq"><summary><span data-i18n="q3" style="font-family:inherit;color:inherit;font-size:inherit"></span><span>+</span></summary><p data-i18n="a3"></p></details>
+<details class="faq"><summary><span data-i18n="q4" style="font-family:inherit;color:inherit;font-size:inherit"></span><span>+</span></summary><p data-i18n="a4"></p></details>
 </div>
 </div></section>
 
 <section class="block"><div class="wrap final">
 <p class="mono" style="margin:0;color:var(--cyan);font-size:13px;letter-spacing:4px">READY?</p>
-<h2>门已经关上了<br><span style="color:var(--pink);text-shadow:0 0 18px rgba(255,43,214,.75)">现在轮到你</span></h2>
-<a class="btn" href="#booking" style="font-size:18px;padding:20px 44px">预约场次 &gt;_</a>
+<h2 data-i18n="final_h"></h2>
+<a class="btn" href="#booking" style="font-size:18px;padding:20px 44px" data-i18n="final_btn"></a>
 </div></section>
 </main>
 
 <footer id="contact">
 <div class="wrap foot">
-<div class="col" style="max-width:440px"><span class="disp shop-name" style="font-size:34px;letter-spacing:3px">[你的店名]</span><p style="margin:0;color:var(--muted);line-height:1.8">[一句话介绍你的密室，例如：本地原创实景密室，每个房间都是自己设计搭建的。]</p></div>
-<div class="col"><span class="k">// CONTACT</span><span>[电话 / WhatsApp]</span><span>[店铺地址]</span></div>
-<div class="col"><span class="k">// SOCIAL</span><span>[Instagram 账号]</span><span>[Facebook / 小红书 账号]</span></div>
+<div class="col" style="max-width:440px"><span class="disp shop-name" style="font-size:34px;letter-spacing:3px">[你的店名]</span><p style="margin:0;color:var(--muted);line-height:1.8" data-i18n="about"></p></div>
+<div class="col"><span class="k">// CONTACT</span><span data-i18n="ft_tel"></span><span data-i18n="ft_addr"></span></div>
+<div class="col"><span class="k">// SOCIAL</span><span data-i18n="ft_ig"></span><span data-i18n="ft_fb"></span></div>
 </div>
 <div class="escape outline" aria-hidden="true">ESCAPE</div>
 <p class="mono" style="margin:0;text-align:center;color:var(--dim);font-size:12px;padding:16px 20px 28px">© 2026 <span class="shop-name">[你的店名]</span> · ALL EXITS MONITORED</p>
 </footer>
 
 <div class="mbar">
-<a class="btn" href="#booking">立即预约 &gt;_</a>
-<a class="wa" id="waIcon" href="#" target="_blank" rel="noopener" aria-label="WhatsApp 联系我们"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF2BD6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.6-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg></a>
+<a class="btn" href="#booking" data-i18n="mbar_book"></a>
+<a class="wa" id="waIcon" href="#" target="_blank" rel="noopener" data-i18n-aria="wa"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF2BD6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.6-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg></a>
 </div>
 
 <script>
-/* ============ 在这里修改你的店铺资料 ============ */
+/* ============ 在这里修改你的店铺资料 / Edit your shop details here ============ */
 var CONFIG = {
   shopName: '[你的店名]',
+  shopNameEn: '[Your Shop Name]',
   // 你的 WhatsApp 号码：国家代码 + 号码，不要加号、空格或横线。例如 012-345 6789 → 60123456789
   whatsapp: '60123456789',
   times: ['10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'],
   daysAhead: 14,
   rooms: [
-    { name: '古宅迷踪', genre: '中式恐怖', icon: 'house', level: 4, difficulty: 4, fear: 5, min: 2, max: 6, minutes: 60, price: 0, image: '',
-      desc: '[主题简介：一两句话交代故事背景，例如：民国老宅里失踪的戏班……]' },
-    { name: '失落实验室', genre: '科幻解谜', icon: 'lab', level: 5, difficulty: 5, fear: 1, min: 2, max: 6, minutes: 60, price: 0, image: '',
-      desc: '[主题简介：一两句话交代故事背景，例如：倒计时启动前关掉反应堆……]' },
-    { name: '侦探事务所', genre: '推理', icon: 'detective', level: 3, difficulty: 3, fear: 2, min: 3, max: 8, minutes: 75, price: 0, image: '',
-      desc: '[主题简介：一两句话交代故事背景，例如：在警察到来前找出真凶……]' }
+    { name: '古宅迷踪', nameEn: 'The Old Mansion', genre: '中式恐怖', genreEn: 'Chinese Horror', icon: 'house', level: 4, difficulty: 4, fear: 5, min: 2, max: 6, minutes: 60, price: 0, image: '',
+      desc: '[主题简介：一两句话交代故事背景，例如：民国老宅里失踪的戏班……]',
+      descEn: '[Room story in one or two lines, e.g. an opera troupe vanished inside an old 1930s mansion…]' },
+    { name: '失落实验室', nameEn: 'Lost Laboratory', genre: '科幻解谜', genreEn: 'Sci-Fi Puzzle', icon: 'lab', level: 5, difficulty: 5, fear: 1, min: 2, max: 6, minutes: 60, price: 0, image: '',
+      desc: '[主题简介：一两句话交代故事背景，例如：倒计时启动前关掉反应堆……]',
+      descEn: '[Room story in one or two lines, e.g. shut down the reactor before the countdown ends…]' },
+    { name: '侦探事务所', nameEn: 'Detective Agency', genre: '推理', genreEn: 'Mystery', icon: 'detective', level: 3, difficulty: 3, fear: 2, min: 3, max: 8, minutes: 75, price: 0, image: '',
+      desc: '[主题简介：一两句话交代故事背景，例如：在警察到来前找出真凶……]',
+      descEn: '[Room story in one or two lines, e.g. find the real killer before the police arrive…]' }
   ]
 };
 /* price 填每人价格（数字），0 表示还没定，会显示 RM[ ]。image 可以填海报图片网址。 */
-/* =============================================== */
+/* ============================================================================ */
+
+var I18N = {
+  zh: {
+    page_title: '{shop} · 密室逃脱在线预约',
+    nav_themes: '/主题', nav_how: '/流程', nav_rules: '/须知', nav_contact: '/联系', nav_book: '立即预约 →',
+    hero_h1: '系统已封锁', hero_sub: '你 逃 不 出 去',
+    hero_desc: '破解线索、重写规则，在倒计时归零前找到出口。选主题、挑时段，一分钟完成预约。',
+    cta_book: '开始预约 &gt;_', cta_rooms: '查看主题档案',
+    info_open_k: 'OPEN · 营业时间', info_open: '[例：每日 10:00 – 24:00]',
+    info_loc_k: 'LOCATION · 地址', info_loc: '[你的店铺地址]', info_tel: '[你的联系电话]',
+    themes_title: '主题档案', themes_note: '每个房间 · 每个时段 · 仅限一组',
+    how_title: '三步进入密室',
+    how1_h: '选择主题', how1_p: '查看难度、恐怖度和人数，挑一个适合你们小队的房间。',
+    how2_h: '挑选时段', how2_p: '选好日期、时间和人数，填写联系方式。',
+    how3_h: 'WhatsApp 确认', how3_p: '预约会直接发到我们的 WhatsApp，我们回复确认后就完成了。',
+    book_title: '申请进入密室',
+    lg_room: '选择主题', lg_date: '选择日期', lg_time: '选择时段', lg_players: '人数', lg_contact: '联系方式',
+    minus: '减少人数', plus: '增加人数',
+    f_name: 'NAME · 姓名', f_phone: 'WHATSAPP · 手机号码', f_note: 'NOTE · 备注（选填）',
+    ph_name: '你的名字', ph_phone: '例：012-345 6789', ph_note: '例如：生日惊喜、有玩家怕黑……',
+    ticket: '入场凭证',
+    done_h: '预约已发送',
+    retry_a: '如果 WhatsApp 没有自动打开，请', retry_link: '点这里重新发送', retry_b: '。我们会尽快回复确认你的场次。',
+    again: '[ 再预约一场 ]',
+    rules_title: '玩家协议',
+    rule1: '请提前 [15] 分钟到店，迟到会占用游戏时间。',
+    rule2: '如需取消或改期，请至少提前 [24] 小时联系我们。',
+    rule3: '房间内禁止拍照录影，请勿暴力破坏道具。',
+    rule4: '恐怖主题不建议孕妇、心脏病患者及 [12] 岁以下儿童参加。',
+    rule5: '[在此补充你的其他规则]',
+    faq_title: '常见问题', faq_note: '还有其他问题？直接 WhatsApp 我们：[你的联系电话]',
+    q1: '第一次玩密室，会不会太难？', a1: '[你的回答，例如：每个房间都有提示机制，卡关时可以向主持人求助。新手推荐从难度 3 的主题开始。]',
+    q2: '胆子小、怕黑可以玩吗？', a2: '[你的回答，例如：可以选择恐怖度较低的主题；预约时在备注说明，我们会调整演出强度。]',
+    q3: '可以包场或办生日、公司团建吗？', a3: '[你的回答，例如：可以，人数较多请提前 [3] 天联系我们安排多个房间同时开场。]',
+    q4: '怎么付款？需要先付订金吗？', a4: '[你的回答，例如：到店付款，支持现金、DuitNow 和电子钱包。]',
+    final_h: '门已经关上了<br><span style="color:var(--pink);text-shadow:0 0 18px rgba(255,43,214,.75)">现在轮到你</span>',
+    final_btn: '预约场次 &gt;_',
+    about: '[一句话介绍你的密室，例如：本地原创实景密室，每个房间都是自己设计搭建的。]',
+    ft_tel: '[电话 / WhatsApp]', ft_addr: '[店铺地址]', ft_ig: '[Instagram 账号]', ft_fb: '[Facebook / 小红书 账号]',
+    mbar_book: '立即预约 &gt;_', wa: 'WhatsApp 联系我们',
+    week: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'], today: '今天',
+    dayLabel: function (d, w) { return (d.getMonth() + 1) + '月' + d.getDate() + '日 ' + w; },
+    monthShort: function (d) { return String(d.getMonth() + 1).padStart(2, '0') + '月'; },
+    difficulty: '难度', fear: '恐怖度', book_room: '[ 预约此主题 ]', poster_alt: ' 海报',
+    pax: function (n) { return n + ' 人'; }, range: function (a, b) { return 'RANGE ' + a + '–' + b + ' 人'; },
+    open: 'OPEN', past: '已过',
+    steps: ['主题', '日期', '时段', '人数', '联系方式'],
+    sub_ready: '通过 WhatsApp 发送预约 &gt;_', sub_contact: '等待填写联系方式…', sub_slot: '等待选择时段…',
+    hint_ready: '会打开 WhatsApp 并带好预约内容，按发送即可。到店付款。', hint_contact: '请填写姓名和手机号码。', hint_slot: '请先选择一个时段。',
+    msg: ['你好，我想预约密室逃脱：', '主题', '日期', '时段', '人数', '姓名', '电话', '备注'],
+    intro_term: ['&gt; booting security system ...', '&gt; scanning subjects ... <b class="ok">4 FOUND</b>', '&gt; verifying access code ...', '&gt; access code ... <b class="ok">OK</b>'],
+    intro_small: '进入密室', skip: '跳过 &gt;&gt;'
+  },
+  en: {
+    page_title: '{shop} · Escape Room Booking',
+    nav_themes: '/Rooms', nav_how: '/How', nav_rules: '/Rules', nav_contact: '/Contact', nav_book: 'Book now →',
+    hero_h1: 'SYSTEM LOCKED', hero_sub: 'NO WAY OUT',
+    hero_desc: 'Crack the clues, break the rules and find the exit before the clock hits zero. Pick a room and a time slot. Booking takes one minute.',
+    cta_book: 'Book a game &gt;_', cta_rooms: 'View room files',
+    info_open_k: 'OPEN · HOURS', info_open: '[e.g. Daily 10:00 – 24:00]',
+    info_loc_k: 'LOCATION', info_loc: '[Your shop address]', info_tel: '[Your phone number]',
+    themes_title: 'Room Files', themes_note: 'One group per room · per slot',
+    how_title: 'Three Steps In',
+    how1_h: 'Pick a room', how1_p: 'Check the difficulty, fear level and group size, then pick the room that fits your team.',
+    how2_h: 'Choose a slot', how2_p: 'Choose the date, time and number of players, then leave your contact.',
+    how3_h: 'Confirm on WhatsApp', how3_p: 'Your booking goes straight to our WhatsApp. Once we reply to confirm, you are all set.',
+    book_title: 'Request Entry',
+    lg_room: 'Pick a room', lg_date: 'Pick a date', lg_time: 'Pick a time', lg_players: 'Players', lg_contact: 'Your contact',
+    minus: 'Fewer players', plus: 'More players',
+    f_name: 'NAME', f_phone: 'WHATSAPP NUMBER', f_note: 'NOTE (OPTIONAL)',
+    ph_name: 'Your name', ph_phone: 'e.g. 012-345 6789', ph_note: 'e.g. birthday surprise, someone is scared of the dark…',
+    ticket: 'Entry Pass',
+    done_h: 'Booking sent',
+    retry_a: 'If WhatsApp did not open,', retry_link: 'tap here to send again', retry_b: '. We will reply soon to confirm your slot.',
+    again: '[ Book another game ]',
+    rules_title: 'House Rules',
+    rule1: 'Please arrive [15] minutes early. Arriving late cuts into your game time.',
+    rule2: 'To cancel or reschedule, contact us at least [24] hours ahead.',
+    rule3: 'No photos or video inside the rooms. Please do not force or break any props.',
+    rule4: 'Horror rooms are not recommended for pregnant guests, people with heart conditions, or children under [12].',
+    rule5: '[Add your other rules here]',
+    faq_title: 'FAQ', faq_note: 'Other questions? WhatsApp us at [your phone number]',
+    q1: 'First time playing. Will it be too hard?', a1: '[Your answer, e.g. every room has a hint system, and the game master can help when you are stuck. Beginners can start with a level 3 room.]',
+    q2: 'Can I play if I scare easily or fear the dark?', a2: '[Your answer, e.g. pick a room with a lower fear level, and add a note when booking so we can tone down the scares.]',
+    q3: 'Can we book the whole place for a birthday or team event?', a3: '[Your answer, e.g. yes. For large groups, contact us [3] days ahead so we can run several rooms at once.]',
+    q4: 'How do I pay? Is a deposit needed?', a4: '[Your answer, e.g. pay at the shop by cash, DuitNow or e-wallet.]',
+    final_h: 'The door is shut.<br><span style="color:var(--pink);text-shadow:0 0 18px rgba(255,43,214,.75)">Your move.</span>',
+    final_btn: 'Book a slot &gt;_',
+    about: '[One line about your shop, e.g. original escape rooms, every room designed and built by our own team.]',
+    ft_tel: '[Phone / WhatsApp]', ft_addr: '[Shop address]', ft_ig: '[Instagram]', ft_fb: '[Facebook / Xiaohongshu]',
+    mbar_book: 'Book now &gt;_', wa: 'Contact us on WhatsApp',
+    week: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], today: 'Today',
+    dayLabel: function (d, w) { return w + ', ' + d.getDate() + ' ' + ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; },
+    monthShort: function (d) { return ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'][d.getMonth()]; },
+    difficulty: 'Difficulty', fear: 'Fear', book_room: '[ Book this room ]', poster_alt: ' poster',
+    pax: function (n) { return n + (n === 1 ? ' player' : ' players'); }, range: function (a, b) { return 'RANGE ' + a + '–' + b + ' PLAYERS'; },
+    open: 'OPEN', past: 'PAST',
+    steps: ['Room', 'Date', 'Time', 'Players', 'Contact'],
+    sub_ready: 'Send booking via WhatsApp &gt;_', sub_contact: 'Waiting for your contact…', sub_slot: 'Waiting for a time slot…',
+    hint_ready: 'WhatsApp opens with your booking filled in. Just tap send. Pay at the shop.', hint_contact: 'Please enter your name and phone number.', hint_slot: 'Please pick a time slot first.',
+    msg: ['Hi, I would like to book an escape room:', 'Room', 'Date', 'Time', 'Players', 'Name', 'Phone', 'Note'],
+    intro_term: ['&gt; booting security system ...', '&gt; scanning subjects ... <b class="ok">4 FOUND</b>', '&gt; verifying access code ...', '&gt; access code ... <b class="ok">OK</b>'],
+    intro_small: 'ENTER THE ROOM', skip: 'Skip &gt;&gt;'
+  }
+};
 
 (function () {
   var ICONS = {
@@ -435,7 +573,43 @@ var CONFIG = {
   var pad = function (n) { return String(n).padStart(2, '0'); };
   var priceText = function (r) { return r.price ? 'RM' + r.price : 'RM[ ]'; };
 
-  document.querySelectorAll('.shop-name').forEach(function (el) { el.textContent = CONFIG.shopName; });
+  // ---- language ----
+  var LANG = 'zh';
+  (function pickLang() {
+    var q = (location.search.match(/[?&]lang=(zh|en)/) || [])[1];
+    var saved = null;
+    try { saved = localStorage.getItem('lang'); } catch (e) {}
+    if (q) LANG = q;
+    else if (saved === 'zh' || saved === 'en') LANG = saved;
+    else {
+      var langs = navigator.languages || [navigator.language || 'zh'];
+      LANG = langs.some(function (l) { return /^zh/i.test(l); }) ? 'zh' : 'en';
+    }
+  })();
+  var T = function () { return I18N[LANG]; };
+  var shop = function () { return LANG === 'en' ? CONFIG.shopNameEn : CONFIG.shopName; };
+  var rn = function (r) { return LANG === 'en' ? r.nameEn : r.name; };
+  var rg = function (r) { return LANG === 'en' ? r.genreEn : r.genre; };
+  var rd = function (r) { return LANG === 'en' ? r.descEn : r.desc; };
+
+  function applyStatic() {
+    var t = T();
+    document.documentElement.lang = LANG === 'en' ? 'en' : 'zh-CN';
+    document.title = t.page_title.replace('{shop}', shop());
+    document.querySelectorAll('[data-i18n]').forEach(function (el) { el.innerHTML = t[el.getAttribute('data-i18n')]; });
+    document.querySelectorAll('[data-i18n-ph]').forEach(function (el) { el.placeholder = t[el.getAttribute('data-i18n-ph')]; });
+    document.querySelectorAll('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', t[el.getAttribute('data-i18n-aria')]); });
+    document.querySelectorAll('.shop-name').forEach(function (el) { el.textContent = shop(); });
+    document.querySelectorAll('[data-lang]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === LANG)); });
+  }
+  function setLang(l) {
+    if (l === LANG) return;
+    LANG = l;
+    try { localStorage.setItem('lang', l); } catch (e) {}
+    buildDays();
+    renderAll();
+  }
+
   $('waIcon').href = 'https://wa.me/' + CONFIG.whatsapp;
 
   // countdown
@@ -453,20 +627,21 @@ var CONFIG = {
     try { seen = sessionStorage.getItem('introSeen') === '1'; } catch (e) {}
     if (reduce || seen) return;
     try { sessionStorage.setItem('introSeen', '1'); } catch (e) {}
+    var t = T();
     var el = document.createElement('div');
     el.id = 'intro';
     el.setAttribute('aria-hidden', 'true');
     el.innerHTML =
-      '<div class="term"><span>&gt; booting security system ...</span><span>&gt; scanning subjects ... <b class="ok">4 FOUND</b></span><span>&gt; verifying access code ...</span><span>&gt; access code ... <b class="ok">OK</b></span></div>' +
+      '<div class="term">' + t.intro_term.map(function (s) { return '<span>' + s + '</span>'; }).join('') + '</div>' +
       '<div class="stage">' +
         '<div class="light"></div>' +
         '<div class="panel"><i class="a"></i><i class="b"></i><span class="knob"></span></div>' +
         '<svg class="frame" viewBox="0 0 520 700" fill="none"><path class="d" d="M40 700V140a120 120 0 0 1 120-120h200a120 120 0 0 1 120 120v560" stroke="#FF2BD6" stroke-width="10"/><path class="d" d="M80 700V160a90 90 0 0 1 90-90h180a90 90 0 0 1 90 90v540" stroke="#FF2BD6" stroke-width="4" opacity=".55"/></svg>' +
         '<span class="lock"></span>' +
       '</div>' +
-      '<div class="granted">ACCESS GRANTED<small>进入密室</small></div>' +
+      '<div class="granted">ACCESS GRANTED<small>' + t.intro_small + '</small></div>' +
       '<div class="flash"></div>' +
-      '<button class="skip" type="button">跳过 &gt;&gt;</button>';
+      '<button class="skip" type="button">' + t.skip + '</button>';
     document.body.appendChild(el);
     var root = document.documentElement, prev = root.style.overflow;
     root.style.overflow = 'hidden';
@@ -485,80 +660,92 @@ var CONFIG = {
   })();
 
   // big marquee
-  var bits = '';
-  CONFIG.rooms.forEach(function (r, i) {
-    bits += '<span class="' + (i % 2 ? 'outline-pink' : 'outline') + '">' + esc(r.name) + '</span><span style="color:' + (i % 2 ? 'var(--cyan)' : 'var(--pink)') + '">✦</span>';
-  });
-  bits += '<span class="outline-pink">ESCAPE ROOM</span><span style="color:var(--cyan)">✦</span>';
-  $('bigmarq').innerHTML = bits + bits;
+  function renderMarquee() {
+    var bits = '';
+    CONFIG.rooms.forEach(function (r, i) {
+      bits += '<span class="' + (i % 2 ? 'outline-pink' : 'outline') + '">' + esc(rn(r)) + '</span><span style="color:' + (i % 2 ? 'var(--cyan)' : 'var(--pink)') + '">✦</span>';
+    });
+    bits += '<span class="outline-pink">ESCAPE ROOM</span><span style="color:var(--cyan)">✦</span>';
+    $('bigmarq').innerHTML = bits + bits;
+  }
 
   // room cards
   var segs = function (n, cls) { var h = '<div class="segs ' + cls + '">'; for (var i = 0; i < 5; i++) h += '<i class="' + (i < n ? 'on' : '') + '"></i>'; return h + '</div>'; };
-  $('roomCards').innerHTML = CONFIG.rooms.map(function (r, i) {
-    return '<article class="card"><div class="poster">' +
-      (r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(r.name) + ' 海报">' : '<span class="num outline" aria-hidden="true">' + pad(i + 1) + '</span>' + (ICONS[r.icon] || ICONS.house)) +
-      '<span class="code">ROOM_' + pad(i + 1) + '</span><span class="lv">LV.' + r.level + '</span></div>' +
-      '<div class="card-body"><div class="card-top"><h3>' + esc(r.name) + '</h3><span class="tag">' + esc(r.genre) + '</span></div>' +
-      '<p>' + esc(r.desc) + '</p>' +
-      '<div style="display:flex;flex-direction:column;gap:10px"><div class="meter"><span>难度</span>' + segs(r.difficulty, 'c') + '</div><div class="meter"><span>恐怖度</span>' + segs(r.fear, 'p') + '</div></div>' +
-      '<div class="facts"><div><small>PLAYERS</small><span>' + r.min + '–' + r.max + '</span></div><div><small>TIME</small><span>' + r.minutes + 'min</span></div><div><small>PRICE</small><span style="color:var(--cyan)">' + priceText(r) + '</span></div></div>' +
-      '<a class="ghost" href="#booking" data-room="' + i + '">[ 预约此主题 ]</a></div></article>';
-  }).join('');
+  function renderCards() {
+    var t = T();
+    $('roomCards').innerHTML = CONFIG.rooms.map(function (r, i) {
+      return '<article class="card"><div class="poster">' +
+        (r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(rn(r)) + t.poster_alt + '">' : '<span class="num outline" aria-hidden="true">' + pad(i + 1) + '</span>' + (ICONS[r.icon] || ICONS.house)) +
+        '<span class="code">ROOM_' + pad(i + 1) + '</span><span class="lv">LV.' + r.level + '</span></div>' +
+        '<div class="card-body"><div class="card-top"><h3>' + esc(rn(r)) + '</h3><span class="tag">' + esc(rg(r)) + '</span></div>' +
+        '<p>' + esc(rd(r)) + '</p>' +
+        '<div style="display:flex;flex-direction:column;gap:10px"><div class="meter"><span>' + t.difficulty + '</span>' + segs(r.difficulty, 'c') + '</div><div class="meter"><span>' + t.fear + '</span>' + segs(r.fear, 'p') + '</div></div>' +
+        '<div class="facts"><div><small>PLAYERS</small><span>' + r.min + '–' + r.max + '</span></div><div><small>TIME</small><span>' + r.minutes + 'min</span></div><div><small>PRICE</small><span style="color:var(--cyan)">' + priceText(r) + '</span></div></div>' +
+        '<a class="ghost" href="#booking" data-room="' + i + '">' + t.book_room + '</a></div></article>';
+    }).join('');
+  }
 
   // booking state
-  var week = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
   var today = new Date();
   var days = [];
-  for (var d = 0; d < CONFIG.daysAhead; d++) {
-    var dt = new Date(today.getFullYear(), today.getMonth(), today.getDate() + d);
-    days.push({ date: dt, week: d === 0 ? '今天' : week[dt.getDay()], label: (dt.getMonth() + 1) + '月' + dt.getDate() + '日 ' + week[dt.getDay()] });
+  function buildDays() {
+    var t = T();
+    days = [];
+    for (var d = 0; d < CONFIG.daysAhead; d++) {
+      var dt = new Date(today.getFullYear(), today.getMonth(), today.getDate() + d);
+      days.push({ date: dt, week: d === 0 ? t.today : t.week[dt.getDay()], label: t.dayLabel(dt, t.week[dt.getDay()]) });
+    }
   }
   var S = { room: 0, day: 0, slot: null, players: 4 };
 
-  function isPast(dayIdx, t) {
+  function isPast(dayIdx, tm) {
     if (dayIdx !== 0) return false;
-    var p = t.split(':'); var now = new Date();
+    var p = tm.split(':'); var now = new Date();
     return now.getHours() * 60 + now.getMinutes() >= (+p[0]) * 60 + (+p[1]);
   }
 
   function render() {
+    var t = T();
     var room = CONFIG.rooms[S.room];
     S.players = Math.min(Math.max(S.players, room.min), room.max);
 
     $('roomOpts').innerHTML = CONFIG.rooms.map(function (r, i) {
-      return '<button type="button" class="opt room' + (S.room === i ? ' on' : '') + '" data-k="room" data-v="' + i + '" aria-pressed="' + (S.room === i) + '"><span class="rc">ROOM_' + pad(i + 1) + '</span><span class="rn">' + esc(r.name) + '</span><span class="s" style="color:var(--muted)">' + esc(r.genre) + ' · ' + r.min + '–' + r.max + ' 人</span></button>';
+      return '<button type="button" class="opt room' + (S.room === i ? ' on' : '') + '" data-k="room" data-v="' + i + '" aria-pressed="' + (S.room === i) + '"><span class="rc">ROOM_' + pad(i + 1) + '</span><span class="rn">' + esc(rn(r)) + '</span><span class="s" style="color:var(--muted)">' + esc(rg(r)) + ' · ' + r.min + '–' + r.max + '</span></button>';
     }).join('');
     $('dayOpts').innerHTML = days.map(function (x, i) {
-      return '<button type="button" class="opt' + (S.day === i ? ' on' : '') + '" data-k="day" data-v="' + i + '" aria-pressed="' + (S.day === i) + '"><span class="s">' + x.week + '</span><span class="n">' + pad(x.date.getDate()) + '</span><span class="s mono">' + pad(x.date.getMonth() + 1) + '月</span></button>';
+      return '<button type="button" class="opt' + (S.day === i ? ' on' : '') + '" data-k="day" data-v="' + i + '" aria-pressed="' + (S.day === i) + '"><span class="s">' + x.week + '</span><span class="n">' + pad(x.date.getDate()) + '</span><span class="s mono">' + t.monthShort(x.date) + '</span></button>';
     }).join('');
-    $('timeOpts').innerHTML = CONFIG.times.map(function (t, i) {
-      var past = isPast(S.day, t);
+    $('timeOpts').innerHTML = CONFIG.times.map(function (tm, i) {
+      var past = isPast(S.day, tm);
       if (past && S.slot === i) S.slot = null;
-      return '<button type="button" class="opt' + (S.slot === i ? ' on' : '') + '" data-k="slot" data-v="' + i + '"' + (past ? ' disabled style="opacity:.35;cursor:not-allowed;transform:none"' : '') + ' aria-pressed="' + (S.slot === i) + '"><span class="t">' + t + '</span><span class="s mono">' + (past ? '已过' : 'OPEN') + '</span></button>';
+      return '<button type="button" class="opt' + (S.slot === i ? ' on' : '') + '" data-k="slot" data-v="' + i + '"' + (past ? ' disabled style="opacity:.35;cursor:not-allowed;transform:none"' : '') + ' aria-pressed="' + (S.slot === i) + '"><span class="t">' + tm + '</span><span class="s mono">' + (past ? t.past : t.open) + '</span></button>';
     }).join('');
 
     $('players').textContent = pad(S.players);
-    $('range').textContent = 'RANGE ' + room.min + '–' + room.max + ' 人';
+    $('range').textContent = t.range(room.min, room.max);
 
     var name = $('fname').value.trim(), phone = $('fphone').value.trim();
     var slotOk = S.slot !== null, contactOk = name !== '' && phone !== '';
     var flags = [true, true, slotOk, true, contactOk];
-    var labels = ['主题', '日期', '时段', '人数', '联系方式'];
-    $('progress').innerHTML = flags.map(function (ok, i) { return '<div class="' + (ok ? 'ok' : '') + '"><i></i><span>' + labels[i] + '</span></div>'; }).join('');
+    $('progress').innerHTML = flags.map(function (ok, i) { return '<div class="' + (ok ? 'ok' : '') + '"><i></i><span>' + t.steps[i] + '</span></div>'; }).join('');
 
-    $('sRoom').textContent = room.name;
+    $('sRoom').textContent = rn(room);
     $('sDay').textContent = days[S.day].label;
     $('sTime').textContent = slotOk ? CONFIG.times[S.slot] : '--:--';
-    $('sPlayers').textContent = S.players + ' 人';
+    $('sPlayers').textContent = t.pax(S.players);
     $('sTotal').textContent = room.price ? 'RM' + (room.price * S.players) : 'RM[ ] × ' + S.players;
 
     var ready = slotOk && contactOk;
     $('submit').disabled = !ready;
-    $('submit').textContent = ready ? '通过 WhatsApp 发送预约 >_' : (slotOk ? '等待填写联系方式…' : '等待选择时段…');
-    $('hint').textContent = ready ? '会打开 WhatsApp 并带好预约内容，按发送即可。到店付款。' : (slotOk ? '请填写姓名和手机号码。' : '请先选择一个时段。');
+    $('submit').innerHTML = ready ? t.sub_ready : (slotOk ? t.sub_contact : t.sub_slot);
+    $('hint').textContent = ready ? t.hint_ready : (slotOk ? t.hint_contact : t.hint_slot);
   }
 
+  function renderAll() { applyStatic(); renderMarquee(); renderCards(); render(); }
+
   document.addEventListener('click', function (e) {
+    var lb = e.target.closest('[data-lang]');
+    if (lb) { setLang(lb.getAttribute('data-lang')); return; }
     var b = e.target.closest('[data-k]');
     if (b && !b.disabled) {
       var k = b.getAttribute('data-k'), v = +b.getAttribute('data-v');
@@ -573,21 +760,23 @@ var CONFIG = {
   $('fname').oninput = render; $('fphone').oninput = render;
 
   $('submit').onclick = function () {
+    var t = T(), m = t.msg;
     var room = CONFIG.rooms[S.room];
     var lines = [
-      '你好，我想预约密室逃脱：',
-      '主题：' + room.name,
-      '日期：' + days[S.day].label,
-      '时段：' + CONFIG.times[S.slot],
-      '人数：' + S.players + ' 人',
-      '姓名：' + $('fname').value.trim(),
-      '电话：' + $('fphone').value.trim()
+      m[0],
+      m[1] + '：' + rn(room) + (LANG === 'en' ? ' (' + room.name + ')' : ''),
+      m[2] + '：' + days[S.day].label,
+      m[3] + '：' + CONFIG.times[S.slot],
+      m[4] + '：' + S.players,
+      m[5] + '：' + $('fname').value.trim(),
+      m[6] + '：' + $('fphone').value.trim()
     ];
     var note = $('fnote').value.trim();
-    if (note) lines.push('备注：' + note);
+    if (note) lines.push(m[7] + '：' + note);
+    if (LANG === 'en') lines = lines.map(function (s) { return s.replace('：', ': '); });
     var url = 'https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(lines.join('\n'));
     $('waRetry').href = url;
-    $('doneLine').textContent = room.name + ' · ' + days[S.day].label + ' ' + CONFIG.times[S.slot] + ' · ' + S.players + ' 人';
+    $('doneLine').textContent = rn(room) + ' · ' + days[S.day].label + ' ' + CONFIG.times[S.slot] + ' · ' + t.pax(S.players);
     $('bookLayout').style.display = 'none';
     $('done').classList.add('show');
     window.open(url, '_blank');
@@ -596,7 +785,8 @@ var CONFIG = {
     S.slot = null; $('done').classList.remove('show'); $('bookLayout').style.display = ''; render();
   };
 
-  render();
+  buildDays();
+  renderAll();
 })();
 </script>
 </body>
