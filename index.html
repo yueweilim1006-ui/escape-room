@@ -189,6 +189,33 @@ footer{border-top:1px solid var(--line);background:rgba(7,5,15,.92);overflow:hid
 .foot .col .k{font-family:var(--mono);color:var(--pink);font-size:12px;letter-spacing:2px}
 .escape{font-family:var(--mono);font-weight:700;font-size:clamp(70px,17vw,260px);line-height:.9;text-align:center;letter-spacing:-4px;padding-top:24px;white-space:nowrap}
 
+/* intro animation */
+#intro{position:fixed;inset:0;z-index:100;overflow:hidden}
+#intro .half{position:absolute;top:0;bottom:0;width:50.2%;background-color:var(--bg);background-image:linear-gradient(#1A1236 1px,transparent 1px),linear-gradient(90deg,#1A1236 1px,transparent 1px);background-size:48px 48px}
+#intro .half.l{left:0;box-shadow:inset -2px 0 0 var(--pink);animation:introL .9s cubic-bezier(.75,0,.2,1) 2.35s forwards}
+#intro .half.r{right:0;box-shadow:inset 2px 0 0 var(--pink);animation:introR .9s cubic-bezier(.75,0,.2,1) 2.35s forwards}
+#intro .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:24px;animation:introFade .35s ease 2.2s forwards}
+#intro .term{font-family:var(--mono);font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:6px;min-width:260px}
+#intro .term span{opacity:0;animation:introShow .01s linear forwards}
+#intro .term span:nth-child(1){animation-delay:.1s}
+#intro .term span:nth-child(2){animation-delay:.45s}
+#intro .term span:nth-child(3){animation-delay:.8s}
+#intro .term span:nth-child(4){animation-delay:1.15s}
+#intro .ok{color:var(--cyan)}
+#intro svg{width:min(220px,46vw);height:auto;overflow:visible;filter:drop-shadow(0 0 10px rgba(255,43,214,.9)) drop-shadow(0 0 28px rgba(255,43,214,.45))}
+#intro svg .d{stroke-dasharray:1900;stroke-dashoffset:1900;animation:introDraw 1.25s ease-out .45s forwards}
+#intro svg .k{opacity:0;animation:introShow .01s linear 1.55s forwards}
+#intro .granted{font-family:var(--mono);font-weight:700;font-size:clamp(20px,4vw,30px);letter-spacing:6px;color:var(--cyan);text-shadow:0 0 14px rgba(0,240,255,.8);opacity:0;animation:introFlick .5s steps(1) 1.65s forwards}
+#intro .granted small{display:block;margin-top:8px;font-family:var(--disp);font-weight:400;font-size:.8em;letter-spacing:8px;color:var(--pink);text-shadow:0 0 12px rgba(255,43,214,.8)}
+#intro .skip{position:absolute;right:max(20px,env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));background:transparent;border:1px solid var(--line3);color:var(--muted);font-family:var(--mono);font-size:13px;padding:10px 16px;cursor:pointer;min-height:44px;animation:introFade .3s ease 2.2s forwards}
+#intro .skip:hover{border-color:var(--pink);color:var(--pink)}
+@keyframes introL{to{transform:translateX(-101%)}}
+@keyframes introR{to{transform:translateX(101%)}}
+@keyframes introFade{to{opacity:0;visibility:hidden}}
+@keyframes introShow{to{opacity:1}}
+@keyframes introDraw{to{stroke-dashoffset:0}}
+@keyframes introFlick{0%{opacity:1}15%{opacity:.2}30%{opacity:1}45%{opacity:.4}60%,100%{opacity:1}}
+
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -409,6 +436,40 @@ var CONFIG = {
     $('clock').textContent = pad(Math.floor(left / 60)) + ':' + pad(left % 60);
     $('clockBar').style.width = (left / 36) + '%';
   }, 1000);
+
+  // ---- intro animation (plays once per visit) ----
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var seen = false;
+    try { seen = sessionStorage.getItem('introSeen') === '1'; } catch (e) {}
+    if (reduce || seen) return;
+    try { sessionStorage.setItem('introSeen', '1'); } catch (e) {}
+    var el = document.createElement('div');
+    el.id = 'intro';
+    el.setAttribute('aria-hidden', 'true');
+    el.innerHTML = '<div class="half l"></div><div class="half r"></div>' +
+      '<div class="center">' +
+      '<div class="term"><span>&gt; booting security system ...</span><span>&gt; scanning subjects ... <b class="ok">4 FOUND</b></span><span>&gt; locking exits ... <b class="ok">OK</b></span><span>&gt; countdown armed: 60:00</span></div>' +
+      '<svg viewBox="0 0 520 700" fill="none"><path class="d" d="M40 700V140a120 120 0 0 1 120-120h200a120 120 0 0 1 120 120v560" stroke="#FF2BD6" stroke-width="10"/><path class="d" d="M80 700V160a90 90 0 0 1 90-90h180a90 90 0 0 1 90 90v540" stroke="#FF2BD6" stroke-width="4" opacity=".55"/><circle class="k" cx="400" cy="420" r="16" stroke="#00F0FF" stroke-width="8"/></svg>' +
+      '<div class="granted">ACCESS GRANTED<small>进入密室</small></div>' +
+      '</div>' +
+      '<button class="skip" type="button">跳过 &gt;&gt;</button>';
+    document.body.appendChild(el);
+    var root = document.documentElement, prev = root.style.overflow;
+    root.style.overflow = 'hidden';
+    var finished = false;
+    function finish() {
+      if (finished) return; finished = true;
+      if (el.parentNode) el.parentNode.removeChild(el);
+      root.style.overflow = prev;
+      left = 3600;
+      document.removeEventListener('keydown', onKey);
+    }
+    function onKey(e) { if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') finish(); }
+    el.querySelector('.skip').addEventListener('click', finish);
+    document.addEventListener('keydown', onKey);
+    setTimeout(finish, 3300);
+  })();
 
   // big marquee
   var bits = '';
