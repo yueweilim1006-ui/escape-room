@@ -102,6 +102,7 @@ header.nav .wrap{display:flex;align-items:center;justify-content:space-between;g
 .poster .code{position:absolute;top:16px;left:16px;font-family:var(--mono);color:var(--pink);font-size:12px}
 .poster .lv{position:absolute;top:16px;right:16px;font-family:var(--mono);color:var(--bg);background:var(--cyan);font-size:11px;font-weight:700;padding:3px 8px}
 .poster svg{position:relative}
+.poster .badge{position:absolute;left:16px;bottom:14px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:1px;color:var(--bg);background:var(--pink);padding:4px 9px;box-shadow:0 0 12px rgba(255,43,214,.55)}
 .card-body{padding:26px;display:flex;flex-direction:column;gap:18px;flex-grow:1}
 .card-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .card h3{margin:0;font-family:var(--disp);font-weight:400;font-size:34px;letter-spacing:2px}
@@ -443,15 +444,30 @@ var CONFIG = {
   times: ['10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'],
   daysAhead: 14,
   rooms: [
-    { name: '古宅迷踪', nameEn: 'The Old Mansion', genre: '中式恐怖', genreEn: 'Chinese Horror', icon: 'house', level: 4, difficulty: 4, fear: 5, min: 2, max: 6, minutes: 60, price: 0, image: '',
-      desc: '[主题简介：一两句话交代故事背景，例如：民国老宅里失踪的戏班……]',
-      descEn: '[Room story in one or two lines, e.g. an opera troupe vanished inside an old 1930s mansion…]' },
-    { name: '失落实验室', nameEn: 'Lost Laboratory', genre: '科幻解谜', genreEn: 'Sci-Fi Puzzle', icon: 'lab', level: 5, difficulty: 5, fear: 1, min: 2, max: 6, minutes: 60, price: 0, image: '',
-      desc: '[主题简介：一两句话交代故事背景，例如：倒计时启动前关掉反应堆……]',
-      descEn: '[Room story in one or two lines, e.g. shut down the reactor before the countdown ends…]' },
-    { name: '侦探事务所', nameEn: 'Detective Agency', genre: '推理', genreEn: 'Mystery', icon: 'detective', level: 3, difficulty: 3, fear: 2, min: 3, max: 8, minutes: 75, price: 0, image: '',
-      desc: '[主题简介：一两句话交代故事背景，例如：在警察到来前找出真凶……]',
-      descEn: '[Room story in one or two lines, e.g. find the real killer before the police arrive…]' }
+    { name: '古宅迷踪', nameEn: 'The Old Mansion', genre: '中式恐怖', genreEn: 'Chinese Horror', icon: 'house', badge: '人气', badgeEn: 'POPULAR',
+      level: 4, difficulty: 4, fear: 5, min: 2, max: 6, minutes: 60, price: 0, image: '',
+      desc: '1937 年，城南戏班在沈家老宅唱完最后一出戏后集体失踪。八十年后，你们收到一张泛黄的戏票，座位数正好是你们的人数。锣声响起，戏台的帷幕慢慢拉开……',
+      descEn: 'In 1937 an opera troupe played one last show at the Shen family mansion and was never seen again. Eighty years later your team receives a yellowed ticket with exactly as many seats as there are of you. The gong sounds, and the curtain begins to rise…' },
+    { name: '失落实验室', nameEn: 'Lost Laboratory', genre: '科幻解谜', genreEn: 'Sci-Fi Puzzle', icon: 'lab', badge: '高难度', badgeEn: 'HARD MODE',
+      level: 5, difficulty: 5, fear: 1, min: 2, max: 6, minutes: 60, price: 0, image: '',
+      desc: '地下实验室的反应堆即将过载，研究员都已撤离，只剩你们被锁在控制室。破解五道安全协议，在倒计时归零前手动关闭反应堆。谜题密度最高，适合老玩家挑战。',
+      descEn: 'The underground lab’s reactor is about to overload. The researchers have fled and your team is locked in the control room. Crack five security protocols and shut the reactor down by hand before the clock runs out. The most puzzle-heavy room, built for experienced players.' },
+    { name: '侦探事务所', nameEn: 'Detective Agency', genre: '推理', genreEn: 'Mystery', icon: 'detective', badge: '新手推荐', badgeEn: 'BEGINNER PICK',
+      level: 3, difficulty: 3, fear: 2, min: 3, max: 8, minutes: 75, price: 0, image: '',
+      desc: '名侦探在办公室离奇死亡，警察 75 分钟后到场。你们是他的助手，必须翻遍档案、比对证词、找出真凶，否则所有人都会成为嫌疑人。以推理为主、不吓人，适合第一次玩和公司团建。',
+      descEn: 'A famous detective has been found dead in his office, and the police arrive in 75 minutes. As his assistants, you must search the files, compare the statements and name the killer, or every one of you becomes a suspect. Logic over scares, great for first-timers and team outings.' },
+    { name: '午夜病院', nameEn: 'Midnight Ward', genre: '医院惊悚', genreEn: 'Hospital Thriller', icon: 'hospital', badge: '胆量测试', badgeEn: 'FEAR TEST',
+      level: 4, difficulty: 3, fear: 5, min: 2, max: 5, minutes: 60, price: 0, image: '',
+      desc: '仁心医院已经废弃三十年，但每到午夜十二点，三楼的护士铃还是会响。你们为了直播探险潜入病房，门却在身后自动锁上。跟着心电图的声音找到出口，千万别回头。',
+      descEn: 'Renxin Hospital has been abandoned for thirty years, yet at midnight the nurse call bell on the third floor still rings. You sneak into the ward to livestream the visit, and the door locks behind you. Follow the heartbeat monitor to find the exit, and do not look back.' },
+    { name: '末班地铁', nameEn: 'The Last Train', genre: '悬疑逃生', genreEn: 'Suspense', icon: 'train', badge: '新主题', badgeEn: 'NEW',
+      level: 4, difficulty: 4, fear: 3, min: 2, max: 6, minutes: 60, price: 0, image: '',
+      desc: '晚上 11 点 59 分，你们搭上了最后一班地铁。列车驶过终点站却没有停下，窗外的站名一个比一个陌生。在列车开进“无名站”之前，找到驾驶室的钥匙，让它停下来。',
+      descEn: 'At 11:59 pm you board the last train of the night. It passes the final station without stopping, and every station name outside the window looks stranger than the last. Find the key to the driver’s cab and stop the train before it reaches the station with no name.' },
+    { name: '玩具工厂', nameEn: 'Toy Factory', genre: '亲子欢乐', genreEn: 'Family Fun', icon: 'toy', badge: '亲子', badgeEn: 'FAMILY',
+      level: 2, difficulty: 2, fear: 1, min: 2, max: 6, minutes: 45, price: 0, image: '',
+      desc: '圣诞夜前夕，玩具工厂的生产线突然卡住，十万份礼物还没包好。和小精灵一起修好齿轮、找回丢失的设计图，让工厂在天亮前重新运转。色彩明亮、没有惊吓，适合 [6] 岁以上的小朋友和家人一起玩。',
+      descEn: 'It is Christmas Eve and the toy factory’s production line has jammed, with 100,000 gifts still unwrapped. Help the elves fix the gears and find the missing blueprints so the factory is running again by dawn. Bright, cheerful and scare-free, made for families with kids aged [6] and up.' }
   ]
 };
 /* price 填每人价格（数字），0 表示还没定，会显示 RM[ ]。image 可以填海报图片网址。 */
@@ -506,7 +522,7 @@ var I18N = {
     sub_ready: '通过 WhatsApp 发送预约 &gt;_', sub_contact: '等待填写联系方式…', sub_slot: '等待选择时段…',
     hint_ready: '会打开 WhatsApp 并带好预约内容，按发送即可。到店付款。', hint_contact: '请填写姓名和手机号码。', hint_slot: '请先选择一个时段。',
     msg: ['你好，我想预约密室逃脱：', '主题', '日期', '时段', '人数', '姓名', '电话', '备注'],
-    intro_term: ['&gt; booting security system ...', '&gt; scanning subjects ... <b class="ok">4 FOUND</b>', '&gt; verifying access code ...', '&gt; access code ... <b class="ok">OK</b>'],
+    intro_term: ['&gt; booting security system ...', '&gt; scanning subjects ... <b class="ok">6 ROOMS ONLINE</b>', '&gt; verifying access code ...', '&gt; access code ... <b class="ok">OK</b>'],
     intro_small: '进入密室', skip: '跳过 &gt;&gt;'
   },
   en: {
@@ -557,7 +573,7 @@ var I18N = {
     sub_ready: 'Send booking via WhatsApp &gt;_', sub_contact: 'Waiting for your contact…', sub_slot: 'Waiting for a time slot…',
     hint_ready: 'WhatsApp opens with your booking filled in. Just tap send. Pay at the shop.', hint_contact: 'Please enter your name and phone number.', hint_slot: 'Please pick a time slot first.',
     msg: ['Hi, I would like to book an escape room:', 'Room', 'Date', 'Time', 'Players', 'Name', 'Phone', 'Note'],
-    intro_term: ['&gt; booting security system ...', '&gt; scanning subjects ... <b class="ok">4 FOUND</b>', '&gt; verifying access code ...', '&gt; access code ... <b class="ok">OK</b>'],
+    intro_term: ['&gt; booting security system ...', '&gt; scanning subjects ... <b class="ok">6 ROOMS ONLINE</b>', '&gt; verifying access code ...', '&gt; access code ... <b class="ok">OK</b>'],
     intro_small: 'ENTER THE ROOM', skip: 'Skip &gt;&gt;'
   }
 };
@@ -566,7 +582,10 @@ var I18N = {
   var ICONS = {
     house: '<svg width="128" height="128" viewBox="0 0 48 48" fill="none" stroke="#FF2BD6" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 8px rgba(255,43,214,.9))" aria-hidden="true"><path d="M5 22 24 7l19 15"/><path d="M10 18v23h28V18"/><path d="M20 41V30h8v11"/><path d="M14 25h4v4h-4zM30 25h4v4h-4z"/><path d="M33 12V7h4v8"/></svg>',
     lab: '<svg width="128" height="128" viewBox="0 0 48 48" fill="none" stroke="#00F0FF" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 8px rgba(0,240,255,.9))" aria-hidden="true"><path d="M18 6h12"/><path d="M20 6v13L9 38a3 3 0 0 0 2.6 4.5h24.8A3 3 0 0 0 39 38L28 19V6"/><path d="M14 30h20"/><circle cx="21" cy="36" r="1.5"/><circle cx="28" cy="34" r="2.2"/></svg>',
-    detective: '<svg width="128" height="128" viewBox="0 0 48 48" fill="none" stroke="#FF2BD6" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 8px rgba(255,43,214,.9))" aria-hidden="true"><circle cx="20" cy="20" r="12"/><path d="M29 29l13 13"/><path d="M14 20a6 6 0 0 1 6-6"/></svg>'
+    detective: '<svg width="128" height="128" viewBox="0 0 48 48" fill="none" stroke="#FF2BD6" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 8px rgba(255,43,214,.9))" aria-hidden="true"><circle cx="20" cy="20" r="12"/><path d="M29 29l13 13"/><path d="M14 20a6 6 0 0 1 6-6"/></svg>',
+    hospital: '<svg width="128" height="128" viewBox="0 0 48 48" fill="none" stroke="#00F0FF" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 8px rgba(0,240,255,.9))" aria-hidden="true"><path d="M3 30h10l4-11 6 19 5-14 3 6h14"/><path d="M24 6v8M20 10h8"/></svg>',
+    train: '<svg width="128" height="128" viewBox="0 0 48 48" fill="none" stroke="#FF2BD6" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 8px rgba(255,43,214,.9))" aria-hidden="true"><rect x="11" y="5" width="26" height="33" rx="7"/><path d="M11 22h26"/><path d="M18 11h12"/><circle cx="18" cy="30" r="2"/><circle cx="30" cy="30" r="2"/><path d="M16 38l-5 6M32 38l5 6"/></svg>',
+    toy: '<svg width="128" height="128" viewBox="0 0 48 48" fill="none" stroke="#00F0FF" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 8px rgba(0,240,255,.9))" aria-hidden="true"><rect x="10" y="24" width="28" height="18" rx="2"/><path d="M10 31h28M24 24v18"/><path d="M24 24v-8"/><circle cx="18" cy="11" r="5"/><circle cx="30" cy="11" r="5"/></svg>'
   };
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -676,7 +695,7 @@ var I18N = {
     $('roomCards').innerHTML = CONFIG.rooms.map(function (r, i) {
       return '<article class="card"><div class="poster">' +
         (r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(rn(r)) + t.poster_alt + '">' : '<span class="num outline" aria-hidden="true">' + pad(i + 1) + '</span>' + (ICONS[r.icon] || ICONS.house)) +
-        '<span class="code">ROOM_' + pad(i + 1) + '</span><span class="lv">LV.' + r.level + '</span></div>' +
+        '<span class="code">ROOM_' + pad(i + 1) + '</span><span class="lv">LV.' + r.level + '</span>' + (r.badge ? '<span class="badge">' + esc(LANG === 'en' ? r.badgeEn : r.badge) + '</span>' : '') + '</div>' +
         '<div class="card-body"><div class="card-top"><h3>' + esc(rn(r)) + '</h3><span class="tag">' + esc(rg(r)) + '</span></div>' +
         '<p>' + esc(rd(r)) + '</p>' +
         '<div style="display:flex;flex-direction:column;gap:10px"><div class="meter"><span>' + t.difficulty + '</span>' + segs(r.difficulty, 'c') + '</div><div class="meter"><span>' + t.fear + '</span>' + segs(r.fear, 'p') + '</div></div>' +
