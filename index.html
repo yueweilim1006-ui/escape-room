@@ -252,6 +252,42 @@ html[lang="en"] h2.title{font-size:clamp(32px,4.6vw,52px)}
 html[lang="en"] .card h3{font-size:24px}
 html[lang="en"] .opt .rn{font-size:17px}
 html[lang="en"] .final h2{font-size:clamp(36px,6vw,84px)}
+/* room detail dialog */
+.card{cursor:pointer}
+.card-actions{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card-actions .ghost{margin-top:0}
+.more{border:1px solid var(--line3);background:transparent;color:var(--text);font-family:var(--mono);font-weight:700;font-size:14px;padding:15px 8px;cursor:pointer;transition:border-color .2s,color .2s}
+.more:hover{border-color:var(--cyan);color:var(--cyan)}
+dialog#roomDlg{width:min(900px,calc(100% - 32px));max-height:calc(100% - 32px);padding:0;border:1px solid var(--pink);background:var(--panel-solid);color:var(--text);box-shadow:0 0 60px rgba(255,43,214,.3);overflow:auto;overscroll-behavior:contain}
+dialog#roomDlg::backdrop{background:rgba(7,5,15,.82);backdrop-filter:blur(4px)}
+dialog#roomDlg[open]{animation:dlgIn .3s cubic-bezier(.2,.8,.2,1)}
+@keyframes dlgIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+.dlg-poster{position:relative;height:240px;background:#100A24;display:flex;align-items:center;justify-content:center;overflow:hidden;border-bottom:1px solid var(--line)}
+.dlg-poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.dlg-poster .num{position:absolute;right:-6px;bottom:-34px;font-family:var(--mono);font-weight:700;font-size:200px;line-height:1}
+.dlg-poster .meta{position:absolute;top:16px;left:16px;display:flex;gap:8px;align-items:center;font-family:var(--mono);font-size:12px}
+.dlg-poster .meta .lv{color:var(--bg);background:var(--cyan);font-weight:700;padding:3px 8px}
+.dlg-poster .badge{position:absolute;left:16px;bottom:14px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:1px;color:var(--bg);background:var(--pink);padding:4px 9px}
+.dlg-close{position:sticky;top:0;float:right;margin:12px 12px -56px 0;z-index:2;width:44px;height:44px;border:1px solid var(--line3);background:rgba(7,5,15,.85);color:var(--text);font-size:22px;line-height:1;cursor:pointer}
+.dlg-close:hover{border-color:var(--pink);color:var(--pink)}
+.dlg-body{padding:28px;display:flex;flex-wrap:wrap;gap:32px}
+.dlg-main{flex:999 1 420px;min-width:0;display:flex;flex-direction:column;gap:22px}
+.dlg-side{flex:1 1 240px;min-width:0;display:flex;flex-direction:column;gap:18px}
+.dlg-title{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.dlg-title h3{margin:0;font-family:var(--disp);font-weight:400;font-size:clamp(34px,5vw,48px);letter-spacing:2px;text-wrap:balance}
+html[lang="en"] .dlg-title h3{font-family:'Orbitron','ZCOOL QingKe HuangYou',sans-serif;font-weight:900;font-size:clamp(24px,4vw,34px);letter-spacing:1px}
+.dlg-sec{display:flex;flex-direction:column;gap:10px}
+.dlg-sec h4{margin:0;font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--pink);font-weight:700}
+.dlg-sec p{margin:0;color:#CFCBE6;font-size:16px;line-height:1.85;max-width:62ch}
+.dlg-sec ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.dlg-sec li{display:flex;gap:12px;font-size:15px;line-height:1.7}
+.dlg-sec li::before{content:"▸";color:var(--cyan);flex:none}
+.dlg-box{border:1px solid var(--line);background:rgba(7,5,15,.5);padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.dlg-box p{margin:0;font-size:14px;line-height:1.75;color:var(--muted)}
+.dlg-foot{position:sticky;bottom:0;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:16px 28px calc(16px + env(safe-area-inset-bottom,0px));background:rgba(16,11,34,.97);border-top:1px solid var(--line)}
+.dlg-foot .price{font-family:var(--mono);font-size:14px;color:var(--muted)}
+.dlg-foot .price b{font-size:22px;color:var(--cyan)}
+@media (max-width:560px){.dlg-body{padding:22px 18px}.dlg-foot{padding-left:18px;padding-right:18px}.dlg-foot .btn{flex:1}.dlg-poster{height:190px}}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -429,6 +465,8 @@ html[lang="en"] .final h2{font-size:clamp(36px,6vw,84px)}
 <p class="mono" style="margin:0;text-align:center;color:var(--dim);font-size:12px;padding:16px 20px 28px">© 2026 <span class="shop-name">[你的店名]</span> · ALL EXITS MONITORED</p>
 </footer>
 
+<dialog id="roomDlg" aria-labelledby="dlgName"></dialog>
+
 <div class="mbar">
 <a class="btn" href="#booking" data-i18n="mbar_book"></a>
 <a class="wa" id="waIcon" href="#" target="_blank" rel="noopener" data-i18n-aria="wa"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF2BD6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.6-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg></a>
@@ -447,27 +485,75 @@ var CONFIG = {
     { name: '古宅迷踪', nameEn: 'The Old Mansion', genre: '中式恐怖', genreEn: 'Chinese Horror', icon: 'house', badge: '人气', badgeEn: 'POPULAR',
       level: 4, difficulty: 4, fear: 5, min: 2, max: 6, minutes: 60, price: 0, image: '',
       desc: '1937 年，城南戏班在沈家老宅唱完最后一出戏后集体失踪。八十年后，你们收到一张泛黄的戏票，座位数正好是你们的人数。锣声响起，戏台的帷幕慢慢拉开……',
-      descEn: 'In 1937 an opera troupe played one last show at the Shen family mansion and was never seen again. Eighty years later your team receives a yellowed ticket with exactly as many seats as there are of you. The gong sounds, and the curtain begins to rise…' },
+      descEn: 'In 1937 an opera troupe played one last show at the Shen family mansion and was never seen again. Eighty years later your team receives a yellowed ticket with exactly as many seats as there are of you. The gong sounds, and the curtain begins to rise…',
+      story: "民国二十六年，名震城南的“庆春班”受邀到沈家老宅祝寿。锣鼓一直唱到三更，第二天清早，整个戏班连同沈家上下十三口人，全都不见了。老宅从此被封，附近的老人说，每逢月圆，还能听见院子里有人在吊嗓子。\n八十年后，你们收到一张泛黄的戏票：“沈府堂会，恭候入座”。推开朱红大门的那一刻，门在身后合上，戏台上的帷幕慢慢拉开了。",
+      storyEn: "In 1937 the celebrated Qingchun Opera Troupe was invited to the Shen mansion for a birthday banquet. The drums played until the small hours. By morning the whole troupe, and all thirteen members of the Shen household, had vanished. The house was sealed, and neighbours still say that on full-moon nights you can hear someone warming up their voice in the courtyard.\nEighty years later a yellowed ticket arrives: “The Shen family requests your presence.” As you step through the red gate it closes behind you, and on the stage the curtain begins to rise.",
+      highlights: ["戏台、厢房、祠堂三个场景，一层比一层深入", "线索藏在戏曲唱词和脸谱里，一步步拼出当年的真相", "后段有一段需要全员分头行动的高能剧情"],
+      highlightsEn: ["A stage, side chambers and an ancestral hall, three spaces that open one after another", "Clues hidden in opera lyrics and painted masks lead you to what really happened that night", "A high-tension finale that splits the team up"],
+      bestFor: "喜欢中式恐怖、胆子够大的玩家；建议 3 人以上一起进入。",
+      bestForEn: "Fans of Chinese horror with the nerve to match. We suggest a team of 3 or more.",
+      notice: "场景较暗，有突然的声响和惊吓；孕妇、心脏病患者及 [12] 岁以下儿童不建议参加。",
+      noticeEn: "Dark rooms with sudden sounds and jump scares. Not recommended for pregnant guests, people with heart conditions or children under [12]." },
     { name: '失落实验室', nameEn: 'Lost Laboratory', genre: '科幻解谜', genreEn: 'Sci-Fi Puzzle', icon: 'lab', badge: '高难度', badgeEn: 'HARD MODE',
       level: 5, difficulty: 5, fear: 1, min: 2, max: 6, minutes: 60, price: 0, image: '',
       desc: '地下实验室的反应堆即将过载，研究员都已撤离，只剩你们被锁在控制室。破解五道安全协议，在倒计时归零前手动关闭反应堆。谜题密度最高，适合老玩家挑战。',
-      descEn: 'The underground lab’s reactor is about to overload. The researchers have fled and your team is locked in the control room. Crack five security protocols and shut the reactor down by hand before the clock runs out. The most puzzle-heavy room, built for experienced players.' },
+      descEn: 'The underground lab’s reactor is about to overload. The researchers have fled and your team is locked in the control room. Crack five security protocols and shut the reactor down by hand before the clock runs out. The most puzzle-heavy room, built for experienced players.',
+      story: "代号“方舟”的地下研究所，三年来一直在进行一项不能公开的能源实验。今晚 23:00，核心反应堆温度突然失控，警报响起，所有研究员按程序撤离，只有你们被反锁在中央控制室。\n主系统已经锁死。要手动关闭反应堆，必须依次破解五道安全协议。墙上的倒计时只剩 60 分钟，每解开一道协议，你们就离出口近一步。",
+      storyEn: "Codenamed ARK, this underground institute has spent three years on an energy experiment it could never make public. At 23:00 tonight the core reactor overheats, the alarms sound and every researcher evacuates by the book, except your team, locked inside the central control room.\nThe main system has frozen. To shut the reactor down by hand you must crack five security protocols in order. The countdown on the wall reads 60 minutes, and every protocol you crack brings you one step closer to the exit.",
+      highlights: ["五道环环相扣的安全协议，谜题多、逻辑链长，很考验团队分工", "机关、灯光和音效联动，每解开一题整个房间都会有反应", "最后一道协议需要全员同时配合操作"],
+      highlightsEn: ["Five linked security protocols with plenty of puzzles and long chains of logic that test how well your team divides the work", "Mechanisms, lights and sound are connected, so the whole room reacts each time you solve something", "The final protocol needs every player working at the same moment"],
+      bestFor: "有密室经验、喜欢动脑的玩家；第一次玩建议先选侦探事务所。",
+      bestForEn: "Experienced players who love a brain workout. First-timers may want to start with Detective Agency.",
+      notice: "几乎没有惊吓，但节奏紧凑；房间内有闪烁灯光，对光敏感的玩家请提前告知。",
+      noticeEn: "Almost no scares, but the pace is fast. There are flashing lights, so tell us in advance if you are sensitive to them." },
     { name: '侦探事务所', nameEn: 'Detective Agency', genre: '推理', genreEn: 'Mystery', icon: 'detective', badge: '新手推荐', badgeEn: 'BEGINNER PICK',
       level: 3, difficulty: 3, fear: 2, min: 3, max: 8, minutes: 75, price: 0, image: '',
       desc: '名侦探在办公室离奇死亡，警察 75 分钟后到场。你们是他的助手，必须翻遍档案、比对证词、找出真凶，否则所有人都会成为嫌疑人。以推理为主、不吓人，适合第一次玩和公司团建。',
-      descEn: 'A famous detective has been found dead in his office, and the police arrive in 75 minutes. As his assistants, you must search the files, compare the statements and name the killer, or every one of you becomes a suspect. Logic over scares, great for first-timers and team outings.' },
+      descEn: 'A famous detective has been found dead in his office, and the police arrive in 75 minutes. As his assistants, you must search the files, compare the statements and name the killer, or every one of you becomes a suspect. Logic over scares, great for first-timers and team outings.',
+      story: "城里最有名的私家侦探林浩然，被发现倒在自己办公室的书桌前，手里还握着一支没写完字的钢笔。门窗都从里面反锁，桌上的咖啡已经凉了。\n你们是他的助手。警察会在 75 分钟后到场，在那之前，所有在场的人都是嫌疑人。翻阅他留下的案件档案，比对四位访客的证词，找出藏在办公室里的暗格，用推理证明谁才是真凶。",
+      storyEn: "Lin Haoran, the most famous private detective in the city, is found slumped over his desk, still holding a pen in mid-sentence. The door and windows are locked from the inside, and his coffee has gone cold.\nYou are his assistants. The police arrive in 75 minutes, and until then everyone in the building is a suspect. Read his case files, compare the statements of four visitors and find the hidden compartments in his office. Then prove who did it.",
+      highlights: ["以搜证和推理为主，最后要当面指认凶手并说出理由", "人越多越好玩，可以分组调查、互相交换线索", "结局会根据你们的推理结果而不同"],
+      highlightsEn: ["Built on searching and deduction, ending with you naming the killer and explaining why", "More players means more fun: split into groups and trade clues", "The ending changes depending on your conclusion"],
+      bestFor: "第一次玩密室的新手、朋友聚会和公司团建；最多可容纳 8 人。",
+      bestForEn: "First-timers, groups of friends and team outings, for up to 8 players.",
+      notice: "不吓人、没有黑暗场景；需要阅读较多文字资料。",
+      noticeEn: "No scares and no dark scenes. Expect quite a lot of reading." },
     { name: '午夜病院', nameEn: 'Midnight Ward', genre: '医院惊悚', genreEn: 'Hospital Thriller', icon: 'hospital', badge: '胆量测试', badgeEn: 'FEAR TEST',
       level: 4, difficulty: 3, fear: 5, min: 2, max: 5, minutes: 60, price: 0, image: '',
       desc: '仁心医院已经废弃三十年，但每到午夜十二点，三楼的护士铃还是会响。你们为了直播探险潜入病房，门却在身后自动锁上。跟着心电图的声音找到出口，千万别回头。',
-      descEn: 'Renxin Hospital has been abandoned for thirty years, yet at midnight the nurse call bell on the third floor still rings. You sneak into the ward to livestream the visit, and the door locks behind you. Follow the heartbeat monitor to find the exit, and do not look back.' },
+      descEn: 'Renxin Hospital has been abandoned for thirty years, yet at midnight the nurse call bell on the third floor still rings. You sneak into the ward to livestream the visit, and the door locks behind you. Follow the heartbeat monitor to find the exit, and do not look back.',
+      story: "仁心医院在 1994 年的一场火灾后关闭，官方记录写着“无人伤亡”。可是三十年来，附近的居民总说，每到午夜十二点，三楼的护士铃都会准时响起。\n你们是一支探险直播小队，为了冲人气，决定午夜潜入三楼病房开直播。镜头刚打开，身后的铁门就“咔嗒”一声锁上了。走廊尽头，心电图的声音一下一下地响着，好像在给你们带路。",
+      storyEn: "Renxin Hospital closed after a fire in 1994. The official record says no one was hurt. Yet for thirty years people living nearby have said that at midnight the nurse call bell on the third floor rings right on time.\nYou are a team of urban-exploration streamers who sneak into the third-floor ward at midnight to boost your views. The moment the camera goes live, the iron door behind you clicks shut. At the end of the corridor a heart monitor beeps, slow and steady, as if it is showing you the way.",
+      highlights: ["病房、手术室、太平间三段场景，越往里走越压抑", "跟着声音和光线找线索，很多机关要在黑暗中完成", "全程恐怖氛围拉满，是真正的胆量测试"],
+      highlightsEn: ["Three scenes, the ward, the operating theatre and the morgue, each heavier than the last", "Follow sounds and light to find clues; many mechanisms must be solved in the dark", "Full-on horror from start to finish, a real test of nerve"],
+      bestFor: "恐怖爱好者、想挑战胆量的朋友；建议队伍里至少有一位“胆大担当”。",
+      bestForEn: "Horror fans and anyone who wants to test their courage. Bring at least one brave teammate.",
+      notice: "有黑暗、狭窄空间和强烈惊吓；孕妇、心脏病患者、有幽闭恐惧的玩家及 [12] 岁以下儿童不建议参加。",
+      noticeEn: "Darkness, tight spaces and strong scares. Not recommended for pregnant guests, people with heart conditions or claustrophobia, or children under [12]." },
     { name: '末班地铁', nameEn: 'The Last Train', genre: '悬疑逃生', genreEn: 'Suspense', icon: 'train', badge: '新主题', badgeEn: 'NEW',
       level: 4, difficulty: 4, fear: 3, min: 2, max: 6, minutes: 60, price: 0, image: '',
       desc: '晚上 11 点 59 分，你们搭上了最后一班地铁。列车驶过终点站却没有停下，窗外的站名一个比一个陌生。在列车开进“无名站”之前，找到驾驶室的钥匙，让它停下来。',
-      descEn: 'At 11:59 pm you board the last train of the night. It passes the final station without stopping, and every station name outside the window looks stranger than the last. Find the key to the driver’s cab and stop the train before it reaches the station with no name.' },
+      descEn: 'At 11:59 pm you board the last train of the night. It passes the final station without stopping, and every station name outside the window looks stranger than the last. Find the key to the driver’s cab and stop the train before it reaches the station with no name.',
+      story: "晚上 11 点 59 分，你们冲进站台，赶上了今晚最后一班地铁。车厢里只有零星几位乘客，每个人都低着头，一动不动。\n列车驶过终点站，却没有减速。窗外闪过的站名越来越陌生，广播一遍遍重复：“下一站，无名站。”在列车到站之前，你们必须查清这班车的秘密，找到驾驶室的钥匙，让它停下来。",
+      storyEn: "At 11:59 pm you sprint onto the platform and catch the last train of the night. There are only a few other passengers, heads down, perfectly still.\nThe train passes the final station without slowing. The names flashing past the window grow stranger, and the announcement keeps repeating: “Next stop, the station with no name.” Before the train arrives you must uncover its secret, find the key to the driver’s cab and bring it to a stop.",
+      highlights: ["车厢、站台、隧道多个场景切换，像列车真的在行驶", "悬疑剧情带反转，真相可能和你想的不一样", "惊吓适中，推理和动手操作各占一半"],
+      highlightsEn: ["Carriages, platforms and tunnels, with scene changes that make it feel like the train is really moving", "A suspense story with a twist: the truth may not be what you think", "Moderate scares, with an even mix of reasoning and hands-on puzzles"],
+      bestFor: "喜欢悬疑故事、能接受一点紧张感的玩家；情侣和小团体都很合适。",
+      bestForEn: "Players who love a mystery and can handle a bit of tension. Great for couples and small groups.",
+      notice: "有局部黑暗和突发音效，但没有强烈惊吓。",
+      noticeEn: "Some dark sections and sudden sound effects, but no heavy scares." },
     { name: '玩具工厂', nameEn: 'Toy Factory', genre: '亲子欢乐', genreEn: 'Family Fun', icon: 'toy', badge: '亲子', badgeEn: 'FAMILY',
       level: 2, difficulty: 2, fear: 1, min: 2, max: 6, minutes: 45, price: 0, image: '',
       desc: '圣诞夜前夕，玩具工厂的生产线突然卡住，十万份礼物还没包好。和小精灵一起修好齿轮、找回丢失的设计图，让工厂在天亮前重新运转。色彩明亮、没有惊吓，适合 [6] 岁以上的小朋友和家人一起玩。',
-      descEn: 'It is Christmas Eve and the toy factory’s production line has jammed, with 100,000 gifts still unwrapped. Help the elves fix the gears and find the missing blueprints so the factory is running again by dawn. Bright, cheerful and scare-free, made for families with kids aged [6] and up.' }
+      descEn: 'It is Christmas Eve and the toy factory’s production line has jammed, with 100,000 gifts still unwrapped. Help the elves fix the gears and find the missing blueprints so the factory is running again by dawn. Bright, cheerful and scare-free, made for families with kids aged [6] and up.',
+      story: "平安夜前一天，北极圈边上的玩具工厂突然停工：齿轮卡住了，传送带一动不动，十万份圣诞礼物还堆在仓库里没包好。更糟的是，今年新玩具的设计图也不见了！\n小精灵们急得团团转，只好请你们来帮忙。修好每一台机器，找回散落在工厂各处的设计图，让生产线在天亮前重新运转，每个小朋友才能准时收到礼物。",
+      storyEn: "The day before Christmas Eve, the toy factory at the edge of the Arctic Circle grinds to a halt. The gears are jammed, the conveyor belts have stopped and 100,000 presents sit unwrapped in the warehouse. Worse still, the blueprints for this year’s new toys are missing!\nThe elves are in a panic and need your help. Fix every machine, find the blueprints scattered around the factory and get the line running again by dawn, so every child gets their present on time.",
+      highlights: ["大量动手类机关：拼装、配色、找不同，小朋友也能参与", "大人和小朋友要一起合作才能过关", "没有黑暗场景、没有惊吓，全程轻松欢乐"],
+      highlightsEn: ["Lots of hands-on puzzles, building, colour matching and spot the difference, that kids can join in", "Adults and kids have to work together to win", "No dark scenes and no scares, just fun from start to finish"],
+      bestFor: "带小朋友的家庭、亲子活动和生日会；建议 [6] 岁以上。",
+      bestForEn: "Families with children, kids’ outings and birthday parties. Recommended for ages [6] and up.",
+      notice: "小朋友需由大人陪同入场。",
+      noticeEn: "Children must be accompanied by an adult." }
   ]
 };
 /* price 填每人价格（数字），0 表示还没定，会显示 RM[ ]。image 可以填海报图片网址。 */
@@ -523,7 +609,8 @@ var I18N = {
     hint_ready: '会打开 WhatsApp 并带好预约内容，按发送即可。到店付款。', hint_contact: '请填写姓名和手机号码。', hint_slot: '请先选择一个时段。',
     msg: ['你好，我想预约密室逃脱：', '主题', '日期', '时段', '人数', '姓名', '电话', '备注'],
     intro_term: ['&gt; booting security system ...', '&gt; scanning subjects ... <b class="ok">6 ROOMS ONLINE</b>', '&gt; verifying access code ...', '&gt; access code ... <b class="ok">OK</b>'],
-    intro_small: '进入密室', skip: '跳过 &gt;&gt;'
+    intro_small: '进入密室', skip: '跳过 &gt;&gt;',
+    details: '查看详情', d_story: '// 故事背景', d_hl: '// 游戏亮点', d_for: '// 适合谁', d_notice: '// 注意事项', d_close: '关闭', d_book: '预约这个主题 &gt;_', d_per: ' / 人', d_minutes: ' 分钟'
   },
   en: {
     page_title: '{shop} · Escape Room Booking',
@@ -574,7 +661,8 @@ var I18N = {
     hint_ready: 'WhatsApp opens with your booking filled in. Just tap send. Pay at the shop.', hint_contact: 'Please enter your name and phone number.', hint_slot: 'Please pick a time slot first.',
     msg: ['Hi, I would like to book an escape room:', 'Room', 'Date', 'Time', 'Players', 'Name', 'Phone', 'Note'],
     intro_term: ['&gt; booting security system ...', '&gt; scanning subjects ... <b class="ok">6 ROOMS ONLINE</b>', '&gt; verifying access code ...', '&gt; access code ... <b class="ok">OK</b>'],
-    intro_small: 'ENTER THE ROOM', skip: 'Skip &gt;&gt;'
+    intro_small: 'ENTER THE ROOM', skip: 'Skip &gt;&gt;',
+    details: 'View details', d_story: '// THE STORY', d_hl: '// HIGHLIGHTS', d_for: '// BEST FOR', d_notice: '// GOOD TO KNOW', d_close: 'Close', d_book: 'Book this room &gt;_', d_per: ' / player', d_minutes: ' min'
   }
 };
 
@@ -693,14 +781,14 @@ var I18N = {
   function renderCards() {
     var t = T();
     $('roomCards').innerHTML = CONFIG.rooms.map(function (r, i) {
-      return '<article class="card"><div class="poster">' +
+      return '<article class="card" data-card="' + i + '"><div class="poster">' +
         (r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(rn(r)) + t.poster_alt + '">' : '<span class="num outline" aria-hidden="true">' + pad(i + 1) + '</span>' + (ICONS[r.icon] || ICONS.house)) +
         '<span class="code">ROOM_' + pad(i + 1) + '</span><span class="lv">LV.' + r.level + '</span>' + (r.badge ? '<span class="badge">' + esc(LANG === 'en' ? r.badgeEn : r.badge) + '</span>' : '') + '</div>' +
         '<div class="card-body"><div class="card-top"><h3>' + esc(rn(r)) + '</h3><span class="tag">' + esc(rg(r)) + '</span></div>' +
         '<p>' + esc(rd(r)) + '</p>' +
         '<div style="display:flex;flex-direction:column;gap:10px"><div class="meter"><span>' + t.difficulty + '</span>' + segs(r.difficulty, 'c') + '</div><div class="meter"><span>' + t.fear + '</span>' + segs(r.fear, 'p') + '</div></div>' +
         '<div class="facts"><div><small>PLAYERS</small><span>' + r.min + '–' + r.max + '</span></div><div><small>TIME</small><span>' + r.minutes + 'min</span></div><div><small>PRICE</small><span style="color:var(--cyan)">' + priceText(r) + '</span></div></div>' +
-        '<a class="ghost" href="#booking" data-room="' + i + '">' + t.book_room + '</a></div></article>';
+        '<div class="card-actions"><button type="button" class="more" data-detail="' + i + '">' + t.details + '</button><a class="ghost" href="#booking" data-room="' + i + '">' + t.book_room + '</a></div></div></article>';
     }).join('');
   }
 
@@ -760,7 +848,69 @@ var I18N = {
     $('hint').textContent = ready ? t.hint_ready : (slotOk ? t.hint_contact : t.hint_slot);
   }
 
-  function renderAll() { applyStatic(); renderMarquee(); renderCards(); render(); }
+  function renderAll() { applyStatic(); renderMarquee(); renderCards(); render(); if (dlg && dlg.open) renderDlg(); }
+
+  // ---- room detail dialog ----
+  var dlg = $('roomDlg'), dlgRoom = null, dlgPrevOverflow = '';
+  var rs = function (r) { return LANG === 'en' ? r.storyEn : r.story; };
+  var rh = function (r) { return LANG === 'en' ? r.highlightsEn : r.highlights; };
+  function renderDlg() {
+    var t = T(), i = dlgRoom, r = CONFIG.rooms[i];
+    if (!r) return;
+    dlg.innerHTML =
+      '<button type="button" class="dlg-close" data-close aria-label="' + t.d_close + '">×</button>' +
+      '<div class="dlg-poster">' +
+        (r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(rn(r)) + t.poster_alt + '">' : '<span class="num outline" aria-hidden="true">' + pad(i + 1) + '</span>' + (ICONS[r.icon] || ICONS.house)) +
+        '<span class="meta"><span style="color:var(--pink)">ROOM_' + pad(i + 1) + '</span><span class="lv">LV.' + r.level + '</span></span>' +
+        (r.badge ? '<span class="badge">' + esc(LANG === 'en' ? r.badgeEn : r.badge) + '</span>' : '') +
+      '</div>' +
+      '<div class="dlg-body">' +
+        '<div class="dlg-main">' +
+          '<div class="dlg-title"><h3 id="dlgName">' + esc(rn(r)) + '</h3><span class="tag">' + esc(rg(r)) + '</span></div>' +
+          '<div class="dlg-sec"><h4>' + t.d_story + '</h4>' + String(rs(r) || rd(r)).split('\n').map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') + '</div>' +
+          ((rh(r) || []).length ? '<div class="dlg-sec"><h4>' + t.d_hl + '</h4><ul>' + rh(r).map(function (h) { return '<li><span>' + esc(h) + '</span></li>'; }).join('') + '</ul></div>' : '') +
+        '</div>' +
+        '<div class="dlg-side">' +
+          '<div class="dlg-box"><div class="meter"><span>' + t.difficulty + '</span>' + segs(r.difficulty, 'c') + '</div><div class="meter"><span>' + t.fear + '</span>' + segs(r.fear, 'p') + '</div>' +
+          '<div class="facts" style="border-top:1px dashed var(--line2)"><div><small>PLAYERS</small><span>' + r.min + '–' + r.max + '</span></div><div><small>TIME</small><span>' + r.minutes + 'min</span></div><div><small>PRICE</small><span style="color:var(--cyan)">' + priceText(r) + '</span></div></div></div>' +
+          (r.bestFor ? '<div class="dlg-box"><h4 style="margin:0;font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--cyan)">' + t.d_for + '</h4><p>' + esc(LANG === 'en' ? r.bestForEn : r.bestFor) + '</p></div>' : '') +
+          (r.notice ? '<div class="dlg-box"><h4 style="margin:0;font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--pink)">' + t.d_notice + '</h4><p>' + esc(LANG === 'en' ? r.noticeEn : r.notice) + '</p></div>' : '') +
+        '</div>' +
+      '</div>' +
+      '<div class="dlg-foot"><span class="price"><b>' + priceText(r) + '</b>' + t.d_per + ' · ' + r.minutes + t.d_minutes + '</span><button type="button" class="btn" data-dlg-book>' + t.d_book + '</button></div>';
+  }
+  function openDlg(i) {
+    dlgRoom = i; renderDlg();
+    if (!dlg.open) {
+      dlgPrevOverflow = document.documentElement.style.overflow;
+      document.documentElement.style.overflow = 'hidden';
+      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+    }
+    dlg.scrollTop = 0;
+    try { history.replaceState(null, '', location.pathname + location.search + '#room-' + (i + 1)); } catch (e) {}
+  }
+  function closeDlg() { if (dlg.open) { if (dlg.close) dlg.close(); else { dlg.removeAttribute('open'); onDlgClosed(); } } }
+  function onDlgClosed() {
+    document.documentElement.style.overflow = dlgPrevOverflow;
+    if (/^#room-\d+$/.test(location.hash)) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
+  }
+  dlg.addEventListener('close', onDlgClosed);
+  dlg.addEventListener('click', function (e) {
+    if (e.target === dlg || e.target.closest('[data-close]')) { closeDlg(); return; }
+    if (e.target.closest('[data-dlg-book]')) {
+      var i = dlgRoom; closeDlg();
+      S.room = i; render();
+      var bk = $('booking'); if (bk) bk.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('#roomDlg')) return;
+    var dbtn = e.target.closest('[data-detail]');
+    if (dbtn) { openDlg(+dbtn.getAttribute('data-detail')); return; }
+    var card = e.target.closest('[data-card]');
+    if (card && !e.target.closest('a,button')) openDlg(+card.getAttribute('data-card'));
+  });
+
 
   document.addEventListener('click', function (e) {
     var lb = e.target.closest('[data-lang]');
@@ -806,6 +956,8 @@ var I18N = {
 
   buildDays();
   renderAll();
+  var mHash = location.hash.match(/^#room-(\d+)$/);
+  if (mHash && CONFIG.rooms[+mHash[1] - 1]) openDlg(+mHash[1] - 1);
 })();
 </script>
 </body>
