@@ -264,9 +264,9 @@ html[lang="en"] .final h2{font-size:clamp(36px,6vw,84px)}
 dialog#roomDlg{width:min(900px,calc(100% - 32px));max-height:calc(100% - 32px);padding:0;border:1px solid var(--pink);background:var(--panel-solid);color:var(--text);box-shadow:0 0 60px rgba(255,42,61,.3);overflow:auto;overscroll-behavior:contain}
 dialog#roomDlg::backdrop{background:rgba(7,2,10,.82);backdrop-filter:blur(4px)}
 dialog#roomDlg[open]{animation:dlgOn .6s cubic-bezier(.2,.8,.2,1) both}
-dialog#roomDlg.closing{animation:dlgOff .28s cubic-bezier(.6,0,.8,.4) forwards}
+dialog#roomDlg.closing{animation:dlgFog .7s ease-in forwards}
 dialog#roomDlg[open]::backdrop{animation:bdIn .4s ease both}
-dialog#roomDlg.closing::backdrop{animation:bdIn .28s ease reverse forwards}
+dialog#roomDlg.closing::backdrop{animation:bdIn .7s ease reverse forwards}
 @keyframes dlgOn{0%{transform:scale(.55,.006);filter:brightness(4);opacity:1}38%{transform:scale(1,.006);filter:brightness(3)}62%{transform:scale(1,1.02);filter:brightness(1.4)}100%{transform:none;filter:none}}
 @keyframes dlgOff{0%{transform:none;filter:none}55%{transform:scale(1,.006);filter:brightness(3)}100%{transform:scale(0,.006);opacity:0}}
 @keyframes bdIn{from{opacity:0}to{opacity:1}}
@@ -609,6 +609,10 @@ html.view-book .links .btn{display:none}
 @keyframes fogDrift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes fogBreath{0%,100%{filter:brightness(.85)}50%{filter:brightness(1.2)}}
 main,footer{position:relative;z-index:1}
+/* closing the room window: flicker, then dissolve into fog */
+@keyframes dlgFog{0%{opacity:1;filter:none;transform:none}8%{opacity:.25}14%{opacity:1}20%{opacity:.4}26%{opacity:1;filter:blur(0) brightness(1.3)}100%{opacity:0;filter:blur(18px) brightness(1.6);transform:scale(1.06)}}
+.fog-puff{position:fixed;inset:-20%;z-index:200;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0024 .005' numOctaves='4' seed='23' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.62 0 0 0 0 0.32 0 0 0 0 0.36 0 0 0 1.7 -0.78'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23f%29'/%3E%3C/svg%3E");background-size:cover;background-position:center;-webkit-mask-image:radial-gradient(circle at 50% 50%,#000 0%,rgba(0,0,0,.6) 30%,transparent 60%);mask-image:radial-gradient(circle at 50% 50%,#000 0%,rgba(0,0,0,.8) 38%,transparent 68%);filter:brightness(1.8) saturate(1.3);opacity:0;animation:fogPuff 1.4s ease-out .15s forwards}
+@keyframes fogPuff{0%{opacity:0;transform:scale(.4)}30%{opacity:1}100%{opacity:0;transform:scale(1.5) translateX(-3%)}}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -1473,7 +1477,9 @@ var I18N = {
     clearInterval(decodeTimer);
     if (reduceMotion()) { reallyClose(); if (after) after(); return; }
     closing = true; dlg.classList.add('closing');
-    setTimeout(function () { reallyClose(); if (after) after(); }, 270);
+    var puff = document.createElement('div'); puff.className = 'fog-puff'; puff.setAttribute('aria-hidden', 'true'); document.body.appendChild(puff);
+    setTimeout(function () { if (puff.parentNode) puff.parentNode.removeChild(puff); }, 1700);
+    setTimeout(function () { reallyClose(); if (after) after(); }, 680);
   }
   dlg.addEventListener('cancel', function (e) { e.preventDefault(); closeDlg(); });
   function onDlgClosed() {
