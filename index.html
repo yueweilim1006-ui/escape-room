@@ -634,6 +634,11 @@ dialog#lightbox::backdrop{background:#000}
 .lb-nav.prev{left:max(12px,env(safe-area-inset-left,0px))}.lb-nav.next{right:max(12px,env(safe-area-inset-right,0px))}
 .lb-nav:hover{background:#C8102E}
 @media (hover:none){.lb-nav{display:none}}
+/* gallery in the room window: blurred fill instead of black bars */
+.sw-slide{position:relative;flex:0 0 100%;width:100%;height:100%;overflow:hidden;scroll-snap-align:center;scroll-snap-stop:always}
+.sw-slide::before{content:"";position:absolute;inset:-40px;background:var(--bg) center/cover no-repeat;filter:blur(28px) brightness(.55) saturate(1.2);transform:scale(1.1)}
+.sw-slide img{position:relative !important;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 30px rgba(0,0,0,.7))}
+.dlg-poster.has-gallery{background:#000}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -1311,7 +1316,8 @@ var I18N = {
     var g = r.gallery, alt = esc(rn(r));
     return '<div class="swipe' + (fit ? ' fit' : '') + '" data-swipe aria-roledescription="carousel">' +
       '<div class="sw-track" tabindex="0">' + g.map(function (src, k) {
-        return '<img src="' + esc(src) + '" alt="' + alt + ' ' + (k + 1) + '/' + g.length + '"' + (k ? ' loading="lazy"' : '') + (!fit && k === 0 && r.imagePos ? ' style="object-position:' + r.imagePos + '"' : '') + ' draggable="false">';
+        var im = '<img src="' + esc(src) + '" alt="' + alt + ' ' + (k + 1) + '/' + g.length + '"' + (k ? ' loading="lazy"' : '') + (!fit && k === 0 && r.imagePos ? ' style="object-position:' + r.imagePos + '"' : '') + ' draggable="false">';
+        return fit ? '<div class="sw-slide" style="--bg:url(\'' + esc(src) + '\')">' + im + '</div>' : im;
       }).join('') + '</div>' +
       '<button type="button" class="sw-nav prev" data-sw="-1" aria-label="上一张"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>' +
       '<button type="button" class="sw-nav next" data-sw="1" aria-label="下一张"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>' +
