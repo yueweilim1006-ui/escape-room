@@ -331,6 +331,28 @@ html[lang="en"] .dlg-title h3{font-family:'Orbitron','ZCOOL QingKe HuangYou',san
 .dlg-foot .price{font-family:var(--mono);font-size:14px;color:var(--muted)}
 .dlg-foot .price b{font-size:22px;color:var(--cyan)}
 @media (max-width:560px){.dlg-body{padding:22px 18px}.dlg-foot{padding-left:18px;padding-right:18px}.dlg-foot .btn{flex:1}.dlg-poster{height:190px}}
+/* featured room */
+.feat{position:relative;display:flex;flex-wrap:wrap;margin-bottom:28px;border:1px solid var(--pink);background:var(--panel);box-shadow:0 0 40px rgba(255,43,214,.22);cursor:pointer;animation:featGlow 3.2s ease-in-out infinite}
+@keyframes featGlow{0%,100%{box-shadow:0 0 28px rgba(255,43,214,.18)}50%{box-shadow:0 0 56px rgba(255,43,214,.42)}}
+.feat-ribbon{position:absolute;top:-1px;left:-1px;z-index:2;display:flex;align-items:center;gap:8px;background:var(--pink);color:var(--bg);font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:2px;padding:7px 14px}
+.feat-ribbon i{width:7px;height:7px;background:var(--bg);display:inline-block}
+.feat-poster{flex:1 1 380px;min-height:340px;position:relative;background:#100A24;display:flex;align-items:center;justify-content:center;overflow:hidden;border-right:1px solid var(--line)}
+.feat-poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.feat-poster .num{position:absolute;right:-8px;bottom:-40px;font-family:var(--mono);font-weight:700;font-size:240px;line-height:1}
+.feat-poster::after{content:"";position:absolute;left:0;right:0;top:0;height:45%;background:linear-gradient(transparent,rgba(0,240,255,.12),transparent);pointer-events:none;animation:posterScan 3s linear infinite}
+.feat-poster .dlg-icon svg{width:170px;height:170px}
+.feat-poster .lv{position:absolute;right:16px;top:16px;font-family:var(--mono);color:var(--bg);background:var(--cyan);font-size:11px;font-weight:700;padding:3px 8px}
+.feat-body{flex:999 1 440px;min-width:0;padding:32px;display:flex;flex-direction:column;gap:18px}
+.feat-body .kick{margin:0;font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--pink)}
+.feat-body h3{margin:0;font-family:var(--disp);font-weight:400;font-size:clamp(44px,6vw,72px);line-height:1;letter-spacing:3px;text-shadow:0 0 18px rgba(255,43,214,.55)}
+html[lang="en"] .feat-body h3{font-family:'Orbitron','ZCOOL QingKe HuangYou',sans-serif;font-weight:900;font-size:clamp(30px,4.4vw,52px);letter-spacing:1px}
+.feat-body p.story{margin:0;color:#CFCBE6;font-size:16px;line-height:1.85;max-width:62ch}
+.feat-stats{display:flex;flex-wrap:wrap;gap:20px 28px;align-items:center}
+.feat-stats .meters{flex:1 1 240px;display:flex;flex-direction:column;gap:10px}
+.feat-stats .facts{flex:1 1 220px;border-top:0;padding-top:0}
+.feat-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px}
+.feat-actions .more{padding:17px 26px}
+@media (max-width:560px){.feat-body{padding:24px 18px}.feat-poster{min-height:240px;border-right:0;border-bottom:1px solid var(--line)}.feat-actions>*{flex:1 1 100%;text-align:center;justify-content:center}}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -407,6 +429,7 @@ html[lang="en"] .dlg-title h3{font-family:'Orbitron','ZCOOL QingKe HuangYou',san
 <div><p class="kicker">&gt; LOAD /ROOM_FILES</p><h2 class="title" data-i18n="themes_title"></h2></div>
 <p class="mono" style="margin:0;color:var(--muted);font-size:13px" data-i18n="themes_note"></p>
 </div>
+<div id="featured"></div>
 <div class="grid3" id="roomCards"></div>
 </div></section>
 
@@ -524,6 +547,8 @@ var CONFIG = {
   whatsapp: '60123456789',
   times: ['10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'],
   daysAhead: 14,
+  // 主打推荐主题：填主题的编号（1–6），会放在主题档案最上面，预约时默认选它。填 0 表示不设主打。
+  featured: 4,
   rooms: [
     { name: '古宅迷踪', nameEn: 'The Old Mansion', genre: '中式恐怖', genreEn: 'Chinese Horror', icon: 'house', badge: '人气', badgeEn: 'POPULAR',
       level: 4, difficulty: 4, fear: 5, min: 2, max: 6, minutes: 60, price: 0, image: '',
@@ -561,7 +586,7 @@ var CONFIG = {
       bestForEn: "First-timers, groups of friends and team outings, for up to 8 players.",
       notice: "不吓人、没有黑暗场景；需要阅读较多文字资料。",
       noticeEn: "No scares and no dark scenes. Expect quite a lot of reading." },
-    { name: '观亡白楼', nameEn: 'Deathwatch Ward', genre: '恐怖游戏', genreEn: 'Horror', icon: 'hospital', badge: '胆量测试', badgeEn: 'FEAR TEST',
+    { name: '观亡白楼', nameEn: 'Deathwatch Ward', genre: '恐怖游戏', genreEn: 'Horror', icon: 'hospital', badge: '主打推荐', badgeEn: 'FEATURED',
       level: 4, difficulty: 3, fear: 5, min: 2, max: 5, minutes: 60, price: 0, image: '',
       desc: '仁心医院已经废弃三十年，但每到午夜十二点，三楼的护士铃还是会响。你们为了直播探险潜入病房，门却在身后自动锁上。跟着心电图的声音找到出口，千万别回头。',
       descEn: 'Renxin Hospital has been abandoned for thirty years, yet at midnight the nurse call bell on the third floor still rings. You sneak into the ward to livestream the visit, and the door locks behind you. Follow the heartbeat monitor to find the exit, and do not look back.',
@@ -653,7 +678,8 @@ var I18N = {
     msg: ['你好，我想预约密室逃脱：', '主题', '日期', '时段', '人数', '姓名', '电话', '备注'],
     intro_term: ['&gt; booting security system ...', '&gt; scanning subjects ... <b class="ok">6 ROOMS ONLINE</b>', '&gt; verifying access code ...', '&gt; access code ... <b class="ok">OK</b>'],
     intro_small: '进入密室', skip: '跳过 &gt;&gt;',
-    details: '查看详情', d_story: '// 故事背景', d_hl: '// 游戏亮点', d_for: '// 适合谁', d_notice: '// 注意事项', d_close: '关闭', d_book: '预约这个主题 &gt;_', d_per: ' / 人', d_minutes: ' 分钟'
+    details: '查看详情', d_story: '// 故事背景', d_hl: '// 游戏亮点', d_for: '// 适合谁', d_notice: '// 注意事项', d_close: '关闭', d_book: '预约这个主题 &gt;_', d_per: ' / 人', d_minutes: ' 分钟',
+    feat_ribbon: '本季主打', feat_kick: '// NOW SHOWING · 店长推荐', feat_book: '立即预约主打主题 &gt;_'
   },
   en: {
     page_title: '{shop} · Escape Room Booking',
@@ -705,7 +731,8 @@ var I18N = {
     msg: ['Hi, I would like to book an escape room:', 'Room', 'Date', 'Time', 'Players', 'Name', 'Phone', 'Note'],
     intro_term: ['&gt; booting security system ...', '&gt; scanning subjects ... <b class="ok">6 ROOMS ONLINE</b>', '&gt; verifying access code ...', '&gt; access code ... <b class="ok">OK</b>'],
     intro_small: 'ENTER THE ROOM', skip: 'Skip &gt;&gt;',
-    details: 'View details', d_story: '// THE STORY', d_hl: '// HIGHLIGHTS', d_for: '// BEST FOR', d_notice: '// GOOD TO KNOW', d_close: 'Close', d_book: 'Book this room &gt;_', d_per: ' / player', d_minutes: ' min'
+    details: 'View details', d_story: '// THE STORY', d_hl: '// HIGHLIGHTS', d_for: '// BEST FOR', d_notice: '// GOOD TO KNOW', d_close: 'Close', d_book: 'Book this room &gt;_', d_per: ' / player', d_minutes: ' min',
+    feat_ribbon: 'FEATURED', feat_kick: '// NOW SHOWING · STAFF PICK', feat_book: 'Book the featured room &gt;_'
   }
 };
 
@@ -835,6 +862,28 @@ var I18N = {
     }).join('');
   }
 
+
+  // featured room
+  function renderFeatured() {
+    var box = $('featured'), fi = (CONFIG.featured || 0) - 1, r = CONFIG.rooms[fi];
+    if (!r) { box.innerHTML = ''; return; }
+    var t = T();
+    box.innerHTML = '<article class="feat" data-card="' + fi + '">' +
+      '<span class="feat-ribbon"><i class="blink"></i>' + t.feat_ribbon + '</span>' +
+      '<div class="feat-poster">' +
+        (r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(rn(r)) + t.poster_alt + '">' : '<span class="num outline" aria-hidden="true">' + pad(fi + 1) + '</span><div class="dlg-icon fx-' + (r.icon || 'house') + '">' + (ICONS[r.icon] || ICONS.house) + '</div>') +
+        '<span class="lv">LV.' + r.level + '</span>' +
+      '</div>' +
+      '<div class="feat-body">' +
+        '<p class="kick">' + t.feat_kick + '</p>' +
+        '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:14px"><h3>' + esc(rn(r)) + '</h3><span class="tag">' + esc(rg(r)) + '</span></div>' +
+        '<p class="story">' + esc(String((LANG === 'en' ? r.storyEn : r.story) || rd(r)).split('\n')[0]) + '</p>' +
+        '<div class="feat-stats"><div class="meters"><div class="meter"><span>' + t.difficulty + '</span>' + segs(r.difficulty, 'c') + '</div><div class="meter"><span>' + t.fear + '</span>' + segs(r.fear, 'p') + '</div></div>' +
+        '<div class="facts"><div><small>PLAYERS</small><span>' + r.min + '–' + r.max + '</span></div><div><small>TIME</small><span>' + r.minutes + 'min</span></div><div><small>PRICE</small><span style="color:var(--cyan)">' + priceText(r) + '</span></div></div></div>' +
+        '<div class="feat-actions"><a class="btn" href="#booking" data-room="' + fi + '">' + t.feat_book + '</a><button type="button" class="more" data-detail="' + fi + '">' + t.details + '</button></div>' +
+      '</div></article>';
+  }
+
   // booking state
   var today = new Date();
   var days = [];
@@ -846,7 +895,7 @@ var I18N = {
       days.push({ date: dt, week: d === 0 ? t.today : t.week[dt.getDay()], label: t.dayLabel(dt, t.week[dt.getDay()]) });
     }
   }
-  var S = { room: 0, day: 0, slot: null, players: 4 };
+  var S = { room: CONFIG.rooms[(CONFIG.featured || 0) - 1] ? CONFIG.featured - 1 : 0, day: 0, slot: null, players: 4 };
 
   function isPast(dayIdx, tm) {
     if (dayIdx !== 0) return false;
@@ -891,7 +940,7 @@ var I18N = {
     $('hint').textContent = ready ? t.hint_ready : (slotOk ? t.hint_contact : t.hint_slot);
   }
 
-  function renderAll() { applyStatic(); renderMarquee(); renderCards(); render(); if (dlg && dlg.open) renderDlg(); }
+  function renderAll() { applyStatic(); renderMarquee(); renderFeatured(); renderCards(); render(); if (dlg && dlg.open) renderDlg(); }
 
   // ---- room detail dialog ----
   var dlg = $('roomDlg'), dlgRoom = null, dlgPrevOverflow = '';
