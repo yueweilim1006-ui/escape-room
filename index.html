@@ -634,11 +634,18 @@ dialog#lightbox::backdrop{background:#000}
 .lb-nav.prev{left:max(12px,env(safe-area-inset-left,0px))}.lb-nav.next{right:max(12px,env(safe-area-inset-right,0px))}
 .lb-nav:hover{background:#C8102E}
 @media (hover:none){.lb-nav{display:none}}
-/* gallery in the room window: blurred fill instead of black bars */
-.sw-slide{position:relative;flex:0 0 100%;width:100%;height:100%;overflow:hidden;scroll-snap-align:center;scroll-snap-stop:always}
-.sw-slide::before{content:"";position:absolute;inset:-40px;background:var(--bg) center/cover no-repeat;filter:blur(28px) brightness(.55) saturate(1.2);transform:scale(1.1)}
-.sw-slide img{position:relative !important;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 30px rgba(0,0,0,.7))}
-.dlg-poster.has-gallery{background:#000}
+/* gallery in the room window: every photo shown whole, at its own shape, no bars */
+.dlg-poster.has-gallery{height:auto;background:#07020A;display:block}
+.dlg-poster.has-gallery .swipe{position:relative;inset:auto;background:transparent}
+.swipe.fit .sw-track{align-items:flex-start;transition:height .35s ease}
+.sw-slide{flex:0 0 100%;width:100%;scroll-snap-align:center;scroll-snap-stop:always}
+.sw-slide img{display:block;width:100%;height:auto !important;position:static !important;object-fit:fill}
+@media (min-width:700px){
+  .swipe.fit .sw-track{height:min(70vh,560px) !important;gap:8px;align-items:stretch;padding:0;scroll-padding:0 40px}
+  .sw-slide{flex:0 0 auto;width:auto;height:100%}
+  .sw-slide img{width:auto;height:100% !important}
+}
+.dlg-poster.has-gallery .meta,.dlg-poster.has-gallery .badge{position:absolute}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -1325,21 +1332,42 @@ var I18N = {
       '<div class="sw-dots" aria-hidden="true">' + g.map(function (x, k) { return '<i' + (k ? '' : ' class="on"') + '></i>'; }).join('') + '</div>' +
       '<span class="sw-count">1 / ' + g.length + '</span></div>';
   }
+  // index helpers that work for equal-width slides and for photos of different widths
+  function swIndex(tr) {
+    var mid = tr.scrollLeft + tr.clientWidth / 2, best = 0, bd = Infinity;
+    [].forEach.call(tr.children, function (c, k) { var d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (d < bd) { bd = d; best = k; } });
+    return best;
+  }
+  function swGo(tr, i, smooth) {
+    var c = tr.children[i]; if (!c) return;
+    tr.scrollTo({ left: c.offsetLeft - (tr.clientWidth - c.offsetWidth) / 2, behavior: smooth === false ? 'auto' : 'smooth' });
+  }
+  function swFitHeight(tr) {
+    // phones: the frame takes the height of the photo on show, so nothing is cropped and there are no bars
+    var box = tr.parentNode; if (!box.classList.contains('fit')) return;
+    if (window.matchMedia('(min-width: 700px)').matches) { tr.style.height = ''; return; }
+    var img = tr.children[swIndex(tr)] && tr.children[swIndex(tr)].querySelector('img');
+    if (img && img.naturalWidth) tr.style.height = Math.round(tr.clientWidth * img.naturalHeight / img.naturalWidth) + 'px';
+  }
   function swipeSync(track) {
-    var w = track.clientWidth || 1, idx = Math.round(track.scrollLeft / w), box = track.parentNode;
+    var idx = swIndex(track), box = track.parentNode;
     box.querySelectorAll('.sw-dots i').forEach(function (d, k) { d.classList.toggle('on', k === idx); });
     var c = box.querySelector('.sw-count'); if (c) c.textContent = (idx + 1) + ' / ' + track.children.length;
     if (box.closest('#roomDlg')) dlg.querySelectorAll('[data-gal]').forEach(function (x, k) { x.setAttribute('aria-pressed', String(k === idx)); });
+    swFitHeight(track);
   }
+  document.addEventListener('load', function (e) {
+    var im = e.target; if (im && im.tagName === 'IMG' && im.closest && im.closest('.swipe.fit')) swipeSync(im.closest('.sw-track'));
+  }, true);
+  window.addEventListener('resize', function () { document.querySelectorAll('.swipe.fit .sw-track').forEach(swipeSync); });
   document.addEventListener('scroll', function (e) {
     var tr = e.target; if (tr && tr.classList && tr.classList.contains('sw-track')) { clearTimeout(tr._t); tr._t = setTimeout(function () { swipeSync(tr); }, 60); }
   }, true);
   document.addEventListener('click', function (e) {
     var nb = e.target.closest('[data-sw]'); if (!nb) return;
     e.stopPropagation();
-    var tr = nb.parentNode.querySelector('.sw-track'), w = tr.clientWidth, n = tr.children.length;
-    var idx = (Math.round(tr.scrollLeft / w) + (+nb.getAttribute('data-sw')) + n) % n;
-    tr.scrollTo({ left: idx * w, behavior: 'smooth' });
+    var tr = nb.parentNode.querySelector('.sw-track'), n = tr.children.length;
+    swGo(tr, (swIndex(tr) + (+nb.getAttribute('data-sw')) + n) % n);
   }, true);
 
   // featured room
@@ -1492,6 +1520,7 @@ var I18N = {
   }
   function openDlg(i) {
     dlgRoom = i; renderDlg(); setTimeout(decodeTitle, 380);
+    var gtr = dlg.querySelector('.swipe.fit .sw-track'); if (gtr) requestAnimationFrame(function () { swipeSync(gtr); });
     if (!dlg.open) {
       dlgPrevOverflow = document.documentElement.style.overflow;
       document.documentElement.style.overflow = 'hidden';
@@ -1520,7 +1549,7 @@ var I18N = {
   dlg.addEventListener('click', function (e) {
     if (e.target === dlg || e.target.closest('[data-close]')) { closeDlg(); return; }
     var gb = e.target.closest('[data-gal]');
-    if (gb) { var trk = dlg.querySelector('.sw-track'); if (trk) { var gi = [].indexOf.call(dlg.querySelectorAll('[data-gal]'), gb); trk.scrollTo({ left: gi * trk.clientWidth, behavior: 'smooth' }); } return; }
+    if (gb) { var trk = dlg.querySelector('.sw-track'); if (trk) { var gi = [].indexOf.call(dlg.querySelectorAll('[data-gal]'), gb); swGo(trk, gi); } return; }
     if (e.target.closest('[data-dlg-book]')) {
       var i = dlgRoom;
       closeDlg(function () { S.room = i; render(); location.hash = 'book'; });
@@ -1610,7 +1639,7 @@ var I18N = {
     if (!e.target.closest('[data-full]') && !e.target.closest('.sw-track img')) return;
     e.stopPropagation(); e.preventDefault();
     var tr = box.querySelector('.sw-track'), srcs = [].map.call(tr.querySelectorAll('img'), function (im) { return im.getAttribute('src'); });
-    openLightbox(srcs, Math.round(tr.scrollLeft / (tr.clientWidth || 1)));
+    openLightbox(srcs, swIndex(tr));
   }, true);
 
   // ---- booking lives on its own page (#book); the music keeps playing ----
