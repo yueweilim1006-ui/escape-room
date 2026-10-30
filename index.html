@@ -353,8 +353,11 @@ html[lang="en"] .feat-body h3{font-family:'Orbitron','ZCOOL QingKe HuangYou',san
 .feat-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px}
 .feat-actions .more{padding:17px 26px}
 @media (max-width:560px){.feat-body{padding:24px 18px}.feat-poster{min-height:240px;border-right:0;border-bottom:1px solid var(--line)}.feat-actions>*{flex:1 1 100%;text-align:center;justify-content:center}}
-.logo-mark{width:46px;height:43px;object-fit:cover;border-radius:50%;mix-blend-mode:screen;box-shadow:0 0 0 1.5px #FF2BD6,0 0 14px rgba(255,43,214,.55);flex:none}
-.hero-logo{display:block;width:min(340px,72vw);height:auto;mix-blend-mode:screen;margin:-48px 0 -10px}
+.logo-mark{width:46px;height:46px;object-fit:cover;object-position:50% 40%;border-radius:50%;background:#07050F;box-shadow:0 0 0 1.5px #FF2BD6,0 0 14px rgba(255,43,214,.55);flex:none}
+.hero-logo-wrap{position:relative;margin:-36px 0 -6px}
+.hero-logo-wrap::before{content:"";position:absolute;left:50%;top:44%;width:120%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,43,214,.20) 0%,rgba(0,240,255,.07) 38%,transparent 65%);pointer-events:none}
+.hero-logo{position:relative;display:block;width:min(320px,70vw);height:auto;filter:drop-shadow(0 0 14px rgba(255,43,214,.45));animation:logoNeon 5s ease-in-out infinite}
+@keyframes logoNeon{0%,100%{filter:drop-shadow(0 0 10px rgba(255,43,214,.35))}50%{filter:drop-shadow(0 0 22px rgba(255,43,214,.6)) drop-shadow(0 0 6px rgba(0,240,255,.35))}}
 .hero .door{top:auto;bottom:-60px;transform:translateX(-50%);height:640px}
 @media (max-width:640px){.hero-logo{margin-top:-24px}}
 /* mobile sticky bar */
@@ -379,7 +382,7 @@ html[lang="en"] .feat-body h3{font-family:'Orbitron','ZCOOL QingKe HuangYou',san
 
 <header class="nav"><div class="wrap">
 <a class="logo" href="#top">
-<img class="logo-mark" src="logo-mark.jpg" alt="" width="160" height="150">
+<img class="logo-mark" src="logo-mark.png" alt="" width="160" height="150">
 <span class="shop-name">潘多拉密室</span>
 </a>
 <nav class="links">
@@ -405,7 +408,7 @@ html[lang="en"] .feat-body h3{font-family:'Orbitron','ZCOOL QingKe HuangYou',san
 <div class="hud l"><span style="color:var(--pink)"><span class="blink">●</span> REC  CAM_04</span><span>SECTOR // B-02</span></div>
 <div class="hud r"><span>SECURITY LV.5</span><span style="color:var(--cyan)">EXIT: 01 / LOCKED</span></div>
 <div class="hero-main">
-<img class="hero-logo" src="logo.jpg" alt="潘多拉密室 PANDORA ESCAPE · 禁域" width="700" height="700">
+<div class="hero-logo-wrap"><img class="hero-logo" src="logo.png" alt="潘多拉密室 PANDORA ESCAPE · 禁域" width="560" height="560"></div>
 <div class="status"><i class="blink"></i>STATUS: SUBJECTS DETECTED</div>
 <h1 data-i18n="hero_h1"></h1>
 <p class="sub" data-i18n="hero_sub"></p>
