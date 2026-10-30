@@ -556,6 +556,21 @@ html[lang="en"] .epigraph{font-family:'Noto Serif SC',Georgia,serif;font-style:i
 .bgm-btn.hint .lbl::after{content:" · 点击开启";opacity:.8}
 html[lang="en"] .bgm-btn.hint .lbl::after{content:" · tap to play"}
 @media (max-width:720px){.bgm-btn{bottom:calc(86px + env(safe-area-inset-bottom,0px));left:12px;padding:0 10px}}
+/* entry gate (starts the music with the intro) */
+#gate{position:fixed;inset:0;z-index:110;display:flex;align-items:center;justify-content:center;padding:24px max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px));background:radial-gradient(ellipse 60% 50% at 50% 45%,rgba(120,0,20,.35),#040103 70%),#040103;animation:gateIn .8s ease both;transition:opacity .45s ease}
+#gate.out{opacity:0}
+#gate .g-in{display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;max-width:520px}
+#gate .g-mark{width:96px;height:96px;object-fit:cover;object-position:50% 40%;border-radius:50%;background:#07020A;box-shadow:0 0 0 1.5px #C8102E,0 0 30px rgba(200,16,46,.5);animation:gatePulse 2.4s ease-in-out infinite}
+#gate .g-k{margin:0;font-family:var(--mono);font-size:12px;letter-spacing:4px;color:#B89CA2}
+#gate h2{margin:0;font-family:'Noto Serif SC','Songti SC',serif;font-weight:900;font-size:clamp(26px,5vw,40px);letter-spacing:6px;color:#F4E3D7;text-shadow:0 0 18px rgba(200,16,46,.6)}
+#gate .g-go{margin-top:8px;display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 30px;border:0;background:#C8102E;color:#fff;font-family:inherit;font-size:17px;font-weight:700;letter-spacing:2px;cursor:pointer;box-shadow:0 0 24px rgba(200,16,46,.55);animation:gateBtn 2.4s ease-in-out infinite}
+#gate .g-go:hover{background:#FF2A45}
+#gate .g-go:focus-visible,#gate .g-mute:focus-visible{outline:2px solid #F4E3D7;outline-offset:3px}
+#gate .g-mute{min-height:44px;padding:0 16px;border:0;background:none;color:#B89CA2;font-family:inherit;font-size:14px;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+#gate .g-note{margin:0;font-size:12px;color:#8E6E76;letter-spacing:1px}
+@keyframes gateIn{from{opacity:0}to{opacity:1}}
+@keyframes gatePulse{0%,100%{box-shadow:0 0 0 1.5px #C8102E,0 0 22px rgba(200,16,46,.35)}50%{box-shadow:0 0 0 1.5px #FF2A3D,0 0 42px rgba(255,42,61,.7)}}
+@keyframes gateBtn{0%,100%{box-shadow:0 0 18px rgba(200,16,46,.45)}50%{box-shadow:0 0 34px rgba(255,42,61,.8)}}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -891,7 +906,7 @@ var I18N = {
     hint_ready: '会打开 WhatsApp 并带好预约内容，按发送即可。到店付款。', hint_contact: '请填写姓名和手机号码。', hint_slot: '请先选择一个时段。',
     msg: ['你好，我想预约密室逃脱：', '主题', '日期', '时段', '人数', '姓名', '电话', '备注'],
     intro_term: ['&gt; 密室系统启动中……', '&gt; 侦测到闯入者…… <b class="ok">六间密室待命</b>', '&gt; 正在核对通关密码……', '&gt; 密码正确，门锁解除 <b class="ok">OK</b>'], intro_granted: '准许进入', intro_lock: '● 已上锁', intro_unlock: '○ 已解锁',
-    intro_small: '进入密室', skip: '跳过 &gt;&gt;',
+    intro_small: '进入密室', gate_title: '一旦打开，便无路可退', gate_go: '进入禁域 · 开启声音', gate_mute: '静音进入', gate_note: '建议戴上耳机，体验更佳', skip: '跳过 &gt;&gt;',
     details: '查看详情', d_story: '// 故事背景', d_hl: '// 游戏亮点', d_for: '// 适合谁', d_notice: '// 注意事项', d_close: '关闭', d_book: '预约这个主题 &gt;_', d_per: ' / 人', d_minutes: ' 分钟',
     feat_ribbon: '本季主打', d_lore: '// 观亡之术', d_rituals: '// 五道法事', d_final: '最终仪式', d_final_p: '五道法事完成之后……真相只有走进白楼才能知道', d_rules: '// 入境须知', feat_kick: '// NOW SHOWING · 店长推荐', feat_book: '立即预约主打主题 &gt;_'
   },
@@ -944,7 +959,7 @@ var I18N = {
     hint_ready: 'WhatsApp opens with your booking filled in. Just tap send. Pay at the shop.', hint_contact: 'Please enter your name and phone number.', hint_slot: 'Please pick a time slot first.',
     msg: ['Hi, I would like to book an escape room:', 'Room', 'Date', 'Time', 'Players', 'Name', 'Phone', 'Note'],
     intro_term: ['&gt; booting security system ...', '&gt; scanning subjects ... <b class="ok">6 ROOMS ONLINE</b>', '&gt; verifying access code ...', '&gt; access code ... <b class="ok">OK</b>'], intro_granted: 'ACCESS GRANTED', intro_lock: '● LOCKED', intro_unlock: '○ UNLOCKED',
-    intro_small: 'ENTER THE ROOM', skip: 'Skip &gt;&gt;',
+    intro_small: 'ENTER THE ROOM', gate_title: 'Once opened, there is no way back', gate_go: 'Enter · Sound on', gate_mute: 'Enter without sound', gate_note: 'Headphones recommended', skip: 'Skip &gt;&gt;',
     details: 'View details', d_story: '// THE STORY', d_hl: '// HIGHLIGHTS', d_for: '// BEST FOR', d_notice: '// GOOD TO KNOW', d_close: 'Close', d_book: 'Book this room &gt;_', d_per: ' / player', d_minutes: ' min',
     feat_ribbon: 'FEATURED', d_lore: '// THE ART OF DEATHWATCH', d_rituals: '// FIVE RITUALS', d_final: 'The final rite', d_final_p: 'What comes after the five rituals can only be found inside the mansion', d_rules: '// BEFORE YOU ENTER', feat_kick: '// NOW SHOWING · STAFF PICK', feat_book: 'Book the featured room &gt;_'
   }
@@ -1025,63 +1040,27 @@ var I18N = {
     if (withSweep) setTimeout(showScare, 2800);
   }
 
-  // ---- generated horror ambience (no audio files) ----
+  // ---- background music: original generated track (bgm.mp3), gapless loop via Web Audio ----
   var BGM = (function () {
     var AC = window.AudioContext || window.webkitAudioContext;
-    var ctx = null, master = null, verb = null, on = false, timers = [];
-    var pref = null;
+    var ctx = null, master = null, buf = null, sfx = null, src = null, on = false, pref = null;
     try { pref = localStorage.getItem('bgm'); } catch (e) {}
-    function impulse(sec, decay) {
-      var len = ctx.sampleRate * sec, buf = ctx.createBuffer(2, len, ctx.sampleRate);
-      for (var c = 0; c < 2; c++) { var d = buf.getChannelData(c); for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay); }
-      return buf;
+    var get = function (u) { return window.fetch ? fetch(u).then(function (r) { return r.ok ? r.arrayBuffer() : null; }).catch(function () { return null; }) : Promise.resolve(null); };
+    var musicData = AC ? get('bgm.mp3') : Promise.resolve(null);
+    var sfxData = AC ? get('scare-sfx.mp3') : Promise.resolve(null);
+    function decode(ab) {
+      return new Promise(function (res) {
+        if (!ab || !ctx) return res(null);
+        try { var p = ctx.decodeAudioData(ab.slice(0), function (b) { res(b); }, function () { res(null); }); if (p && p.then) p.then(res, function () { res(null); }); } catch (e) { res(null); }
+      });
     }
-    function lfo(freq, depth, target) { var o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = freq; g.gain.value = depth; o.connect(g); g.connect(target); o.start(); return o; }
-    function build() {
-      ctx = new AC();
-      master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
-      verb = ctx.createConvolver(); verb.buffer = impulse(4, 2.6);
-      var verbOut = ctx.createGain(); verbOut.gain.value = .55; verb.connect(verbOut); verbOut.connect(master);
-      // low drone
-      var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 220; lp.Q.value = 6; lp.connect(master);
-      lfo(.05, 120, lp.frequency);
-      [[55, 'sawtooth', .10], [58.3, 'sawtooth', .08], [110, 'sine', .10], [41.2, 'sine', .16]].forEach(function (d) {
-        var o = ctx.createOscillator(), g = ctx.createGain(); o.type = d[1]; o.frequency.value = d[0]; g.gain.value = d[2]; o.connect(g); g.connect(lp); lfo(.07 + Math.random() * .05, .6, o.detune); o.start();
-      });
-      // dissonant pad
-      var pad = ctx.createGain(); pad.gain.value = .045; pad.connect(master); pad.connect(verb);
-      [220, 233.1, 329.6, 349.2].forEach(function (f, k) {
-        var o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine'; o.frequency.value = f; g.gain.value = 0; o.connect(g); g.connect(pad); o.start();
-        var t = ctx.createOscillator(), tg = ctx.createGain(); t.frequency.value = .03 + k * .021; tg.gain.value = .5; t.connect(tg); tg.connect(g.gain); t.start();
-      });
-      // wind
-      var nb = ctx.createBuffer(1, ctx.sampleRate * 3, ctx.sampleRate), nd = nb.getChannelData(0);
-      for (var i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
-      var ns = ctx.createBufferSource(); ns.buffer = nb; ns.loop = true;
-      var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 600; bp.Q.value = 1.2;
-      var wg = ctx.createGain(); wg.gain.value = .05; ns.connect(bp); bp.connect(wg); wg.connect(master); wg.connect(verb);
-      lfo(.06, 420, bp.frequency); lfo(.09, .035, wg.gain); ns.start();
-    }
-    function beat() {
-      if (!on) return;
-      var t = ctx.currentTime;
-      [0, .28].forEach(function (dt, k) {
-        var o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine';
-        o.frequency.setValueAtTime(70, t + dt); o.frequency.exponentialRampToValueAtTime(38, t + dt + .18);
-        g.gain.setValueAtTime(0, t + dt); g.gain.linearRampToValueAtTime(k ? .22 : .32, t + dt + .015); g.gain.exponentialRampToValueAtTime(.001, t + dt + .3);
-        o.connect(g); g.connect(master); o.start(t + dt); o.stop(t + dt + .35);
-      });
-      timers.push(setTimeout(beat, 1500));
-    }
-    function bell() {
-      if (!on) return;
-      var t = ctx.currentTime, base = [196, 207.7, 261.6, 277.2][Math.floor(Math.random() * 4)];
-      [1, 2.76, 5.4, 8.93].forEach(function (r, k) {
-        var o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine'; o.frequency.value = base * r;
-        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.06 / (k + 1), t + .01); g.gain.exponentialRampToValueAtTime(.0005, t + 5 - k);
-        o.connect(g); g.connect(verb); g.connect(master); o.start(t); o.stop(t + 5);
-      });
-      timers.push(setTimeout(bell, 9000 + Math.random() * 9000));
+    function build() { ctx = new AC(); master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination); }
+    function ensureMusic() { return buf ? Promise.resolve(buf) : musicData.then(decode).then(function (b) { buf = b; return b; }); }
+    function play() {
+      if (!on || !buf || src) return;
+      src = ctx.createBufferSource(); src.buffer = buf; src.loop = true;
+      src.loopStart = 0.05; src.loopEnd = buf.duration - 0.05;
+      src.connect(master); src.start(0, 0.05);
     }
     function start() {
       if (!AC) return;
@@ -1089,33 +1068,29 @@ var I18N = {
       if (ctx.state === 'suspended') ctx.resume();
       if (on) return;
       on = true;
-      master.gain.cancelScheduledValues(ctx.currentTime);
-      master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
-      master.gain.linearRampToValueAtTime(.55, ctx.currentTime + 3);
-      beat(); timers.push(setTimeout(bell, 4000));
+      var now = ctx.currentTime;
+      master.gain.cancelScheduledValues(now); master.gain.setValueAtTime(master.gain.value, now); master.gain.linearRampToValueAtTime(0.85, now + 2.5);
+      ensureMusic().then(play);
       ui();
     }
     function stop() {
-      if (!ctx || !on) { on = false; ui(); return; }
-      on = false; timers.forEach(clearTimeout); timers = [];
-      master.gain.cancelScheduledValues(ctx.currentTime);
-      master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
-      master.gain.linearRampToValueAtTime(0, ctx.currentTime + .8);
+      on = false;
+      if (ctx) {
+        var now = ctx.currentTime;
+        master.gain.cancelScheduledValues(now); master.gain.setValueAtTime(master.gain.value, now); master.gain.linearRampToValueAtTime(0, now + 0.8);
+        var s = src; src = null;
+        if (s) setTimeout(function () { try { s.stop(); } catch (e) {} }, 900);
+      }
       ui();
     }
+    function save(v) { pref = v; try { localStorage.setItem('bgm', v); } catch (e) {} }
+    function mute() { save('off'); stop(); }
     function stinger() {
       if (!on || !ctx) return;
-      var t = ctx.currentTime;
-      [233, 247, 311, 466, 494].forEach(function (f) {
-        var o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sawtooth'; o.frequency.setValueAtTime(f, t); o.frequency.linearRampToValueAtTime(f * 1.06, t + 1.2);
-        g.gain.setValueAtTime(.0, t); g.gain.linearRampToValueAtTime(.12, t + .02); g.gain.exponentialRampToValueAtTime(.001, t + 1.6);
-        o.connect(g); g.connect(master); g.connect(verb); o.start(t); o.stop(t + 1.7);
+      (sfx ? Promise.resolve(sfx) : sfxData.then(decode).then(function (b) { sfx = b; return b; })).then(function (b) {
+        if (!b) return;
+        var s = ctx.createBufferSource(), g = ctx.createGain(); s.buffer = b; g.gain.value = 0.9; s.connect(g); g.connect(ctx.destination); s.start();
       });
-      var n = ctx.createBufferSource(), nb = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate), d = nb.getChannelData(0);
-      for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-      n.buffer = nb; var hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.setValueAtTime(800, t); hp.frequency.exponentialRampToValueAtTime(5000, t + .8);
-      var ng = ctx.createGain(); ng.gain.setValueAtTime(.25, t); ng.gain.exponentialRampToValueAtTime(.001, t + 1);
-      n.connect(hp); hp.connect(ng); ng.connect(master); n.start(t);
     }
     var btn = document.getElementById('bgmBtn');
     function ui() {
@@ -1126,13 +1101,11 @@ var I18N = {
     }
     if (btn) btn.addEventListener('click', function (e) {
       e.stopPropagation();
-      if (on) { stop(); pref = 'off'; } else { start(); pref = 'on'; }
-      try { localStorage.setItem('bgm', pref); } catch (er) {}
-      ui();
+      if (on) { save('off'); stop(); } else { save('on'); start(); }
     });
-    // browsers only allow sound after the visitor interacts: start on the first tap/click/key
+    // Browsers only allow sound after the visitor interacts, so start on the first tap/click/key
     function firstGesture(e) {
-      if (e.target && e.target.closest && e.target.closest('#bgmBtn')) return;
+      if (e.target && e.target.closest && e.target.closest('#bgmBtn, #gate')) return;
       document.removeEventListener('pointerdown', firstGesture, true);
       document.removeEventListener('keydown', firstGesture, true);
       if (pref !== 'off') start();
@@ -1140,12 +1113,16 @@ var I18N = {
     if (AC) {
       document.addEventListener('pointerdown', firstGesture, true);
       document.addEventListener('keydown', firstGesture, true);
+      // Some browsers do allow autoplay (e.g. returning visitors): try it right away
+      if (pref !== 'off') {
+        try { build(); var r = ctx.resume(); if (r && r.then) r.then(function () { if (ctx.state === 'running') start(); }, function () {}); } catch (e) {}
+      }
     } else if (btn) { btn.hidden = true; }
     document.addEventListener('visibilitychange', function () {
       if (!ctx) return;
       if (document.hidden) ctx.suspend(); else if (on) ctx.resume();
     });
-    return { start: start, stop: stop, stinger: stinger, ui: ui };
+    return { start: start, stop: stop, mute: mute, stinger: stinger, ui: ui, isOn: function () { return on; } };
   })();
   function showScare() {
     if (document.getElementById('scare')) return;
@@ -1190,9 +1167,26 @@ var I18N = {
       '<div class="granted">' + t.intro_granted + '<small>' + t.intro_small + '</small></div>' +
       '<div class="flash"></div>' +
       '<button class="skip" type="button">' + t.skip + '</button>';
-    document.body.appendChild(el);
     var root = document.documentElement, prev = root.style.overflow;
     root.style.overflow = 'hidden';
+    var gate = document.createElement('div');
+    gate.id = 'gate';
+    gate.setAttribute('role', 'dialog');
+    gate.setAttribute('aria-label', t.gate_title);
+    gate.innerHTML = '<div class="g-in"><img class="g-mark" src="logo-mark.png" alt=""><p class="g-k">PANDORA ESCAPE · 禁域</p><h2>' + t.gate_title + '</h2>' +
+      '<button type="button" class="g-go"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>' + t.gate_go + '</button>' +
+      '<button type="button" class="g-mute">' + t.gate_mute + '</button><p class="g-note">' + t.gate_note + '</p></div>';
+    document.body.appendChild(gate);
+    var goBtn = gate.querySelector('.g-go'); try { goBtn.focus({ preventScroll: true }); } catch (e) {}
+    function enter(sound) {
+      if (!gate.parentNode) return;
+      if (sound) BGM.start(); else BGM.mute();
+      gate.classList.add('out');
+      setTimeout(function () { if (gate.parentNode) gate.parentNode.removeChild(gate); }, 450);
+      playIntro();
+    }
+    goBtn.addEventListener('click', function () { enter(true); });
+    gate.querySelector('.g-mute').addEventListener('click', function () { enter(false); });
     var finished = false;
     function finish() {
       if (finished) return; finished = true;
@@ -1203,9 +1197,12 @@ var I18N = {
       document.removeEventListener('keydown', onKey);
     }
     function onKey(e) { if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') finish(); }
-    el.querySelector('.skip').addEventListener('click', finish);
-    document.addEventListener('keydown', onKey);
-    setTimeout(finish, 3750);
+    function playIntro() {
+      document.body.appendChild(el);
+      el.querySelector('.skip').addEventListener('click', finish);
+      document.addEventListener('keydown', onKey);
+      setTimeout(finish, 3750);
+    }
   })();
 
   // big marquee
