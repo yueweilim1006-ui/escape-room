@@ -662,6 +662,8 @@ dialog#lightbox::backdrop{background:#000}
   #roomDlg.with-gal .dlg-body{grid-column:2;grid-row:1 / span 3;padding-top:24px}
   #roomDlg.with-gal .dlg-foot{grid-column:1 / span 2;grid-row:4}
   #roomDlg.with-gal .dlg-poster.has-gallery::after{height:60px}
+  #roomDlg.with-gal .swipe.fit .sw-track{height:calc(100vh - 32px - 98px) !important;height:calc(100dvh - 32px - 98px) !important;max-height:900px}
+  dialog#roomDlg.with-gal[open]{grid-template-columns:400px minmax(0,1fr)}
 }
 /* mobile sticky bar */
 .mbar{display:none}
