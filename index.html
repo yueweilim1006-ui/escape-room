@@ -613,6 +613,27 @@ main,footer{position:relative;z-index:1}
 @keyframes dlgFog{0%{opacity:1;filter:none;transform:none}8%{opacity:.25}14%{opacity:1}20%{opacity:.4}26%{opacity:1;filter:blur(0) brightness(1.3)}100%{opacity:0;filter:blur(18px) brightness(1.6);transform:scale(1.06)}}
 .fog-puff{position:fixed;inset:-20%;z-index:200;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0024 .005' numOctaves='4' seed='23' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.62 0 0 0 0 0.32 0 0 0 0 0.36 0 0 0 1.7 -0.78'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23f%29'/%3E%3C/svg%3E");background-size:cover;background-position:center;-webkit-mask-image:radial-gradient(circle at 50% 50%,#000 0%,rgba(0,0,0,.6) 30%,transparent 60%);mask-image:radial-gradient(circle at 50% 50%,#000 0%,rgba(0,0,0,.8) 38%,transparent 68%);filter:brightness(1.8) saturate(1.3);opacity:0;animation:fogPuff 1.4s ease-out .15s forwards}
 @keyframes fogPuff{0%{opacity:0;transform:scale(.4)}30%{opacity:1}100%{opacity:0;transform:scale(1.5) translateX(-3%)}}
+/* full-screen photo viewer */
+.sw-track img{cursor:zoom-in}
+.sw-full{position:absolute;top:10px;right:10px;z-index:3;display:flex;align-items:center;gap:6px;height:34px;padding:0 10px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.55);color:#fff;font-family:var(--mono);font-size:12px;cursor:pointer}
+.sw-full:hover{background:#C8102E}
+.dlg-poster .sw-full{top:auto;bottom:40px}
+.poster .sw-full span,.feat-poster .sw-full span{display:none}
+.poster .sw-full{top:auto;bottom:34px;right:10px;height:30px;padding:0 7px}
+dialog#lightbox{position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:#000;color:#fff;overflow:hidden;animation:lbIn .3s ease}
+dialog#lightbox::backdrop{background:#000}
+@keyframes lbIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+.lb-track{display:flex;width:100%;height:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;overscroll-behavior:contain}
+.lb-track::-webkit-scrollbar{display:none}
+.lb-slide{flex:0 0 100%;height:100%;display:flex;align-items:center;justify-content:center;scroll-snap-align:center;scroll-snap-stop:always;padding:calc(56px + env(safe-area-inset-top,0px)) 0 calc(44px + env(safe-area-inset-bottom,0px))}
+.lb-slide img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;user-select:none;-webkit-user-drag:none}
+.lb-close{position:absolute;top:calc(10px + env(safe-area-inset-top,0px));right:max(10px,env(safe-area-inset-right,0px));z-index:2;width:46px;height:46px;border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.6);color:#fff;font-size:26px;line-height:1;cursor:pointer}
+.lb-close:hover{background:#C8102E}
+.lb-count{position:absolute;left:50%;bottom:calc(12px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);font-family:var(--mono);font-size:13px;letter-spacing:2px;color:#EEE4E6}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:52px;height:52px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.55);color:#fff;cursor:pointer}
+.lb-nav.prev{left:max(12px,env(safe-area-inset-left,0px))}.lb-nav.next{right:max(12px,env(safe-area-inset-right,0px))}
+.lb-nav:hover{background:#C8102E}
+@media (hover:none){.lb-nav{display:none}}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -795,6 +816,7 @@ main,footer{position:relative;z-index:1}
 </footer>
 
 <dialog id="roomDlg" aria-labelledby="dlgName"></dialog>
+<dialog id="lightbox" aria-label="照片"></dialog>
 
 <button type="button" id="bgmBtn" class="bgm-btn" aria-pressed="false" aria-label="背景音乐"><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="lbl">音乐</span></button>
 <div class="mbar">
@@ -1293,6 +1315,7 @@ var I18N = {
       }).join('') + '</div>' +
       '<button type="button" class="sw-nav prev" data-sw="-1" aria-label="上一张"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>' +
       '<button type="button" class="sw-nav next" data-sw="1" aria-label="下一张"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>' +
+      '<button type="button" class="sw-full" data-full aria-label="全屏查看"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span>' + (LANG === 'en' ? 'Full screen' : '全屏') + '</span></button>' +
       '<div class="sw-dots" aria-hidden="true">' + g.map(function (x, k) { return '<i' + (k ? '' : ' class="on"') + '></i>'; }).join('') + '</div>' +
       '<span class="sw-count">1 / ' + g.length + '</span></div>';
   }
@@ -1548,6 +1571,41 @@ var I18N = {
     S.slot = null; $('done').classList.remove('show'); $('bookLayout').style.display = ''; render();
   };
 
+
+
+  // ---- full-screen photo viewer ----
+  var lb = document.getElementById('lightbox');
+  function openLightbox(srcs, idx) {
+    var en = LANG === 'en';
+    lb.innerHTML = '<div class="lb-track" tabindex="0">' + srcs.map(function (src, k) { return '<div class="lb-slide"><img src="' + esc(src) + '" alt="' + (k + 1) + '/' + srcs.length + '" draggable="false"></div>'; }).join('') + '</div>' +
+      '<button type="button" class="lb-close" data-lb-close aria-label="' + (en ? 'Close' : '关闭') + '">×</button>' +
+      '<button type="button" class="lb-nav prev" data-lb="-1" aria-label="' + (en ? 'Previous' : '上一张') + '"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>' +
+      '<button type="button" class="lb-nav next" data-lb="1" aria-label="' + (en ? 'Next' : '下一张') + '"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>' +
+      '<span class="lb-count">' + (idx + 1) + ' / ' + srcs.length + '</span>';
+    if (lb.showModal) lb.showModal(); else lb.setAttribute('open', '');
+    var tr = lb.querySelector('.lb-track');
+    tr.style.scrollBehavior = 'auto'; tr.scrollLeft = idx * tr.clientWidth; tr.style.scrollBehavior = '';
+    requestAnimationFrame(function () { tr.scrollLeft = idx * tr.clientWidth; });
+    tr.addEventListener('scroll', function () { clearTimeout(tr._t); tr._t = setTimeout(function () { var i = Math.round(tr.scrollLeft / tr.clientWidth); lb.querySelector('.lb-count').textContent = (i + 1) + ' / ' + srcs.length; }, 60); });
+  }
+  function closeLightbox() { if (lb.open) { if (lb.close) lb.close(); else lb.removeAttribute('open'); } lb.innerHTML = ''; }
+  lb.addEventListener('click', function (e) {
+    if (e.target.closest('[data-lb-close]') || e.target === lb) { closeLightbox(); return; }
+    var nb = e.target.closest('[data-lb]');
+    if (nb) { var tr = lb.querySelector('.lb-track'), n = tr.children.length, i = (Math.round(tr.scrollLeft / tr.clientWidth) + (+nb.getAttribute('data-lb')) + n) % n; tr.scrollTo({ left: i * tr.clientWidth, behavior: 'smooth' }); return; }
+    if (e.target.closest('.lb-slide') && !e.target.closest('img')) closeLightbox();
+  });
+  lb.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { var b = lb.querySelector(e.key === 'ArrowLeft' ? '.prev' : '.next'); if (b) b.click(); }
+  });
+  lb.addEventListener('close', function () { lb.innerHTML = ''; });
+  document.addEventListener('click', function (e) {
+    var box = e.target.closest('.swipe'); if (!box || e.target.closest('[data-sw]')) return;
+    if (!e.target.closest('[data-full]') && !e.target.closest('.sw-track img')) return;
+    e.stopPropagation(); e.preventDefault();
+    var tr = box.querySelector('.sw-track'), srcs = [].map.call(tr.querySelectorAll('img'), function (im) { return im.getAttribute('src'); });
+    openLightbox(srcs, Math.round(tr.scrollLeft / (tr.clientWidth || 1)));
+  }, true);
 
   // ---- booking lives on its own page (#book); the music keeps playing ----
   function setView() {
