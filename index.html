@@ -511,6 +511,16 @@ html[lang="en"] .hero .sub{font-size:clamp(20px,2.8vw,34px);letter-spacing:6px}
 .box-eye i{position:absolute;inset:0;border-radius:50%;background:radial-gradient(ellipse 30% 70% at 50% 50%,#000 0 38%,#ff1a2e 42%,#ff6a5a 62%,#ffe8d8 78%);box-shadow:0 0 10px #ff1a2e,0 0 22px rgba(255,0,30,.7);transform:scaleY(0);animation:boxEye 9s steps(1,end) infinite}
 @keyframes boxEye{0%,64%{transform:scaleY(0)}65%{transform:scaleY(.35)}66%,74%{transform:scaleY(1)}75%{transform:scaleY(.1)}76%,82%{transform:scaleY(1) translateX(10%)}83%{transform:scaleY(.3)}84%,100%{transform:scaleY(0)}}
 .box-sparks i{background:#E8D0C8;box-shadow:0 0 4px rgba(255,80,70,.6);animation-duration:4.5s;animation-timing-function:ease-in-out}
+/* room photo gallery */
+.dlg-poster.has-gallery{height:min(62vh,520px);background:#000}
+.dlg-poster.has-gallery img{object-fit:contain}
+.dlg-poster img.swap{animation:galSwap .45s ease}
+@keyframes galSwap{from{opacity:0;filter:brightness(2.2)}to{opacity:1;filter:none}}
+.dlg-thumbs{display:flex;gap:8px;padding:12px 16px;overflow-x:auto;background:#050104;border-bottom:1px solid var(--line)}
+.dlg-thumbs button{flex:none;width:84px;height:62px;padding:0;border:1px solid var(--line2);background:#000;cursor:pointer;opacity:.55;transition:opacity .2s,border-color .2s}
+.dlg-thumbs button img{width:100%;height:100%;object-fit:cover;display:block}
+.dlg-thumbs button[aria-pressed="true"],.dlg-thumbs button:hover{opacity:1;border-color:var(--pink)}
+@media (max-width:560px){.dlg-poster.has-gallery{height:46vh}.dlg-thumbs button{width:64px;height:48px}}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -745,18 +755,19 @@ var CONFIG = {
       bestForEn: "First-timers, groups of friends and team outings, for up to 8 players.",
       notice: "不吓人、没有黑暗场景；需要阅读较多文字资料。",
       noticeEn: "No scares and no dark scenes. Expect quite a lot of reading." },
-    { name: '观亡白楼', nameEn: 'Deathwatch Ward', genre: '恐怖游戏', genreEn: 'Horror', icon: 'hospital', badge: '主打推荐', badgeEn: 'FEATURED',
-      level: 4, difficulty: 3, fear: 5, min: 2, max: 5, minutes: 60, price: 0, image: 'room-baiou.jpg',
-      desc: '仁心医院已经废弃三十年，但每到午夜十二点，三楼的护士铃还是会响。你们为了直播探险潜入病房，门却在身后自动锁上。跟着心电图的声音找到出口，千万别回头。',
-      descEn: 'Renxin Hospital has been abandoned for thirty years, yet at midnight the nurse call bell on the third floor still rings. You sneak into the ward to livestream the visit, and the door locks behind you. Follow the heartbeat monitor to find the exit, and do not look back.',
-      story: "仁心医院，附近的人都叫它“白楼”。1994 年一场火灾后，白楼被关闭，官方记录写着“无人伤亡”。可是三十年来，附近的居民总说，每到午夜十二点，三楼的护士铃都会准时响起。\n你们是一支探险直播小队，为了冲人气，决定午夜潜入三楼病房开直播。镜头刚打开，身后的铁门就“咔嗒”一声锁上了。走廊尽头，心电图的声音一下一下地响着，好像在给你们带路。",
-      storyEn: "Renxin Hospital, known locally as “the White Building”, closed after a fire in 1994. The official record says no one was hurt. Yet for thirty years people living nearby have said that at midnight the nurse call bell on the third floor rings right on time.\nYou are a team of urban-exploration streamers who sneak into the third-floor ward at midnight to boost your views. The moment the camera goes live, the iron door behind you clicks shut. At the end of the corridor a heart monitor beeps, slow and steady, as if it is showing you the way.",
-      highlights: ["病房、手术室、太平间三段场景，越往里走越压抑", "跟着声音和光线找线索，很多机关要在黑暗中完成", "全程恐怖氛围拉满，是真正的胆量测试"],
-      highlightsEn: ["Three scenes, the ward, the operating theatre and the morgue, each heavier than the last", "Follow sounds and light to find clues; many mechanisms must be solved in the dark", "Full-on horror from start to finish, a real test of nerve"],
-      bestFor: "恐怖爱好者、想挑战胆量的朋友；建议队伍里至少有一位“胆大担当”。",
-      bestForEn: "Horror fans and anyone who wants to test their courage. Bring at least one brave teammate.",
-      notice: "有黑暗、狭窄空间和强烈惊吓；孕妇、心脏病患者、有幽闭恐惧的玩家及 [12] 岁以下儿童不建议参加。",
-      noticeEn: "Darkness, tight spaces and strong scares. Not recommended for pregnant guests, people with heart conditions or claustrophobia, or children under [12]." },
+    { name: '观亡白楼', nameEn: 'Deathwatch Mansion', genre: '中式恐怖', genreEn: 'Chinese Folk Horror', icon: 'house', badge: '主打推荐', badgeEn: 'FEATURED',
+      level: 4, difficulty: 3, fear: 5, min: 2, max: 5, minutes: 60, price: 0, image: 'baiou-1.jpg', imagePos: '50% 58%',
+      gallery: ['baiou-1.jpg', 'baiou-2.jpg', 'baiou-3.jpg', 'baiou-4.jpg', 'baiou-5.jpg', 'scare.jpg'],
+      desc: "城郊废弃的白楼里，一场无人生还的冥婚。午夜推开那扇门，你就是下一位前来观礼的宾客。",
+      descEn: "Inside an abandoned white mansion, a ghost wedding no one survived. Push the door open at midnight, and you are the next guest invited to watch.",
+      story: "城郊有一座废弃多年的白楼。民国年间，楼主林家为早逝的少爷办了一场冥婚，迎亲那夜锣鼓喧天，可宾客散尽之后，整栋楼再也没有人走出来。\n如今白楼大门半掩，门缝里挂着褪色的红绸，纸扎的童男童女整齐地排在喜堂前。有人说，只要在午夜推开那扇门，就会被请进去“观礼”。而观礼的人，要留下来陪新人。",
+      storyEn: "On the edge of town stands a white mansion, abandoned for decades. Long ago the Lin family held a ghost wedding there for their son who died young. The drums played all night, but once the guests had gone, no one ever walked out of the house again.\nToday the gate stands half open, faded red silk hangs in the doorway and paper-effigy children sit in neat rows before the wedding hall. They say that if you push the door open at midnight, you will be invited in to watch the ceremony. And those who watch must stay to keep the couple company.",
+      highlights: ["牌坊大门、喜堂、灵堂多段中式场景，越往里走越压抑", "纸扎人、冥婚新人与红白喜事交织的诡异氛围", "剧情和机关紧密结合，越接近真相越难回头"],
+      highlightsEn: ["An ancestral gate, a wedding hall and a mourning hall, each scene heavier than the last", "Paper effigies, a ghost bride and groom, and a wedding that is also a funeral", "Story and puzzles are tightly linked: the closer you get to the truth, the harder it is to turn back"],
+      bestFor: "喜欢中式民俗恐怖、胆子够大的玩家；建议 3 人以上一起进入。",
+      bestForEn: "Fans of Chinese folk horror with strong nerves. We suggest a team of 3 or more.",
+      notice: "场景昏暗，有强烈惊吓；孕妇、心脏病患者及 [12] 岁以下儿童不建议参加。",
+      noticeEn: "Dark scenes and strong scares. Not recommended for pregnant guests, people with heart conditions or children under [12]." },
     { name: '末班地铁', nameEn: 'The Last Train', genre: '悬疑逃生', genreEn: 'Suspense', icon: 'train', badge: '新主题', badgeEn: 'NEW',
       level: 4, difficulty: 4, fear: 3, min: 2, max: 6, minutes: 60, price: 0, image: '',
       desc: '晚上 11 点 59 分，你们搭上了最后一班地铁。列车驶过终点站却没有停下，窗外的站名一个比一个陌生。在列车开进“无名站”之前，找到驾驶室的钥匙，让它停下来。',
@@ -975,9 +986,9 @@ var I18N = {
     var sc = document.createElement('div');
     sc.id = 'scare';
     sc.setAttribute('role', 'dialog');
-    sc.setAttribute('aria-label', en ? 'Deathwatch Ward' : '观亡白楼');
+    sc.setAttribute('aria-label', en ? 'Deathwatch Mansion' : '观亡白楼');
     sc.innerHTML = '<div class="shot"></div><div class="slice a"></div><div class="slice b"></div><div class="vig"></div><div class="flash"></div>' +
-      '<div class="cap">' + (en ? 'DEATHWATCH WARD · DARE TO ENTER?' : '观亡白楼 · 你敢进来吗？') + '<small>' + (en ? 'TAP ANYWHERE TO CLOSE' : '点击任意处关闭') + '</small></div>';
+      '<div class="cap">' + (en ? 'DEATHWATCH MANSION · DARE TO ENTER?' : '观亡白楼 · 你敢进来吗？') + '<small>' + (en ? 'TAP ANYWHERE TO CLOSE' : '点击任意处关闭') + '</small></div>';
     document.body.appendChild(sc);
     var prevOv = root0.style.overflow; root0.style.overflow = 'hidden';
     var done = false;
@@ -1045,7 +1056,7 @@ var I18N = {
     var t = T();
     $('roomCards').innerHTML = CONFIG.rooms.map(function (r, i) {
       return '<article class="card" data-card="' + i + '"><div class="poster">' +
-        (r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(rn(r)) + t.poster_alt + '">' : '<span class="num outline" aria-hidden="true">' + pad(i + 1) + '</span>' + (ICONS[r.icon] || ICONS.house)) +
+        (r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(rn(r)) + t.poster_alt + '"' + (r.imagePos ? ' style="object-position:' + r.imagePos + '"' : '') + '>' : '<span class="num outline" aria-hidden="true">' + pad(i + 1) + '</span>' + (ICONS[r.icon] || ICONS.house)) +
         '<span class="code">ROOM_' + pad(i + 1) + '</span><span class="lv">LV.' + r.level + '</span>' + (r.badge ? '<span class="badge">' + esc(LANG === 'en' ? r.badgeEn : r.badge) + '</span>' : '') + '</div>' +
         '<div class="card-body"><div class="card-top"><h3>' + esc(rn(r)) + '</h3><span class="tag">' + esc(rg(r)) + '</span></div>' +
         '<p>' + esc(rd(r)) + '</p>' +
@@ -1064,7 +1075,7 @@ var I18N = {
     box.innerHTML = '<article class="feat" data-card="' + fi + '">' +
       '<span class="feat-ribbon"><i class="blink"></i>' + t.feat_ribbon + '</span>' +
       '<div class="feat-poster">' +
-        (r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(rn(r)) + t.poster_alt + '">' : '<span class="num outline" aria-hidden="true">' + pad(fi + 1) + '</span><div class="dlg-icon fx-' + (r.icon || 'house') + '">' + (ICONS[r.icon] || ICONS.house) + '</div>') +
+        (r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(rn(r)) + t.poster_alt + '"' + (r.imagePos ? ' style="object-position:' + r.imagePos + '"' : '') + '>' : '<span class="num outline" aria-hidden="true">' + pad(fi + 1) + '</span><div class="dlg-icon fx-' + (r.icon || 'house') + '">' + (ICONS[r.icon] || ICONS.house) + '</div>') +
         '<span class="lv">LV.' + r.level + '</span>' +
       '</div>' +
       '<div class="feat-body">' +
@@ -1179,11 +1190,12 @@ var I18N = {
     if (!r) return;
     dlg.innerHTML =
       '<button type="button" class="dlg-close" data-close aria-label="' + t.d_close + '">×</button>' +
-      '<div class="dlg-poster p-' + (r.icon || 'house') + '">' +
-        (r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(rn(r)) + t.poster_alt + '">' : '<span class="num outline" aria-hidden="true">' + pad(i + 1) + '</span><div class="dlg-icon fx-' + (r.icon || 'house') + '">' + (ICONS[r.icon] || ICONS.house) + '</div>') +
+      '<div class="dlg-poster p-' + (r.icon || 'house') + (r.gallery ? ' has-gallery' : '') + '">' +
+        (r.gallery ? '<img id="dlgMain" src="' + esc(r.gallery[0]) + '" alt="' + esc(rn(r)) + t.poster_alt + '">' : r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(rn(r)) + t.poster_alt + '"' + (r.imagePos ? ' style="object-position:' + r.imagePos + '"' : '') + '>' : '<span class="num outline" aria-hidden="true">' + pad(i + 1) + '</span><div class="dlg-icon fx-' + (r.icon || 'house') + '">' + (ICONS[r.icon] || ICONS.house) + '</div>') +
         '<span class="meta"><span style="color:var(--pink)">ROOM_' + pad(i + 1) + '</span><span class="lv">LV.' + r.level + '</span></span>' +
         (r.badge ? '<span class="badge">' + esc(LANG === 'en' ? r.badgeEn : r.badge) + '</span>' : '') +
       '</div>' +
+      (r.gallery ? '<div class="dlg-thumbs" role="group" aria-label="' + (LANG === 'en' ? 'Photos' : '照片') + '">' + r.gallery.map(function (g, k) { return '<button type="button" data-gal="' + esc(g) + '" aria-pressed="' + (k === 0) + '" aria-label="' + (k + 1) + '"><img src="' + esc(g.replace(/\.jpg$/, '-t.jpg')) + '" alt="" loading="lazy"></button>'; }).join('') + '</div>' : '') +
       '<div class="dlg-body">' +
         '<div class="dlg-main">' +
           '<div class="dlg-title dlg-anim" style="--d:.35s"><h3 id="dlgName" aria-label="' + esc(rn(r)) + '">' + esc(rn(r)) + '</h3><span class="tag">' + esc(rg(r)) + '</span></div>' +
@@ -1226,6 +1238,8 @@ var I18N = {
   dlg.addEventListener('close', onDlgClosed);
   dlg.addEventListener('click', function (e) {
     if (e.target === dlg || e.target.closest('[data-close]')) { closeDlg(); return; }
+    var gb = e.target.closest('[data-gal]');
+    if (gb) { var m = $('dlgMain'); if (m) { m.src = gb.getAttribute('data-gal'); m.classList.remove('swap'); void m.offsetWidth; m.classList.add('swap'); } dlg.querySelectorAll('[data-gal]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === gb)); }); return; }
     if (e.target.closest('[data-dlg-book]')) {
       var i = dlgRoom;
       closeDlg(function () { S.room = i; render(); var bk = $('booking'); if (bk) bk.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth' }); });
