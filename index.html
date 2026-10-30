@@ -412,13 +412,14 @@ html[lang="en"] .hero .sub{font-size:clamp(20px,2.8vw,34px);letter-spacing:6px}
 .hero .clock{font-size:clamp(48px,6vw,80px)}
 .hero p.desc{max-width:360px;margin-top:6px;background:none;font-size:16px}
 @media (max-width:640px){.hero .door{top:84px;-webkit-mask-image:linear-gradient(#000 52%,transparent 74%);mask-image:linear-gradient(#000 52%,transparent 74%)}.hero .door::after{display:none}.hero p.desc{max-width:none;font-size:15px}.hero-logo-wrap{margin-top:40px}.hero-logo{width:min(250px,64vw)}.hero .sub{letter-spacing:8px}}
-/* rainbow marquee lettering on the logo */
+/* light-cyan neon lettering on the logo */
 .lt{position:absolute;inset:0;pointer-events:none}
-.lt i{position:absolute;inset:0;background:repeating-linear-gradient(90deg,#FF2D55 0,#FF8A00 60px,#FFE600 120px,#2BFF6A 180px,#00E5FF 240px,#3D6BFF 300px,#C02BFF 360px,#FF2D55 420px);-webkit-mask:url(logo-text.png) center/100% 100% no-repeat;mask:url(logo-text.png) center/100% 100% no-repeat;animation:rainbowRun 2.4s linear infinite,marqueeBlink .9s steps(1) infinite}
-.lt-glow{filter:blur(7px);opacity:.95}
-.lt-glow i{animation:rainbowRun 2.4s linear infinite,marqueeBlink .9s steps(1) infinite}
-@keyframes rainbowRun{from{background-position:0 0}to{background-position:420px 0}}
-@keyframes marqueeBlink{0%{filter:brightness(1.35) saturate(1.2)}33%{filter:brightness(.75)}66%{filter:brightness(1.6) saturate(1.3)}}
+.lt i{position:absolute;inset:0;background:linear-gradient(105deg,#7FF6FF 0%,#7FF6FF 42%,#FFFFFF 50%,#7FF6FF 58%,#7FF6FF 100%) 0 0/300% 100% no-repeat;-webkit-mask:url(logo-text.png) center/100% 100% no-repeat;mask:url(logo-text.png) center/100% 100% no-repeat;animation:textSweep 3.6s cubic-bezier(.45,0,.25,1) infinite,tubeFlicker 7s steps(1) infinite}
+.lt-glow{filter:blur(8px);animation:glowBreath 2.8s ease-in-out infinite}
+.lt-glow i{background:#00E5FF;animation:tubeFlicker 7s steps(1) infinite}
+@keyframes textSweep{0%{background-position:100% 0}55%,100%{background-position:0 0}}
+@keyframes glowBreath{0%,100%{opacity:.55}50%{opacity:1}}
+@keyframes tubeFlicker{0%,61%,66%,100%{opacity:1}62%{opacity:.35}63%{opacity:1}64%{opacity:.5}}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
