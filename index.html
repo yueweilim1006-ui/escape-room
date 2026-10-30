@@ -470,6 +470,22 @@ html[lang="en"] .hero .sub{font-size:clamp(20px,2.8vw,34px);letter-spacing:6px}
 .hero-logo-wrap{margin:26px 0 -4px}
 .hero .hero-main,.hero .hud{z-index:2}
 @media (max-width:640px){.hero .eyes span:nth-child(n+4),.hero .whispers span:nth-child(n+4),.hero .drips i:nth-child(even){display:none}.hero-logo-wrap{margin-top:16px}}
+/* jump scare after entering */
+#scare{position:fixed;inset:0;z-index:120;background:#000;overflow:hidden;cursor:pointer;animation:scareOut .6s ease 2.5s forwards}
+#scare .shot{position:absolute;inset:0;background:url(scare.jpg) 62% 40%/cover no-repeat;animation:scareIn .9s cubic-bezier(.15,1.5,.35,1) both,scareShake .07s steps(2) 8}
+#scare .slice{position:absolute;inset:0;background:url(scare.jpg) 62% 40%/cover no-repeat;opacity:0;mix-blend-mode:screen;animation:scareSlice .55s steps(1) .05s both}
+#scare .slice.a{filter:hue-rotate(160deg) saturate(3);clip-path:inset(28% 0 52% 0)}
+#scare .slice.b{filter:hue-rotate(-60deg) saturate(3);clip-path:inset(58% 0 26% 0);animation-delay:.18s}
+#scare .flash{position:absolute;inset:0;background:radial-gradient(ellipse at 60% 45%,rgba(255,255,255,.9),rgba(255,43,214,.5) 45%,rgba(0,0,0,0) 80%);animation:scareFlash .45s ease-out both;pointer-events:none}
+#scare .vig{position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 60% 45%,transparent 40%,rgba(0,0,0,.85) 100%);pointer-events:none}
+#scare .cap{position:absolute;left:50%;bottom:calc(9% + env(safe-area-inset-bottom,0px));transform:translateX(-50%);text-align:center;white-space:nowrap;font-family:var(--disp);font-size:clamp(22px,4vw,44px);letter-spacing:8px;color:#FF2BD6;text-shadow:0 0 14px rgba(255,43,214,.9),0 0 36px rgba(255,43,214,.5);opacity:0;animation:scareCap .5s ease .75s both}
+#scare .cap small{display:block;margin-top:10px;font-family:var(--mono);font-size:12px;letter-spacing:3px;color:#A69ECB;text-shadow:none}
+@keyframes scareIn{0%{transform:scale(1.9);filter:brightness(3.2) contrast(1.6)}14%{transform:scale(1.04);filter:brightness(1.6) contrast(1.3)}100%{transform:scale(1);filter:brightness(1) contrast(1.05)}}
+@keyframes scareShake{0%{translate:-10px 6px}50%{translate:9px -7px}}
+@keyframes scareSlice{0%{opacity:.9;transform:translateX(-26px)}35%{opacity:.9;transform:translateX(22px)}60%{opacity:.6;transform:translateX(-8px)}100%{opacity:0;transform:none}}
+@keyframes scareFlash{from{opacity:1}to{opacity:0}}
+@keyframes scareCap{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%)}}
+@keyframes scareOut{to{opacity:0;visibility:hidden}}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -705,7 +721,7 @@ var CONFIG = {
       notice: "不吓人、没有黑暗场景；需要阅读较多文字资料。",
       noticeEn: "No scares and no dark scenes. Expect quite a lot of reading." },
     { name: '观亡白楼', nameEn: 'Deathwatch Ward', genre: '恐怖游戏', genreEn: 'Horror', icon: 'hospital', badge: '主打推荐', badgeEn: 'FEATURED',
-      level: 4, difficulty: 3, fear: 5, min: 2, max: 5, minutes: 60, price: 0, image: '',
+      level: 4, difficulty: 3, fear: 5, min: 2, max: 5, minutes: 60, price: 0, image: 'room-baiou.jpg',
       desc: '仁心医院已经废弃三十年，但每到午夜十二点，三楼的护士铃还是会响。你们为了直播探险潜入病房，门却在身后自动锁上。跟着心电图的声音找到出口，千万别回头。',
       descEn: 'Renxin Hospital has been abandoned for thirty years, yet at midnight the nurse call bell on the third floor still rings. You sneak into the ward to livestream the visit, and the door locks behind you. Follow the heartbeat monitor to find the exit, and do not look back.',
       story: "仁心医院，附近的人都叫它“白楼”。1994 年一场火灾后，白楼被关闭，官方记录写着“无人伤亡”。可是三十年来，附近的居民总说，每到午夜十二点，三楼的护士铃都会准时响起。\n你们是一支探险直播小队，为了冲人气，决定午夜潜入三楼病房开直播。镜头刚打开，身后的铁门就“咔嗒”一声锁上了。走廊尽头，心电图的声音一下一下地响着，好像在给你们带路。",
@@ -926,6 +942,25 @@ var I18N = {
       setTimeout(function () { if (sw.parentNode) sw.parentNode.removeChild(sw); }, 1200);
     }
     setTimeout(function () { root0.classList.remove('enter'); }, 2600);
+    if (withSweep) setTimeout(showScare, 2800);
+  }
+  function showScare() {
+    if (document.getElementById('scare')) return;
+    var t = T(), en = LANG === 'en';
+    var sc = document.createElement('div');
+    sc.id = 'scare';
+    sc.setAttribute('role', 'dialog');
+    sc.setAttribute('aria-label', en ? 'Deathwatch Ward' : '观亡白楼');
+    sc.innerHTML = '<div class="shot"></div><div class="slice a"></div><div class="slice b"></div><div class="vig"></div><div class="flash"></div>' +
+      '<div class="cap">' + (en ? 'DEATHWATCH WARD · DARE TO ENTER?' : '观亡白楼 · 你敢进来吗？') + '<small>' + (en ? 'TAP ANYWHERE TO CLOSE' : '点击任意处关闭') + '</small></div>';
+    document.body.appendChild(sc);
+    var prevOv = root0.style.overflow; root0.style.overflow = 'hidden';
+    var done = false;
+    function close() { if (done) return; done = true; if (sc.parentNode) sc.parentNode.removeChild(sc); root0.style.overflow = prevOv; document.removeEventListener('keydown', onK); }
+    function onK(e) { if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') close(); }
+    sc.addEventListener('click', close);
+    document.addEventListener('keydown', onK);
+    setTimeout(close, 3150);
   }
   // ---- intro animation: the door opens (plays once per visit) ----
   (function () {
