@@ -1054,7 +1054,14 @@ var I18N = {
         try { var p = ctx.decodeAudioData(ab.slice(0), function (b) { res(b); }, function () { res(null); }); if (p && p.then) p.then(res, function () { res(null); }); } catch (e) { res(null); }
       });
     }
-    function build() { ctx = new AC(); master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination); }
+    function build() {
+      try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
+      ctx = new AC(); master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+    }
+    function unlock() {
+      // iOS needs a sound started inside the tap itself
+      try { var b = ctx.createBuffer(1, 1, 22050), s0 = ctx.createBufferSource(); s0.buffer = b; s0.connect(ctx.destination); s0.start(0); } catch (e) {}
+    }
     function ensureMusic() { return buf ? Promise.resolve(buf) : musicData.then(decode).then(function (b) { buf = b; return b; }); }
     function play() {
       if (!on || !buf || src) return;
@@ -1065,7 +1072,8 @@ var I18N = {
     function start() {
       if (!AC) return;
       if (!ctx) build();
-      if (ctx.state === 'suspended') ctx.resume();
+      if (ctx.state !== 'running') { try { ctx.resume(); } catch (e) {} }
+      unlock();
       if (on) return;
       on = true;
       var now = ctx.currentTime;
@@ -1104,15 +1112,14 @@ var I18N = {
       if (on) { save('off'); stop(); } else { save('on'); start(); }
     });
     // Browsers only allow sound after the visitor interacts, so start on the first tap/click/key
+    var GEST = ['touchend', 'click', 'keydown', 'pointerup'];
     function firstGesture(e) {
       if (e.target && e.target.closest && e.target.closest('#bgmBtn, #gate')) return;
-      document.removeEventListener('pointerdown', firstGesture, true);
-      document.removeEventListener('keydown', firstGesture, true);
+      GEST.forEach(function (ev) { document.removeEventListener(ev, firstGesture, true); });
       if (pref !== 'off') start();
     }
     if (AC) {
-      document.addEventListener('pointerdown', firstGesture, true);
-      document.addEventListener('keydown', firstGesture, true);
+      GEST.forEach(function (ev) { document.addEventListener(ev, firstGesture, true); });
       // Some browsers do allow autoplay (e.g. returning visitors): try it right away
       if (pref !== 'off') {
         try { build(); var r = ctx.resume(); if (r && r.then) r.then(function () { if (ctx.state === 'running') start(); }, function () {}); } catch (e) {}
@@ -1120,7 +1127,7 @@ var I18N = {
     } else if (btn) { btn.hidden = true; }
     document.addEventListener('visibilitychange', function () {
       if (!ctx) return;
-      if (document.hidden) ctx.suspend(); else if (on) ctx.resume();
+      if (document.hidden) ctx.suspend(); else if (on) { try { ctx.resume(); } catch (e) {} }
     });
     return { start: start, stop: stop, mute: mute, stinger: stinger, ui: ui, isOn: function () { return on; } };
   })();
