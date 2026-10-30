@@ -209,7 +209,7 @@ footer{border-top:1px solid var(--line);background:rgba(7,2,10,.92);overflow:hid
 #intro .term span:nth-child(3){animation-delay:.7s}
 #intro .term span:nth-child(4){animation-delay:1s}
 #intro .ok{color:var(--cyan)}
-#intro .stage{position:relative;width:min(230px,48vw);aspect-ratio:520/700;perspective:900px;transform-origin:50% 58%;animation:introZoom .85s cubic-bezier(.6,0,.9,.4) 2.75s forwards}
+#intro .stage{margin-top:28px;position:relative;width:min(230px,48vw);aspect-ratio:520/700;perspective:900px;transform-origin:50% 58%;animation:introZoom .85s cubic-bezier(.6,0,.9,.4) 2.75s forwards}
 #intro .frame{position:absolute;inset:0;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 10px rgba(255,42,61,.9)) drop-shadow(0 0 28px rgba(255,42,61,.45))}
 #intro .frame .d{stroke-dasharray:1900;stroke-dashoffset:1900;animation:introDraw 1.1s ease-out .3s forwards}
 #intro .light,#intro .panel{position:absolute;left:15.38%;width:69.23%;top:10%;height:90%;border-radius:25% 25% 0 0/14.3% 14.3% 0 0}
@@ -220,8 +220,11 @@ footer{border-top:1px solid var(--line);background:rgba(7,2,10,.92);overflow:hid
 #intro .panel i.b{top:54%;height:36%}
 #intro .knob{position:absolute;left:84%;top:55%;width:9%;aspect-ratio:1;border-radius:50%;border:2.5px solid var(--cyan);box-shadow:0 0 10px var(--cyan);transform:translate(-50%,-50%)}
 #intro .lock{position:absolute;left:50%;top:-34px;transform:translateX(-50%);font-family:var(--mono);font-size:12px;letter-spacing:3px;white-space:nowrap;color:var(--pink);opacity:0;animation:introShow .01s linear 1.2s forwards,introOut .2s ease 2.05s forwards}
-#intro .lock::after{content:"● LOCKED";animation:introUnlock .01s steps(1) 1.7s forwards}
+#intro .lock b{font-weight:400}
+#intro .lock .l1{animation:introOut .01s steps(1) 1.7s forwards}
+#intro .lock .l2{position:absolute;left:50%;top:0;transform:translateX(-50%);opacity:0;color:#FF5A6B;animation:introShow .01s steps(1) 1.7s forwards}
 #intro .granted{font-family:var(--mono);font-weight:700;font-size:clamp(20px,4vw,30px);letter-spacing:6px;color:var(--cyan);text-shadow:0 0 14px rgba(255,90,107,.8);text-align:center;opacity:0;animation:introFlick .45s steps(1) 1.6s forwards,introOut .3s ease 2.4s forwards}
+html[lang="zh-CN"] #intro .granted{letter-spacing:12px}
 #intro .granted small{display:block;margin-top:8px;font-family:var(--disp);font-weight:400;font-size:.8em;letter-spacing:8px;color:var(--pink);text-shadow:0 0 12px rgba(255,42,61,.8)}
 #intro .flash{position:absolute;inset:0;background:#FFE0E0;opacity:0;pointer-events:none;animation:introFlash .6s ease 3.1s forwards}
 #intro .skip{position:absolute;right:max(20px,env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));background:transparent;border:1px solid var(--line3);color:var(--muted);font-family:var(--mono);font-size:13px;padding:10px 16px;cursor:pointer;min-height:44px;animation:introOut .3s ease 2.6s forwards}
@@ -846,7 +849,7 @@ var I18N = {
     sub_ready: '通过 WhatsApp 发送预约 &gt;_', sub_contact: '等待填写联系方式…', sub_slot: '等待选择时段…',
     hint_ready: '会打开 WhatsApp 并带好预约内容，按发送即可。到店付款。', hint_contact: '请填写姓名和手机号码。', hint_slot: '请先选择一个时段。',
     msg: ['你好，我想预约密室逃脱：', '主题', '日期', '时段', '人数', '姓名', '电话', '备注'],
-    intro_term: ['&gt; booting security system ...', '&gt; scanning subjects ... <b class="ok">6 ROOMS ONLINE</b>', '&gt; verifying access code ...', '&gt; access code ... <b class="ok">OK</b>'],
+    intro_term: ['&gt; 密室系统启动中……', '&gt; 侦测到闯入者…… <b class="ok">六间密室待命</b>', '&gt; 正在核对通关密码……', '&gt; 密码正确，门锁解除 <b class="ok">OK</b>'], intro_granted: '准许进入', intro_lock: '● 已上锁', intro_unlock: '○ 已解锁',
     intro_small: '进入密室', skip: '跳过 &gt;&gt;',
     details: '查看详情', d_story: '// 故事背景', d_hl: '// 游戏亮点', d_for: '// 适合谁', d_notice: '// 注意事项', d_close: '关闭', d_book: '预约这个主题 &gt;_', d_per: ' / 人', d_minutes: ' 分钟',
     feat_ribbon: '本季主打', feat_kick: '// NOW SHOWING · 店长推荐', feat_book: '立即预约主打主题 &gt;_'
@@ -899,7 +902,7 @@ var I18N = {
     sub_ready: 'Send booking via WhatsApp &gt;_', sub_contact: 'Waiting for your contact…', sub_slot: 'Waiting for a time slot…',
     hint_ready: 'WhatsApp opens with your booking filled in. Just tap send. Pay at the shop.', hint_contact: 'Please enter your name and phone number.', hint_slot: 'Please pick a time slot first.',
     msg: ['Hi, I would like to book an escape room:', 'Room', 'Date', 'Time', 'Players', 'Name', 'Phone', 'Note'],
-    intro_term: ['&gt; booting security system ...', '&gt; scanning subjects ... <b class="ok">6 ROOMS ONLINE</b>', '&gt; verifying access code ...', '&gt; access code ... <b class="ok">OK</b>'],
+    intro_term: ['&gt; booting security system ...', '&gt; scanning subjects ... <b class="ok">6 ROOMS ONLINE</b>', '&gt; verifying access code ...', '&gt; access code ... <b class="ok">OK</b>'], intro_granted: 'ACCESS GRANTED', intro_lock: '● LOCKED', intro_unlock: '○ UNLOCKED',
     intro_small: 'ENTER THE ROOM', skip: 'Skip &gt;&gt;',
     details: 'View details', d_story: '// THE STORY', d_hl: '// HIGHLIGHTS', d_for: '// BEST FOR', d_notice: '// GOOD TO KNOW', d_close: 'Close', d_book: 'Book this room &gt;_', d_per: ' / player', d_minutes: ' min',
     feat_ribbon: 'FEATURED', feat_kick: '// NOW SHOWING · STAFF PICK', feat_book: 'Book the featured room &gt;_'
@@ -1017,9 +1020,9 @@ var I18N = {
         '<div class="light"></div>' +
         '<div class="panel"><i class="a"></i><i class="b"></i><span class="knob"></span></div>' +
         '<svg class="frame" viewBox="0 0 520 700" fill="none"><path class="d" d="M40 700V140a120 120 0 0 1 120-120h200a120 120 0 0 1 120 120v560" stroke="#FF2A3D" stroke-width="10"/><path class="d" d="M80 700V160a90 90 0 0 1 90-90h180a90 90 0 0 1 90 90v540" stroke="#FF2A3D" stroke-width="4" opacity=".55"/></svg>' +
-        '<span class="lock"></span>' +
+        '<span class="lock"><b class="l1">' + t.intro_lock + '</b><b class="l2">' + t.intro_unlock + '</b></span>' +
       '</div>' +
-      '<div class="granted">ACCESS GRANTED<small>' + t.intro_small + '</small></div>' +
+      '<div class="granted">' + t.intro_granted + '<small>' + t.intro_small + '</small></div>' +
       '<div class="flash"></div>' +
       '<button class="skip" type="button">' + t.skip + '</button>';
     document.body.appendChild(el);
