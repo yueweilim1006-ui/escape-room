@@ -530,6 +530,18 @@ html[lang="en"] .hero .sub{font-size:clamp(20px,2.8vw,34px);letter-spacing:6px}
 @keyframes spotSway{0%,100%{opacity:.75}50%{opacity:1}}
 .hero-logo-floor{position:absolute;left:50%;bottom:4%;width:62%;height:7%;transform:translateX(-50%);border-radius:50%;background:radial-gradient(ellipse,rgba(200,16,46,.45),rgba(120,0,20,.15) 45%,transparent 70%);filter:blur(4px);pointer-events:none}
 @media (max-width:640px){.hero-logo-wrap{margin:0 0 -18px}}
+/* deathwatch lore sections */
+.epigraph{margin:-4px 0 0;padding:10px 0 10px 16px;border-left:2px solid var(--pink);font-family:'Zhi Mang Xing','STKaiti','KaiTi',serif;font-size:22px;line-height:1.6;color:#F4E3D7;text-shadow:0 0 10px rgba(255,42,61,.35);max-width:36em}
+html[lang="en"] .epigraph{font-family:'Noto Serif SC',Georgia,serif;font-style:italic;font-size:16px}
+.rituals{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.rituals li{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);background:rgba(7,2,10,.55)}
+.rituals li b{flex:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif SC',serif;font-size:18px;color:#fff;background:#8a0014;box-shadow:0 0 10px rgba(200,16,46,.5)}
+.rituals li span{display:flex;flex-direction:column;gap:4px;font-size:13.5px;line-height:1.6;color:var(--muted)}
+.rituals li strong{font-size:16px;color:var(--text);letter-spacing:2px}
+.dlg-sec .rituals li::before{content:none}
+.rituals li.more{border-style:dashed;opacity:.85}
+.rituals li.more b{background:transparent;border:1px dashed var(--pink);color:var(--pink)}
+.dlg-box.rules ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:8px;font-size:13.5px;line-height:1.7;color:var(--muted)}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -765,18 +777,26 @@ var CONFIG = {
       notice: "不吓人、没有黑暗场景；需要阅读较多文字资料。",
       noticeEn: "No scares and no dark scenes. Expect quite a lot of reading." },
     { name: '观亡白楼', nameEn: 'Deathwatch Mansion', genre: '中式恐怖', genreEn: 'Chinese Folk Horror', icon: 'house', badge: '主打推荐', badgeEn: 'FEATURED',
-      level: 4, thrill: 5, fear: 5, min: 2, max: 5, minutes: 60, price: 0, image: 'baiou-1.jpg', imagePos: '50% 58%',
+      level: 4, thrill: 5, fear: 5, min: 2, max: 5, minutes: 80, price: 0, image: 'baiou-1.jpg', imagePos: '50% 58%',
       gallery: ['baiou-1.jpg', 'baiou-2.jpg', 'baiou-3.jpg', 'baiou-4.jpg', 'baiou-5.jpg', 'scare.jpg'],
-      desc: "城郊废弃的白楼里，一场无人生还的冥婚。午夜推开那扇门，你就是下一位前来观礼的宾客。",
-      descEn: "Inside an abandoned white mansion, a ghost wedding no one survived. Push the door open at midnight, and you are the next guest invited to watch.",
-      story: "城郊有一座废弃多年的白楼。民国年间，楼主林家为早逝的少爷办了一场冥婚，迎亲那夜锣鼓喧天，可宾客散尽之后，整栋楼再也没有人走出来。\n如今白楼大门半掩，门缝里挂着褪色的红绸，纸扎的童男童女整齐地排在喜堂前。有人说，只要在午夜推开那扇门，就会被请进去“观礼”。而观礼的人，要留下来陪新人。",
-      storyEn: "On the edge of town stands a white mansion, abandoned for decades. Long ago the Lin family held a ghost wedding there for their son who died young. The drums played all night, but once the guests had gone, no one ever walked out of the house again.\nToday the gate stands half open, faded red silk hangs in the doorway and paper-effigy children sit in neat rows before the wedding hall. They say that if you push the door open at midnight, you will be invited in to watch the ceremony. And those who watch must stay to keep the couple company.",
-      highlights: ["牌坊大门、喜堂、灵堂多段中式场景，越往里走越压抑", "纸扎人、冥婚新人与红白喜事交织的诡异氛围", "剧情和机关紧密结合，越接近真相越难回头"],
-      highlightsEn: ["An ancestral gate, a wedding hall and a mourning hall, each scene heavier than the last", "Paper effigies, a ghost bride and groom, and a wedding that is also a funeral", "Story and puzzles are tightly linked: the closer you get to the truth, the harder it is to turn back"],
-      bestFor: "喜欢中式民俗恐怖、胆子够大的玩家；建议 3 人以上一起进入。",
-      bestForEn: "Fans of Chinese folk horror with strong nerves. We suggest a team of 3 or more.",
-      notice: "场景昏暗，有强烈惊吓；孕妇、心脏病患者及 [12] 岁以下儿童不建议参加。",
-      noticeEn: "Dark scenes and strong scares. Not recommended for pregnant guests, people with heart conditions or children under [12]." },
+      desc: "黑水镇首富白家，自大小姐白纤纤病逝后，老宅夜夜闹鬼。作为这一代的观亡人，你要走进白楼，开启观亡之境，查出十年前的真相。",
+      descEn: "Ever since Miss Bai Xianxian died ten years ago, the Bai family mansion has been haunted every night. As this generation's Deathwatcher, you must enter the White Mansion, open the Deathwatch Realm and uncover what really happened.",
+      epigraph: "观亡者，观亡者之心，破阴阳之隔，化生死之执念，了尘世之夙愿。",
+      epigraphEn: "A Deathwatcher sees the hearts of the dead: breaking the wall between the living and the dead, dissolving the obsessions of life and death, fulfilling wishes left undone.",
+      story: "在国土的最西边，有一座黑水镇。镇上的白家世代经商、家业雄厚，是黑水镇最大的名门望族，老宅祠堂里供奉的列祖列宗，保佑着白家商运亨通。\n可自从十年前白家大小姐白纤纤病逝，老宅便怪事不断。每逢打更声响起，宅中就传来鬼哭狼嚎。白家众人不堪忍受搬离老宅，半夜依然怪影四起，百年基业十年间几近毁于一旦。\n白家请来观亡人化解闹鬼之事，对缘由却支支吾吾，只说与病逝的大小姐有关。作为这一代的观亡人，你被选中前往白家老宅，以观亡之术，破解白楼之谜。",
+      storyEn: "Far in the west lies Blackwater Town, home of the Bai family, wealthy merchants for generations and the most powerful clan in town. The ancestors enshrined in their family hall have long blessed their fortunes.\nBut ever since the eldest daughter, Bai Xianxian, died of illness ten years ago, strange things have plagued the old mansion. Whenever the night watchman's gong sounds, wailing echoes through the halls. The family moved out, yet shadows still stir at midnight, and a century of fortune has nearly crumbled in ten years.\nThe Bai family has summoned a Deathwatcher, but when asked why, they mumble that it has something to do with the late eldest daughter. As this generation's Deathwatcher, you have been chosen to enter the old mansion and use the art of Deathwatch to break the curse of the White Mansion.",
+      lore: "观亡人是自古便存在的神秘职业，可通阴阳、驱邪避灾。其中最神秘的，便是观亡之术。需由金、木、水、火、土五行的观亡人点亮五行之烛，再以死者执念最深之物为媒介，方可开启观亡之境。观亡之境只能维持片刻，境中不分阴阳，人可与鬼相见。",
+      loreEn: "Deathwatchers are an ancient and secretive order who walk between the living and the dead and drive away evil. Their most mysterious art is Deathwatch. Five Deathwatchers of Metal, Wood, Water, Fire and Earth must light the candles of the Five Elements and use the object the dead clung to most as a medium to open the Deathwatch Realm. The realm lasts only moments, and within it the living and the dead can meet.",
+      rituals: [["起魂", "点亮五行灵灯，唤醒沉睡在白楼中的魂"], ["安宅", "敬香安宅，向白家先祖讨一件灵物"], ["问神", "神前问卜，投石问路，求一支签"], ["集怨", "独卧高床之下，召唤白楼深处的怨念"], ["结阴", "循着黑暗中的铃声，找回那件阴人之物"]],
+      ritualsEn: [["Raise the Soul", "Light the Five Element lamps and wake the souls asleep in the mansion"], ["Settle the House", "Offer incense and ask the Bai ancestors for a spirit object"], ["Ask the Gods", "Seek an omen before the gods and draw a fortune stick"], ["Gather the Grudge", "Lie alone beneath the high bed and summon the resentment within"], ["Bind the Dead", "Follow the bell in the dark and recover what belongs to the dead"]],
+      highlights: ["五行分工：每位玩家担任金、木、水、火、土其中一位观亡人，有些法事必须独自完成", "真人 NPC 纸人在黑暗中追逐、近距离惊吓，白家往事由演员现场演绎", "大雾、雷电、纸钱、狂风等实景声光效果，牌坊、祠堂、喜堂多场景层层深入"],
+      highlightsEn: ["Five Element roles: each player is a Deathwatcher of Metal, Wood, Water, Fire or Earth, and some rituals must be done alone", "Live actors as paper effigies chase you in the dark and scare you up close, and the Bai family's past is acted out in front of you", "Fog, lightning, falling spirit money and howling wind across the gate, the ancestral hall and the wedding hall"],
+      rules: ["入场后点燃观亡香，一炷香燃尽前必须回到人间，否则观亡之境崩塌。", "每人会得到一条黄色灵带，可替你挡一次邪祟；被扯掉之后，恶鬼会更疯狂地追来。", "老观亡人会化身一个布偶随你们入境，有疑问可以随时向它请教。"],
+      rulesEn: ["Light the Deathwatch incense on entry; you must return to the world of the living before it burns out, or the realm collapses.", "Each player receives a yellow spirit ribbon that protects you once; if it is torn off, the ghosts will come after you even harder.", "The old Deathwatcher travels with you as a cloth doll; you can ask it for guidance at any time."],
+      bestFor: "喜欢中式民俗恐怖、能接受真人追逐和近距离惊吓的玩家；五行各一人最理想。",
+      bestForEn: "Fans of Chinese folk horror who can handle live-actor chases and close-up scares. Five players, one per element, is ideal.",
+      notice: "本主题根据中国古代观亡人传说改编，含黑暗环境、真人追逐与强烈惊吓；孕妇、心脏病患者及 [12] 岁以下儿童不建议参加。可以不信鬼神，但请常怀敬畏之心。",
+      noticeEn: "Adapted from ancient Chinese Deathwatcher legends. Includes darkness, live-actor chases and intense scares. Not recommended for pregnant guests, people with heart conditions or children under [12]. You need not believe in ghosts, but please keep a respectful heart." },
     { name: '末班地铁', nameEn: 'The Last Train', genre: '悬疑逃生', genreEn: 'Suspense', icon: 'train', badge: '新主题', badgeEn: 'NEW',
       level: 4, thrill: 4, fear: 3, min: 2, max: 6, minutes: 60, price: 0, image: '',
       desc: '晚上 11 点 59 分，你们搭上了最后一班地铁。列车驶过终点站却没有停下，窗外的站名一个比一个陌生。在列车开进“无名站”之前，找到驾驶室的钥匙，让它停下来。',
@@ -858,7 +878,7 @@ var I18N = {
     intro_term: ['&gt; 密室系统启动中……', '&gt; 侦测到闯入者…… <b class="ok">六间密室待命</b>', '&gt; 正在核对通关密码……', '&gt; 密码正确，门锁解除 <b class="ok">OK</b>'], intro_granted: '准许进入', intro_lock: '● 已上锁', intro_unlock: '○ 已解锁',
     intro_small: '进入密室', skip: '跳过 &gt;&gt;',
     details: '查看详情', d_story: '// 故事背景', d_hl: '// 游戏亮点', d_for: '// 适合谁', d_notice: '// 注意事项', d_close: '关闭', d_book: '预约这个主题 &gt;_', d_per: ' / 人', d_minutes: ' 分钟',
-    feat_ribbon: '本季主打', feat_kick: '// NOW SHOWING · 店长推荐', feat_book: '立即预约主打主题 &gt;_'
+    feat_ribbon: '本季主打', d_lore: '// 观亡之术', d_rituals: '// 五道法事', d_final: '最终仪式', d_final_p: '五道法事完成之后……真相只有走进白楼才能知道', d_rules: '// 入境须知', feat_kick: '// NOW SHOWING · 店长推荐', feat_book: '立即预约主打主题 &gt;_'
   },
   en: {
     page_title: '{shop} · Escape Room Booking',
@@ -911,7 +931,7 @@ var I18N = {
     intro_term: ['&gt; booting security system ...', '&gt; scanning subjects ... <b class="ok">6 ROOMS ONLINE</b>', '&gt; verifying access code ...', '&gt; access code ... <b class="ok">OK</b>'], intro_granted: 'ACCESS GRANTED', intro_lock: '● LOCKED', intro_unlock: '○ UNLOCKED',
     intro_small: 'ENTER THE ROOM', skip: 'Skip &gt;&gt;',
     details: 'View details', d_story: '// THE STORY', d_hl: '// HIGHLIGHTS', d_for: '// BEST FOR', d_notice: '// GOOD TO KNOW', d_close: 'Close', d_book: 'Book this room &gt;_', d_per: ' / player', d_minutes: ' min',
-    feat_ribbon: 'FEATURED', feat_kick: '// NOW SHOWING · STAFF PICK', feat_book: 'Book the featured room &gt;_'
+    feat_ribbon: 'FEATURED', d_lore: '// THE ART OF DEATHWATCH', d_rituals: '// FIVE RITUALS', d_final: 'The final rite', d_final_p: 'What comes after the five rituals can only be found inside the mansion', d_rules: '// BEFORE YOU ENTER', feat_kick: '// NOW SHOWING · STAFF PICK', feat_book: 'Book the featured room &gt;_'
   }
 };
 
@@ -1208,12 +1228,16 @@ var I18N = {
       '<div class="dlg-body">' +
         '<div class="dlg-main">' +
           '<div class="dlg-title dlg-anim" style="--d:.35s"><h3 id="dlgName" aria-label="' + esc(rn(r)) + '">' + esc(rn(r)) + '</h3><span class="tag">' + esc(rg(r)) + '</span></div>' +
+          (r.epigraph ? '<blockquote class="epigraph dlg-anim" style="--d:.45s">' + esc(LANG === 'en' ? r.epigraphEn : r.epigraph) + '</blockquote>' : '') +
           '<div class="dlg-sec dlg-anim" style="--d:.5s"><h4>' + t.d_story + '</h4>' + String(rs(r) || rd(r)).split('\n').map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') + '</div>' +
+          (r.lore ? '<div class="dlg-sec dlg-anim" style="--d:.58s"><h4>' + t.d_lore + '</h4><p>' + esc(LANG === 'en' ? r.loreEn : r.lore) + '</p></div>' : '') +
+          (r.rituals ? '<div class="dlg-sec dlg-anim" style="--d:.62s"><h4>' + t.d_rituals + '</h4><ol class="rituals">' + (LANG === 'en' ? r.ritualsEn : r.rituals).map(function (x, k) { return '<li><b>' + ['壹','贰','叁','肆','伍','陆'][k] + '</b><span><strong>' + esc(x[0]) + '</strong>' + esc(x[1]) + '</span></li>'; }).join('') + '<li class="more"><b>？</b><span><strong>' + t.d_final + '</strong>' + t.d_final_p + '</span></li></ol></div>' : '') +
           ((rh(r) || []).length ? '<div class="dlg-sec dlg-anim" style="--d:.65s"><h4>' + t.d_hl + '</h4><ul>' + rh(r).map(function (h, k) { return '<li style="--d:' + (0.8 + k * 0.12).toFixed(2) + 's"><span>' + esc(h) + '</span></li>'; }).join('') + '</ul></div>' : '') +
         '</div>' +
         '<div class="dlg-side">' +
           '<div class="dlg-box dlg-anim" style="--d:.45s"><div class="meter"><span>' + t.difficulty + '</span>' + segsAnim(r.thrill, 'c', 0.6) + '</div><div class="meter"><span>' + t.fear + '</span>' + segsAnim(r.fear, 'p', 0.75) + '</div>' +
           '<div class="facts" style="border-top:1px dashed var(--line2)"><div><small>PLAYERS</small><span>' + r.min + '–' + r.max + '</span></div><div><small>TIME</small><span>' + r.minutes + 'min</span></div><div><small>PRICE</small><span style="color:var(--cyan)">' + priceText(r) + '</span></div></div></div>' +
+          (r.rules ? '<div class="dlg-box rules dlg-anim" style="--d:.55s"><h4 style="margin:0;font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--pink)">' + t.d_rules + '</h4><ul>' + (LANG === 'en' ? r.rulesEn : r.rules).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>' : '') +
           (r.bestFor ? '<div class="dlg-box dlg-anim" style="--d:.6s"><h4 style="margin:0;font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--cyan)">' + t.d_for + '</h4><p>' + esc(LANG === 'en' ? r.bestForEn : r.bestFor) + '</p></div>' : '') +
           (r.notice ? '<div class="dlg-box dlg-anim" style="--d:.72s"><h4 style="margin:0;font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--pink)">' + t.d_notice + '</h4><p>' + esc(LANG === 'en' ? r.noticeEn : r.notice) + '</p></div>' : '') +
         '</div>' +
