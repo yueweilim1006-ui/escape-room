@@ -399,6 +399,19 @@ html.enter .door path,html.enter .door circle{stroke-dasharray:2400;stroke-dasho
 @keyframes doorDraw{to{stroke-dashoffset:0}}
 @keyframes heroUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 @keyframes heroFade{from{opacity:0}to{opacity:1}}
+/* hero: the signboard is the headline */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.hero{min-height:0}
+.hero-main{padding-top:28px;padding-bottom:72px;gap:18px}
+.hero .door{top:96px;bottom:auto;transform:translateX(-50%);width:min(560px,94vw);max-width:none;height:auto;aspect-ratio:520/700}
+.hero .door::after{content:"";position:absolute;left:12%;right:12%;bottom:-2px;height:60px;background:radial-gradient(ellipse at 50% 100%,rgba(255,43,214,.35),transparent 70%);pointer-events:none}
+.hero-logo-wrap{margin:58px 0 -4px}
+.hero-logo{width:min(380px,66vw)}
+.hero .sub{font-size:clamp(24px,3.4vw,42px);letter-spacing:12px;margin-top:-8px}
+html[lang="en"] .hero .sub{font-size:clamp(20px,2.8vw,34px);letter-spacing:6px}
+.hero .clock{font-size:clamp(48px,6vw,80px)}
+.hero p.desc{max-width:360px;margin-top:6px;background:none;font-size:16px}
+@media (max-width:640px){.hero .door{top:84px;-webkit-mask-image:linear-gradient(#000 52%,transparent 74%);mask-image:linear-gradient(#000 52%,transparent 74%)}.hero .door::after{display:none}.hero p.desc{max-width:none;font-size:15px}.hero-logo-wrap{margin-top:40px}.hero-logo{width:min(250px,64vw)}.hero .sub{letter-spacing:8px}}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -440,16 +453,14 @@ html.enter .door path,html.enter .door circle{stroke-dasharray:2400;stroke-dasho
 <svg viewBox="0 0 520 700" fill="none" preserveAspectRatio="xMidYMid meet">
 <path d="M40 700V140a120 120 0 0 1 120-120h200a120 120 0 0 1 120 120v560" stroke="#FF2BD6" stroke-width="4"/>
 <path d="M80 700V160a90 90 0 0 1 90-90h180a90 90 0 0 1 90 90v540" stroke="#FF2BD6" stroke-width="1.5" opacity=".5"/>
-<circle cx="400" cy="420" r="10" stroke="#00F0FF" stroke-width="3"/>
-<path d="M400 430v22" stroke="#00F0FF" stroke-width="3" stroke-linecap="round"/>
 </svg>
 </div>
 <div class="hud l"><span style="color:var(--pink)"><span class="blink">●</span> REC  CAM_04</span><span>SECTOR // B-02</span></div>
 <div class="hud r"><span>SECURITY LV.5</span><span style="color:var(--cyan)">EXIT: 01 / LOCKED</span></div>
 <div class="hero-main">
-<div class="hero-logo-wrap"><img class="hero-logo" src="logo.png" alt="潘多拉密室 PANDORA ESCAPE · 禁域" width="560" height="560"><span class="box-glow" aria-hidden="true"></span><span class="box-core" aria-hidden="true"></span><span class="box-sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+<h1 class="sr-only"><span class="shop-name">潘多拉密室</span> · PANDORA ESCAPE</h1>
 <div class="status"><i class="blink"></i>STATUS: SUBJECTS DETECTED</div>
-<h1 data-i18n="hero_h1"></h1>
+<div class="hero-logo-wrap"><img class="hero-logo" src="logo.png" alt="潘多拉密室 PANDORA ESCAPE · 禁域" width="560" height="560"><span class="box-glow" aria-hidden="true"></span><span class="box-core" aria-hidden="true"></span><span class="box-sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
 <p class="sub" data-i18n="hero_sub"></p>
 <div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:8px">
 <span class="clock-label">TIME REMAINING</span>
