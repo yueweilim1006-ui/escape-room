@@ -444,43 +444,31 @@ html[lang="en"] .hero .sub{font-size:clamp(20px,2.8vw,34px);letter-spacing:6px}
 .hero .clock .colon{display:inline-block;animation:colonBlink 1s steps(1) infinite}
 @keyframes colonBlink{50%{opacity:.15}}
 /* horror hero */
-.hero{background:radial-gradient(ellipse 80% 65% at 50% 42%,#14040b 0%,#07020a 55%,#020103 100%)}
-.hero .fog i:nth-child(1){background:radial-gradient(ellipse,rgba(150,0,25,.5),transparent 65%)}
-.hero .fog i:nth-child(2){background:radial-gradient(ellipse,rgba(70,0,90,.4),transparent 62%)}
-.hero .fog i:nth-child(3){background:radial-gradient(ellipse,rgba(255,20,50,.16),transparent 60%)}
-.hero .vignette{background:radial-gradient(ellipse 62% 66% at 50% 45%,transparent 30%,rgba(2,0,3,.7) 68%,rgba(0,0,0,.95) 100%)}
-.hero .stars i{--c:#ff6a7a !important;opacity:0}
+.hero{background:radial-gradient(ellipse 80% 65% at 50% 42%,#150823 0%,#08040f 55%,#030106 100%)}
+.hero .fog i:nth-child(1){background:radial-gradient(ellipse,rgba(180,20,170,.42),transparent 65%)}
+.hero .fog i:nth-child(2){background:radial-gradient(ellipse,rgba(0,190,220,.2),transparent 62%)}
+.hero .fog i:nth-child(3){background:radial-gradient(ellipse,rgba(255,43,214,.18),transparent 60%)}
+.hero .vignette{background:radial-gradient(ellipse 62% 66% at 50% 45%,transparent 30%,rgba(4,1,8,.7) 68%,rgba(2,0,4,.95) 100%)}
 .hero .stars i.sp{display:none}
-.hero .runes span{color:#ff3a4e;text-shadow:0 0 10px rgba(255,20,50,.7),0 0 26px rgba(160,0,20,.5);animation-duration:9s}
+.hero .runes span{animation-duration:9s}
 .hero .drips{position:absolute;left:0;right:0;top:0;height:220px;pointer-events:none;z-index:1}
-.hero .drips i{position:absolute;top:0;width:var(--w);height:0;border-radius:0 0 999px 999px;background:linear-gradient(#3a0008,#8a0014 60%,#c0081f);box-shadow:0 0 8px rgba(160,0,20,.6);animation:drip var(--t) cubic-bezier(.55,0,.8,.4) infinite}
-.hero .drips i::after{content:"";position:absolute;left:50%;bottom:-6px;width:calc(var(--w) + 4px);height:calc(var(--w) + 6px);transform:translateX(-50%);border-radius:50% 50% 50% 50%/40% 40% 60% 60%;background:#c0081f}
+.hero .drips i{position:absolute;top:0;width:var(--w);height:0;border-radius:0 0 999px 999px;background:linear-gradient(#2a0124,#9a0d82 60%,#FF2BD6);box-shadow:0 0 8px rgba(255,43,214,.7),0 0 18px rgba(255,43,214,.35);animation:drip var(--t) cubic-bezier(.55,0,.8,.4) infinite}
+.hero .drips i::after{content:"";position:absolute;left:50%;bottom:-6px;width:calc(var(--w) + 4px);height:calc(var(--w) + 6px);transform:translateX(-50%);border-radius:50% 50% 50% 50%/40% 40% 60% 60%;background:#FF2BD6;box-shadow:0 0 10px #FF2BD6}
 @keyframes drip{0%{height:0;opacity:1}70%{height:var(--h);opacity:1}90%{height:var(--h);opacity:.9}100%{height:var(--h);opacity:0}}
 .hero .eyes span{position:absolute;display:flex;gap:16px;pointer-events:none}
-.hero .eyes i{width:12px;height:6px;border-radius:50%;background:radial-gradient(ellipse,#ffd0d0 0%,#ff1a2e 45%,#7a0010 100%);box-shadow:0 0 10px #ff1a2e,0 0 24px rgba(255,0,30,.6);transform:scaleY(0);animation:eyeBlink var(--t) steps(1,end) infinite;animation-delay:inherit}
+.hero .eyes i{width:12px;height:6px;border-radius:50%;background:radial-gradient(ellipse,#E8FFFF 0%,#00F0FF 45%,#006a80 100%);box-shadow:0 0 10px #00F0FF,0 0 24px rgba(0,240,255,.6);transform:scaleY(0);animation:eyeBlink var(--t) steps(1,end) infinite;animation-delay:inherit}
 @keyframes eyeBlink{0%,72%{transform:scaleY(0)}73%{transform:scaleY(.4)}74%,84%{transform:scaleY(1)}85%{transform:scaleY(.1)}86%,91%{transform:scaleY(1)}92%,100%{transform:scaleY(0)}}
-.hero .whispers span{position:absolute;font-family:'Zhi Mang Xing','STKaiti','KaiTi',cursive;font-size:clamp(22px,2.8vw,38px);color:#a30c1f;text-shadow:0 0 6px rgba(255,0,30,.45);opacity:0;transform:rotate(var(--r));animation:whisper 19.8s ease-in-out infinite;white-space:nowrap}
+.hero .whispers span{position:absolute;font-family:'Zhi Mang Xing','STKaiti','KaiTi',cursive;font-size:clamp(22px,2.8vw,38px);color:#d81fb4;text-shadow:0 0 8px rgba(255,43,214,.6);opacity:0;transform:rotate(var(--r));animation:whisper 19.8s ease-in-out infinite;white-space:nowrap}
 @keyframes whisper{0%,100%{opacity:0;filter:blur(4px)}5%{opacity:.7;filter:blur(0)}12%{opacity:.55}17%,99%{opacity:0;filter:blur(3px)}}
 .hero .grain{position:absolute;inset:-50%;pointer-events:none;opacity:.09;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain .6s steps(4) infinite}
 @keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-4%,3%)}50%{transform:translate(3%,-5%)}75%{transform:translate(-2%,-2%)}}
 .hero .blackout{position:absolute;inset:0;background:#000;pointer-events:none;opacity:0;animation:blackout 11s steps(1) infinite;z-index:3}
 @keyframes blackout{0%,80%,84%,100%{opacity:0}80.5%{opacity:.88}81.5%{opacity:.2}82%{opacity:.92}83%{opacity:0}}
-.hero .sub{color:#ff1e3c;text-shadow:0 0 12px rgba(255,20,50,.85),0 0 32px rgba(180,0,20,.6);animation:none}
+.hero .sub{animation:none}
 .hero .sub .ch{animation:charFlicker var(--dur) steps(1) var(--dl) infinite,shiver .18s steps(2) infinite}
 @keyframes shiver{0%{transform:translate(0,0)}50%{transform:translate(.8px,-.6px)}}
-.hero .clock{color:#ff2a3d;text-shadow:0 0 16px rgba(255,20,50,.8),0 0 40px rgba(180,0,20,.5)}
-.hero .clock-bar div{background:#ff2a3d;box-shadow:0 0 10px #ff2a3d}
-.hero .status{color:#ff4a5c;border-color:#3a0d18;background:rgba(10,2,5,.8)}
-.hero .status i{background:#ff2a3d}
-.hero .hud span{color:#8a5560 !important}
-.hero .hud .blink{color:#ff1a2e}
 .hero-logo-wrap{margin:26px 0 -4px}
-.hero-logo-wrap::before{background:radial-gradient(circle,rgba(160,0,30,.25) 0%,rgba(0,240,255,.05) 40%,transparent 65%)}
-.hero .btn-line{border-color:#5a1a26}
 .hero .hero-main,.hero .hud{z-index:2}
-.hero .cta-row .btn{background:#C8102E;color:#fff;box-shadow:0 0 18px rgba(200,16,46,.55)}
-.hero .cta-row .btn:hover{background:#ff2a45 !important;color:#fff !important}
-.hero .cta-row .btn-line{color:#f0c8cf}
 @media (max-width:640px){.hero .eyes span:nth-child(n+4),.hero .whispers span:nth-child(n+4),.hero .drips i:nth-child(even){display:none}.hero-logo-wrap{margin-top:16px}}
 /* mobile sticky bar */
 .mbar{display:none}
