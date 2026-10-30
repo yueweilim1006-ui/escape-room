@@ -542,6 +542,20 @@ html[lang="en"] .epigraph{font-family:'Noto Serif SC',Georgia,serif;font-style:i
 .rituals li.more{border-style:dashed;opacity:.85}
 .rituals li.more b{background:transparent;border:1px dashed var(--pink);color:var(--pink)}
 .dlg-box.rules ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:8px;font-size:13.5px;line-height:1.7;color:var(--muted)}
+/* background music toggle */
+.bgm-btn{position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:8px;height:44px;padding:0 14px;border:1px solid var(--line3);background:rgba(7,2,10,.85);color:var(--muted);font-family:var(--mono);font-size:12px;letter-spacing:2px;cursor:pointer;backdrop-filter:blur(4px);transition:border-color .2s,color .2s}
+.bgm-btn:hover{border-color:var(--pink);color:var(--pink)}
+.bgm-btn .bars{display:flex;align-items:flex-end;gap:2px;height:14px}
+.bgm-btn .bars i{width:3px;height:4px;background:currentColor}
+.bgm-btn[aria-pressed="true"]{color:#FF5A6B;border-color:#8a0014;box-shadow:0 0 14px rgba(200,16,46,.35)}
+.bgm-btn[aria-pressed="true"] .bars i{animation:eq 1s ease-in-out infinite}
+.bgm-btn[aria-pressed="true"] .bars i:nth-child(2){animation-delay:-.3s}
+.bgm-btn[aria-pressed="true"] .bars i:nth-child(3){animation-delay:-.6s}
+.bgm-btn[aria-pressed="true"] .bars i:nth-child(4){animation-delay:-.15s}
+@keyframes eq{0%,100%{height:3px}50%{height:14px}}
+.bgm-btn.hint .lbl::after{content:" · 点击开启";opacity:.8}
+html[lang="en"] .bgm-btn.hint .lbl::after{content:" · tap to play"}
+@media (max-width:720px){.bgm-btn{bottom:calc(86px + env(safe-area-inset-bottom,0px));left:12px;padding:0 10px}}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -723,6 +737,7 @@ html[lang="en"] .epigraph{font-family:'Noto Serif SC',Georgia,serif;font-style:i
 
 <dialog id="roomDlg" aria-labelledby="dlgName"></dialog>
 
+<button type="button" id="bgmBtn" class="bgm-btn" aria-pressed="false" aria-label="背景音乐"><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="lbl">音乐</span></button>
 <div class="mbar">
 <a class="btn" href="#booking" data-i18n="mbar_book"></a>
 <a class="wa" id="waIcon" href="#" target="_blank" rel="noopener" data-i18n-aria="wa"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF2A3D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.6-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg></a>
@@ -1009,6 +1024,129 @@ var I18N = {
     setTimeout(function () { root0.classList.remove('enter'); }, 2600);
     if (withSweep) setTimeout(showScare, 2800);
   }
+
+  // ---- generated horror ambience (no audio files) ----
+  var BGM = (function () {
+    var AC = window.AudioContext || window.webkitAudioContext;
+    var ctx = null, master = null, verb = null, on = false, timers = [];
+    var pref = null;
+    try { pref = localStorage.getItem('bgm'); } catch (e) {}
+    function impulse(sec, decay) {
+      var len = ctx.sampleRate * sec, buf = ctx.createBuffer(2, len, ctx.sampleRate);
+      for (var c = 0; c < 2; c++) { var d = buf.getChannelData(c); for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay); }
+      return buf;
+    }
+    function lfo(freq, depth, target) { var o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = freq; g.gain.value = depth; o.connect(g); g.connect(target); o.start(); return o; }
+    function build() {
+      ctx = new AC();
+      master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+      verb = ctx.createConvolver(); verb.buffer = impulse(4, 2.6);
+      var verbOut = ctx.createGain(); verbOut.gain.value = .55; verb.connect(verbOut); verbOut.connect(master);
+      // low drone
+      var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 220; lp.Q.value = 6; lp.connect(master);
+      lfo(.05, 120, lp.frequency);
+      [[55, 'sawtooth', .10], [58.3, 'sawtooth', .08], [110, 'sine', .10], [41.2, 'sine', .16]].forEach(function (d) {
+        var o = ctx.createOscillator(), g = ctx.createGain(); o.type = d[1]; o.frequency.value = d[0]; g.gain.value = d[2]; o.connect(g); g.connect(lp); lfo(.07 + Math.random() * .05, .6, o.detune); o.start();
+      });
+      // dissonant pad
+      var pad = ctx.createGain(); pad.gain.value = .045; pad.connect(master); pad.connect(verb);
+      [220, 233.1, 329.6, 349.2].forEach(function (f, k) {
+        var o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine'; o.frequency.value = f; g.gain.value = 0; o.connect(g); g.connect(pad); o.start();
+        var t = ctx.createOscillator(), tg = ctx.createGain(); t.frequency.value = .03 + k * .021; tg.gain.value = .5; t.connect(tg); tg.connect(g.gain); t.start();
+      });
+      // wind
+      var nb = ctx.createBuffer(1, ctx.sampleRate * 3, ctx.sampleRate), nd = nb.getChannelData(0);
+      for (var i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+      var ns = ctx.createBufferSource(); ns.buffer = nb; ns.loop = true;
+      var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 600; bp.Q.value = 1.2;
+      var wg = ctx.createGain(); wg.gain.value = .05; ns.connect(bp); bp.connect(wg); wg.connect(master); wg.connect(verb);
+      lfo(.06, 420, bp.frequency); lfo(.09, .035, wg.gain); ns.start();
+    }
+    function beat() {
+      if (!on) return;
+      var t = ctx.currentTime;
+      [0, .28].forEach(function (dt, k) {
+        var o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine';
+        o.frequency.setValueAtTime(70, t + dt); o.frequency.exponentialRampToValueAtTime(38, t + dt + .18);
+        g.gain.setValueAtTime(0, t + dt); g.gain.linearRampToValueAtTime(k ? .22 : .32, t + dt + .015); g.gain.exponentialRampToValueAtTime(.001, t + dt + .3);
+        o.connect(g); g.connect(master); o.start(t + dt); o.stop(t + dt + .35);
+      });
+      timers.push(setTimeout(beat, 1500));
+    }
+    function bell() {
+      if (!on) return;
+      var t = ctx.currentTime, base = [196, 207.7, 261.6, 277.2][Math.floor(Math.random() * 4)];
+      [1, 2.76, 5.4, 8.93].forEach(function (r, k) {
+        var o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine'; o.frequency.value = base * r;
+        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.06 / (k + 1), t + .01); g.gain.exponentialRampToValueAtTime(.0005, t + 5 - k);
+        o.connect(g); g.connect(verb); g.connect(master); o.start(t); o.stop(t + 5);
+      });
+      timers.push(setTimeout(bell, 9000 + Math.random() * 9000));
+    }
+    function start() {
+      if (!AC) return;
+      if (!ctx) build();
+      if (ctx.state === 'suspended') ctx.resume();
+      if (on) return;
+      on = true;
+      master.gain.cancelScheduledValues(ctx.currentTime);
+      master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
+      master.gain.linearRampToValueAtTime(.55, ctx.currentTime + 3);
+      beat(); timers.push(setTimeout(bell, 4000));
+      ui();
+    }
+    function stop() {
+      if (!ctx || !on) { on = false; ui(); return; }
+      on = false; timers.forEach(clearTimeout); timers = [];
+      master.gain.cancelScheduledValues(ctx.currentTime);
+      master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
+      master.gain.linearRampToValueAtTime(0, ctx.currentTime + .8);
+      ui();
+    }
+    function stinger() {
+      if (!on || !ctx) return;
+      var t = ctx.currentTime;
+      [233, 247, 311, 466, 494].forEach(function (f) {
+        var o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sawtooth'; o.frequency.setValueAtTime(f, t); o.frequency.linearRampToValueAtTime(f * 1.06, t + 1.2);
+        g.gain.setValueAtTime(.0, t); g.gain.linearRampToValueAtTime(.12, t + .02); g.gain.exponentialRampToValueAtTime(.001, t + 1.6);
+        o.connect(g); g.connect(master); g.connect(verb); o.start(t); o.stop(t + 1.7);
+      });
+      var n = ctx.createBufferSource(), nb = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate), d = nb.getChannelData(0);
+      for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      n.buffer = nb; var hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.setValueAtTime(800, t); hp.frequency.exponentialRampToValueAtTime(5000, t + .8);
+      var ng = ctx.createGain(); ng.gain.setValueAtTime(.25, t); ng.gain.exponentialRampToValueAtTime(.001, t + 1);
+      n.connect(hp); hp.connect(ng); ng.connect(master); n.start(t);
+    }
+    var btn = document.getElementById('bgmBtn');
+    function ui() {
+      if (!btn) return;
+      btn.setAttribute('aria-pressed', String(on));
+      btn.classList.toggle('hint', !on && pref !== 'off');
+      btn.querySelector('.lbl').textContent = LANG === 'en' ? (on ? 'MUSIC ON' : 'MUSIC') : (on ? '音乐 开' : '音乐');
+    }
+    if (btn) btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (on) { stop(); pref = 'off'; } else { start(); pref = 'on'; }
+      try { localStorage.setItem('bgm', pref); } catch (er) {}
+      ui();
+    });
+    // browsers only allow sound after the visitor interacts: start on the first tap/click/key
+    function firstGesture(e) {
+      if (e.target && e.target.closest && e.target.closest('#bgmBtn')) return;
+      document.removeEventListener('pointerdown', firstGesture, true);
+      document.removeEventListener('keydown', firstGesture, true);
+      if (pref !== 'off') start();
+    }
+    if (AC) {
+      document.addEventListener('pointerdown', firstGesture, true);
+      document.addEventListener('keydown', firstGesture, true);
+    } else if (btn) { btn.hidden = true; }
+    document.addEventListener('visibilitychange', function () {
+      if (!ctx) return;
+      if (document.hidden) ctx.suspend(); else if (on) ctx.resume();
+    });
+    return { start: start, stop: stop, stinger: stinger, ui: ui };
+  })();
   function showScare() {
     if (document.getElementById('scare')) return;
     var t = T(), en = LANG === 'en';
@@ -1019,6 +1157,7 @@ var I18N = {
     sc.innerHTML = '<div class="shot"></div><div class="slice a"></div><div class="slice b"></div><div class="vig"></div><div class="flash"></div>' +
       '<div class="cap">' + (en ? 'DEATHWATCH MANSION · DARE TO ENTER?' : '观亡白楼 · 你敢进来吗？') + '<small>' + (en ? 'TAP ANYWHERE TO CLOSE' : '点击任意处关闭') + '</small></div>';
     document.body.appendChild(sc);
+    BGM.stinger();
     var prevOv = root0.style.overflow; root0.style.overflow = 'hidden';
     var done = false;
     function close() { if (done) return; done = true; if (sc.parentNode) sc.parentNode.removeChild(sc); root0.style.overflow = prevOv; document.removeEventListener('keydown', onK); }
@@ -1188,7 +1327,7 @@ var I18N = {
       return c === ' ' ? ' ' : '<span class="ch" style="--dl:-' + (Math.random() * 6).toFixed(2) + 's;--dur:' + (3.5 + Math.random() * 4).toFixed(2) + 's">' + esc(c) + '</span>';
     }).join('');
   }
-  function renderAll() { applyStatic(); splitSub(); renderMarquee(); renderFeatured(); renderCards(); render(); if (dlg && dlg.open) renderDlg(); }
+  function renderAll() { applyStatic(); splitSub(); if (typeof BGM !== 'undefined') BGM.ui(); renderMarquee(); renderFeatured(); renderCards(); render(); if (dlg && dlg.open) renderDlg(); }
 
   // ---- room detail dialog ----
   var dlg = $('roomDlg'), dlgRoom = null, dlgPrevOverflow = '';
