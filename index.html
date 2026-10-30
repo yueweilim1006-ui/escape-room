@@ -640,11 +640,6 @@ dialog#lightbox::backdrop{background:#000}
 .swipe.fit .sw-track{align-items:flex-start;transition:height .35s ease}
 .sw-slide{flex:0 0 100%;width:100%;scroll-snap-align:center;scroll-snap-stop:always}
 .sw-slide img{display:block;width:100%;height:auto !important;position:static !important;object-fit:fill}
-@media (min-width:700px){
-  .swipe.fit .sw-track{height:min(70vh,560px) !important;gap:8px;align-items:stretch;padding:0;scroll-padding:0 40px}
-  .sw-slide{flex:0 0 auto;width:auto;height:100%}
-  .sw-slide img{width:auto;height:100% !important}
-}
 .dlg-poster.has-gallery .meta,.dlg-poster.has-gallery .badge{position:absolute}
 /* mobile sticky bar */
 .mbar{display:none}
@@ -1345,7 +1340,6 @@ var I18N = {
   function swFitHeight(tr) {
     // phones: the frame takes the height of the photo on show, so nothing is cropped and there are no bars
     var box = tr.parentNode; if (!box.classList.contains('fit')) return;
-    if (window.matchMedia('(min-width: 700px)').matches) { tr.style.height = ''; return; }
     var img = tr.children[swIndex(tr)] && tr.children[swIndex(tr)].querySelector('img');
     if (img && img.naturalWidth) tr.style.height = Math.round(tr.clientWidth * img.naturalHeight / img.naturalWidth) + 'px';
   }
