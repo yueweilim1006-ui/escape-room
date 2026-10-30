@@ -361,9 +361,9 @@ html[lang="en"] .feat-body h3{font-family:'Orbitron','ZCOOL QingKe HuangYou',san
 .hero .door{top:auto;bottom:-60px;transform:translateX(-50%);height:640px}
 @media (max-width:640px){.hero-logo{margin-top:-24px}}
 /* the box in the logo keeps glowing */
-.box-glow{\1background:radial-gradient(circle,rgba(255,230,200,.5) 0%,rgba(255,80,50,.4) 16%,rgba(200,16,46,.16) 38%,transparent 62%);pointer-events:none;animation:boxGlow 2.6s ease-in-out infinite}
+.box-glow{\1background:radial-gradient(circle,rgba(255,230,200,.5) 0%,rgba(255,80,50,.4) 16%,rgba(200,16,46,.16) 38%,transparent 62%);pointer-events:none;animation:boxGlow 2.2s linear infinite}
 .box-core{\1background:radial-gradient(ellipse,rgba(255,250,235,.95) 0%,rgba(255,150,100,.65) 40%,transparent 72%);pointer-events:none;animation:boxCore 1.3s ease-in-out infinite alternate}
-@keyframes boxGlow{0%,100%{opacity:.55;transform:translate(-50%,-50%) scale(.88)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.12)}}
+@keyframes boxGlow{0%{opacity:.6;transform:translate(-50%,-50%) scale(.92)}8%{opacity:.95;transform:translate(-50%,-50%) scale(1.04)}15%{opacity:.7;transform:translate(-50%,-50%) scale(.97)}22%{opacity:1;transform:translate(-50%,-50%) scale(1.12)}35%{opacity:.62;transform:translate(-50%,-50%) scale(.94)}48%{opacity:.9;transform:translate(-50%,-50%) scale(1.06)}60%{opacity:.72;transform:translate(-50%,-50%) scale(.98)}72%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}85%{opacity:.68;transform:translate(-50%,-50%) scale(.95)}100%{opacity:.6;transform:translate(-50%,-50%) scale(.92)}}
 @keyframes boxCore{from{opacity:.55}to{opacity:1}}
 .box-sparks{position:absolute;left:35.8%;top:41%;width:0;height:0;pointer-events:none}
 .box-sparks i{\1background:#FFD2B8;box-shadow:0 0 6px #FF4A3A,0 0 12px rgba(255,42,61,.6);opacity:0;animation:boxSpark 2.8s ease-out infinite}
@@ -494,6 +494,26 @@ html[lang="en"] .hero .sub{font-size:clamp(20px,2.8vw,34px);letter-spacing:6px}
 .segs.c i.on{background:#F4E3D7;box-shadow:0 0 8px rgba(244,227,215,.7)}
 .strip{background:#B3001B;color:#fff}
 .lang button[aria-pressed="true"]{background:#C8102E;color:#fff}
+/* extra effects on the box light */
+.box-rays{position:absolute;left:35.8%;top:41%;width:78%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(255,150,100,.34) 0deg 2.5deg,transparent 2.5deg 16deg);-webkit-mask-image:radial-gradient(circle,#000 6%,rgba(0,0,0,.5) 22%,transparent 52%);mask-image:radial-gradient(circle,#000 6%,rgba(0,0,0,.5) 22%,transparent 52%);pointer-events:none;animation:raysSpin 20s linear infinite,raysPulse 2.2s ease-in-out infinite}
+@keyframes raysSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes raysPulse{0%,100%{opacity:.5}50%{opacity:1}}
+.box-ring{position:absolute;left:35.8%;top:42%;width:14%;height:6%;border:2px solid rgba(255,130,90,.85);border-radius:50%;box-shadow:0 0 10px rgba(255,60,50,.6);transform:translate(-50%,-50%) scale(.4);opacity:0;pointer-events:none;animation:ringOut 3.4s ease-out infinite}
+.box-ring.r2{animation-delay:1.7s}
+@keyframes ringOut{0%{opacity:.95;transform:translate(-50%,-50%) scale(.4)}100%{opacity:0;transform:translate(-50%,-50%) scale(4.2)}}
+.box-flare{position:absolute;left:35.8%;top:41.5%;width:18%;aspect-ratio:1;transform:translate(-50%,-50%) scale(.3);border-radius:50%;background:radial-gradient(circle,#FFFDF5 0%,rgba(255,190,140,.85) 25%,rgba(255,60,50,.35) 50%,transparent 70%);opacity:0;pointer-events:none;animation:boxFlare 6.5s ease-out infinite}
+@keyframes boxFlare{0%,84%{opacity:0;transform:translate(-50%,-50%) scale(.3)}88%{opacity:1;transform:translate(-50%,-50%) scale(2.4)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}}
+.box-smoke{position:absolute;left:35.8%;top:38%;width:0;height:0;pointer-events:none}
+.box-smoke i{position:absolute;left:-30px;top:-20px;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,rgba(150,20,35,.45),transparent 70%);filter:blur(6px);opacity:0;animation:smokeUp 6s ease-out infinite}
+.box-smoke i:nth-child(2){animation-delay:2s;animation-duration:7s;--sx:-24px}
+.box-smoke i:nth-child(3){animation-delay:4s;animation-duration:6.5s;--sx:18px}
+@keyframes smokeUp{0%{opacity:0;transform:translate(0,0) scale(.5)}20%{opacity:.9}100%{opacity:0;transform:translate(var(--sx,10px),-120px) scale(2.2)}}
+.box-sparks i:nth-child(11){--x:-28px;animation-delay:.15s;animation-duration:2.2s}
+.box-sparks i:nth-child(12){--x:26px;animation-delay:.75s;animation-duration:3.6s}
+.box-sparks i:nth-child(13){--x:-16px;animation-delay:1.35s;animation-duration:2.9s;width:4px;height:4px}
+.box-sparks i:nth-child(14){--x:32px;animation-delay:1.95s;animation-duration:3.3s}
+.box-sparks i:nth-child(15){--x:-34px;animation-delay:2.25s;animation-duration:2.7s;width:2px;height:2px}
+.box-sparks i:nth-child(16){--x:8px;animation-delay:2.7s;animation-duration:2.4s;width:4px;height:4px}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -544,7 +564,7 @@ html[lang="en"] .hero .sub{font-size:clamp(20px,2.8vw,34px);letter-spacing:6px}
 <div class="hero-main">
 <h1 class="sr-only"><span class="shop-name">潘多拉密室</span> · PANDORA ESCAPE</h1>
 <div class="status"><i class="blink"></i>STATUS: SUBJECTS DETECTED</div>
-<div class="hero-logo-wrap"><img class="hero-logo" src="logo-art.png" alt="潘多拉密室 PANDORA ESCAPE · 禁域" width="560" height="560"><span class="lt lt-glow" aria-hidden="true"><i></i></span><span class="lt" aria-hidden="true"><i></i></span><span class="box-beam" aria-hidden="true"></span><span class="box-glow" aria-hidden="true"></span><span class="box-core" aria-hidden="true"></span><span class="box-sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+<div class="hero-logo-wrap"><img class="hero-logo" src="logo-art.png" alt="潘多拉密室 PANDORA ESCAPE · 禁域" width="560" height="560"><span class="lt lt-glow" aria-hidden="true"><i></i></span><span class="lt" aria-hidden="true"><i></i></span><span class="box-beam" aria-hidden="true"></span><span class="box-rays" aria-hidden="true"></span><span class="box-smoke" aria-hidden="true"><i></i><i></i><i></i></span><span class="box-glow" aria-hidden="true"></span><span class="box-ring" aria-hidden="true"></span><span class="box-ring r2" aria-hidden="true"></span><span class="box-core" aria-hidden="true"></span><span class="box-flare" aria-hidden="true"></span><span class="box-sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
 <p class="sub" data-i18n="hero_sub"></p>
 <div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:8px">
 <span class="clock-label">TIME REMAINING</span>
