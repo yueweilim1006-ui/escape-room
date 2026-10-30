@@ -641,16 +641,16 @@ dialog#lightbox::backdrop{background:#000}
 .sw-slide{flex:0 0 100%;width:100%;scroll-snap-align:center;scroll-snap-stop:always}
 .sw-slide img{display:block;width:100%;height:auto !important;position:static !important;object-fit:fill}
 .dlg-poster.has-gallery .meta,.dlg-poster.has-gallery .badge{position:absolute}
-/* desktop: one photo at a time on a gallery stage, always fully visible */
+/* desktop: photo fills the whole showcase edge to edge, focused on its subject */
 @media (min-width:700px){
-  .dlg-poster.has-gallery{background:radial-gradient(ellipse 60% 70% at 50% 50%,rgba(140,10,30,.32),transparent 70%),linear-gradient(#0b0306,#050103)}
-  .swipe.fit .sw-track{height:min(64vh,540px) !important}
-  .swipe.fit .sw-slide{display:flex;align-items:center;justify-content:center;padding:28px 76px 36px;box-sizing:border-box;height:100%}
-  .swipe.fit .sw-slide img{flex:none !important;object-fit:fill !important;width:auto !important;height:auto !important;max-width:100%;max-height:100%;border:1px solid rgba(255,90,107,.35);box-shadow:0 18px 50px rgba(0,0,0,.75),0 0 40px rgba(200,16,46,.18)}
-  .swipe.fit .sw-nav{opacity:1;width:46px;height:46px}
-  .swipe.fit .sw-dots{bottom:12px}
-  .swipe.fit .sw-count{bottom:10px;right:16px}
-  .dlg-poster.has-gallery .sw-full{bottom:44px;right:16px}
+  .dlg-poster.has-gallery{background:#000}
+  .swipe.fit .sw-track{height:min(66vh,560px) !important}
+  .swipe.fit .sw-slide{height:100%;padding:0}
+  .swipe.fit .sw-slide img{width:100% !important;height:100% !important;object-fit:cover !important;object-position:var(--fp,50% 50%);border:0;box-shadow:none}
+  .dlg-poster.has-gallery::after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;background:linear-gradient(transparent,rgba(18,6,10,.95));pointer-events:none;z-index:1;top:auto;animation:none;transform:none}
+  .swipe.fit .sw-nav{opacity:0}
+  .swipe.fit:hover .sw-nav{opacity:1}
+  .swipe.fit .sw-dots,.swipe.fit .sw-count,.dlg-poster.has-gallery .sw-full{z-index:3}
 }
 /* mobile sticky bar */
 .mbar{display:none}
@@ -893,6 +893,7 @@ var CONFIG = {
     { name: '观亡白楼', nameEn: 'Deathwatch Mansion', genre: '中式恐怖', genreEn: 'Chinese Folk Horror', icon: 'house', badge: '主打推荐', badgeEn: 'FEATURED',
       level: 4, thrill: 5, fear: 5, min: 2, max: 5, minutes: 80, price: 0, image: 'baiou-1.jpg', imagePos: '50% 58%',
       gallery: ['baiou-1.jpg', 'baiou-2.jpg', 'baiou-3.jpg', 'baiou-4.jpg', 'baiou-5.jpg', 'scare.jpg'],
+      focus: ['50% 74%', '50% 78%', '50% 80%', '50% 80%', '50% 42%', '60% 40%'],
       desc: "黑水镇首富白家，自大小姐白纤纤病逝后，老宅夜夜闹鬼。作为这一代的观亡人，你要走进白楼，开启观亡之境，查出十年前的真相。",
       descEn: "Ever since Miss Bai Xianxian died ten years ago, the Bai family mansion has been haunted every night. As this generation's Deathwatcher, you must enter the White Mansion, open the Deathwatch Realm and uncover what really happened.",
       epigraph: "观亡者，观亡者之心，破阴阳之隔，化生死之执念，了尘世之夙愿。",
@@ -1330,7 +1331,7 @@ var I18N = {
     return '<div class="swipe' + (fit ? ' fit' : '') + '" data-swipe aria-roledescription="carousel">' +
       '<div class="sw-track" tabindex="0">' + g.map(function (src, k) {
         var im = '<img src="' + esc(src) + '" alt="' + alt + ' ' + (k + 1) + '/' + g.length + '"' + (k ? ' loading="lazy"' : '') + (!fit && k === 0 && r.imagePos ? ' style="object-position:' + r.imagePos + '"' : '') + ' draggable="false">';
-        return fit ? '<div class="sw-slide" style="--bg:url(\'' + esc(src) + '\')">' + im + '</div>' : im;
+        return fit ? '<div class="sw-slide" style="--fp:' + ((r.focus && r.focus[k]) || '50% 50%') + '">' + im + '</div>' : im;
       }).join('') + '</div>' +
       '<button type="button" class="sw-nav prev" data-sw="-1" aria-label="上一张"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>' +
       '<button type="button" class="sw-nav next" data-sw="1" aria-label="下一张"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>' +
