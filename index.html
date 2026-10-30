@@ -600,6 +600,15 @@ html.view-book .back-home:hover{color:var(--pink)}
 html.view-book .links .btn{display:none}
 @media (max-width:720px){html.view-book footer{padding-bottom:24px}}
 @media (max-width:560px){.opts.rooms{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.opt.room{padding:12px}.opt .rn{font-size:19px;letter-spacing:1px}}
+/* drifting fog across every page */
+.site-fog{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.site-fog i{position:absolute;left:0;width:200%;background-repeat:repeat-x;background-size:50% 100%;will-change:transform}
+.site-fog i:nth-child(1){bottom:-6%;height:70%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0016 .0038' numOctaves='4' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.78 0 0 0 0 0.6 0 0 0 0 0.62 0 0 0 1.9 -0.82'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23f%29'/%3E%3C/svg%3E");opacity:.32;animation:fogDrift 90s linear infinite,fogBreath 14s ease-in-out infinite;-webkit-mask-image:linear-gradient(transparent,#000 55%);mask-image:linear-gradient(transparent,#000 55%)}
+.site-fog i:nth-child(2){bottom:10%;height:60%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0024 .005' numOctaves='4' seed='23' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.62 0 0 0 0 0.32 0 0 0 0 0.36 0 0 0 1.7 -0.78'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23f%29'/%3E%3C/svg%3E");opacity:.26;animation:fogDrift 140s linear infinite reverse,fogBreath 19s ease-in-out -6s infinite;-webkit-mask-image:linear-gradient(transparent,#000 40%,#000 70%,transparent);mask-image:linear-gradient(transparent,#000 40%,#000 70%,transparent)}
+.site-fog i:nth-child(3){top:-10%;height:45%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0024 .005' numOctaves='4' seed='23' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.62 0 0 0 0 0.32 0 0 0 0 0.36 0 0 0 1.7 -0.78'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23f%29'/%3E%3C/svg%3E");opacity:.16;animation:fogDrift 170s linear -40s infinite,fogBreath 23s ease-in-out -11s infinite;-webkit-mask-image:linear-gradient(#000,transparent);mask-image:linear-gradient(#000,transparent)}
+@keyframes fogDrift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes fogBreath{0%,100%{filter:brightness(.85)}50%{filter:brightness(1.2)}}
+main,footer{position:relative;z-index:1}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -634,6 +643,7 @@ html.view-book .links .btn{display:none}
 </nav>
 </div></header>
 
+<div class="site-fog" aria-hidden="true"><i></i><i></i><i></i></div>
 <main id="top">
 <section class="hero">
 <div class="fog" aria-hidden="true"><i></i><i></i><i></i></div>
