@@ -412,6 +412,13 @@ html[lang="en"] .hero .sub{font-size:clamp(20px,2.8vw,34px);letter-spacing:6px}
 .hero .clock{font-size:clamp(48px,6vw,80px)}
 .hero p.desc{max-width:360px;margin-top:6px;background:none;font-size:16px}
 @media (max-width:640px){.hero .door{top:84px;-webkit-mask-image:linear-gradient(#000 52%,transparent 74%);mask-image:linear-gradient(#000 52%,transparent 74%)}.hero .door::after{display:none}.hero p.desc{max-width:none;font-size:15px}.hero-logo-wrap{margin-top:40px}.hero-logo{width:min(250px,64vw)}.hero .sub{letter-spacing:8px}}
+/* rainbow marquee lettering on the logo */
+.lt{position:absolute;inset:0;pointer-events:none}
+.lt i{position:absolute;inset:0;background:repeating-linear-gradient(90deg,#FF2D55 0,#FF8A00 60px,#FFE600 120px,#2BFF6A 180px,#00E5FF 240px,#3D6BFF 300px,#C02BFF 360px,#FF2D55 420px);-webkit-mask:url(logo-text.png) center/100% 100% no-repeat;mask:url(logo-text.png) center/100% 100% no-repeat;animation:rainbowRun 2.4s linear infinite,marqueeBlink .9s steps(1) infinite}
+.lt-glow{filter:blur(7px);opacity:.95}
+.lt-glow i{animation:rainbowRun 2.4s linear infinite,marqueeBlink .9s steps(1) infinite}
+@keyframes rainbowRun{from{background-position:0 0}to{background-position:420px 0}}
+@keyframes marqueeBlink{0%{filter:brightness(1.35) saturate(1.2)}33%{filter:brightness(.75)}66%{filter:brightness(1.6) saturate(1.3)}}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -460,7 +467,7 @@ html[lang="en"] .hero .sub{font-size:clamp(20px,2.8vw,34px);letter-spacing:6px}
 <div class="hero-main">
 <h1 class="sr-only"><span class="shop-name">潘多拉密室</span> · PANDORA ESCAPE</h1>
 <div class="status"><i class="blink"></i>STATUS: SUBJECTS DETECTED</div>
-<div class="hero-logo-wrap"><img class="hero-logo" src="logo.png" alt="潘多拉密室 PANDORA ESCAPE · 禁域" width="560" height="560"><span class="box-glow" aria-hidden="true"></span><span class="box-core" aria-hidden="true"></span><span class="box-sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+<div class="hero-logo-wrap"><img class="hero-logo" src="logo-art.png" alt="潘多拉密室 PANDORA ESCAPE · 禁域" width="560" height="560"><span class="lt lt-glow" aria-hidden="true"><i></i></span><span class="lt" aria-hidden="true"><i></i></span><span class="box-glow" aria-hidden="true"></span><span class="box-core" aria-hidden="true"></span><span class="box-sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
 <p class="sub" data-i18n="hero_sub"></p>
 <div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:8px">
 <span class="clock-label">TIME REMAINING</span>
