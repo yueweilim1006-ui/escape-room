@@ -66,7 +66,7 @@ header.nav .wrap{display:flex;align-items:center;justify-content:space-between;g
 .hero{position:relative;min-height:820px;display:flex;flex-direction:column;justify-content:center;overflow:hidden;border-bottom:1px solid var(--line)}
 .scanbar{position:absolute;left:0;right:0;top:0;height:180px;background:linear-gradient(transparent,rgba(0,240,255,.07),transparent);pointer-events:none;animation:scan 6s linear infinite}
 .door{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:520px;max-width:86%;height:700px;pointer-events:none}
-.door svg{width:100%;height:100%;animation:breathe 3s ease-in-out infinite;filter:drop-shadow(0 0 14px rgba(255,43,214,.9)) drop-shadow(0 0 40px rgba(255,43,214,.45))}
+.door svg{width:100%;height:100%;animation:breathe 3s ease-in-out infinite,doorFlicker 9s steps(1) infinite;filter:drop-shadow(0 0 14px rgba(255,43,214,.9)) drop-shadow(0 0 40px rgba(255,43,214,.45))}
 .hud{position:absolute;top:28px;font-family:var(--mono);font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:6px;letter-spacing:1px}
 .hud.l{left:28px}.hud.r{right:28px;align-items:flex-end}
 @media (max-width:640px){.hud{display:none}}
@@ -420,6 +420,29 @@ html[lang="en"] .hero .sub{font-size:clamp(20px,2.8vw,34px);letter-spacing:6px}
 @keyframes textSweep{0%{background-position:100% 0}55%,100%{background-position:0 0}}
 @keyframes glowBreath{0%,100%{opacity:.55}50%{opacity:1}}
 @keyframes tubeFlicker{0%,61%,66%,100%{opacity:1}62%{opacity:.35}63%{opacity:1}64%{opacity:.5}}
+/* mysterious hero atmosphere */
+.hero .fog,.hero .stars,.hero .runes,.hero .vignette{position:absolute;inset:0;pointer-events:none}
+.hero .fog i{position:absolute;width:70vmax;height:40vmax;left:50%;top:52%;border-radius:50%;filter:blur(40px);opacity:.55;transform:translate(-50%,-50%)}
+.hero .fog i:nth-child(1){background:radial-gradient(ellipse,rgba(160,40,200,.45),transparent 65%);animation:fogA 22s ease-in-out infinite alternate}
+.hero .fog i:nth-child(2){background:radial-gradient(ellipse,rgba(0,200,230,.22),transparent 62%);animation:fogB 28s ease-in-out infinite alternate;top:66%}
+.hero .fog i:nth-child(3){background:radial-gradient(ellipse,rgba(255,43,214,.18),transparent 60%);animation:fogC 18s ease-in-out infinite alternate;top:38%;width:50vmax}
+@keyframes fogA{from{transform:translate(-62%,-48%) scale(1)}to{transform:translate(-38%,-54%) scale(1.15)}}
+@keyframes fogB{from{transform:translate(-35%,-50%) scale(1.1)}to{transform:translate(-65%,-46%) scale(.95)}}
+@keyframes fogC{from{transform:translate(-50%,-40%)}to{transform:translate(-50%,-60%) scale(1.2)}}
+.hero .vignette{background:radial-gradient(ellipse 70% 75% at 50% 48%,transparent 40%,rgba(5,3,10,.55) 75%,rgba(5,3,10,.85) 100%)}
+.hero .stars i{position:absolute;border-radius:50%;background:var(--c);box-shadow:0 0 6px var(--c),0 0 12px var(--c);opacity:0;animation:twinkle var(--t) ease-in-out infinite}
+.hero .stars i.sp{border-radius:0;background:var(--c);clip-path:polygon(50% 0,58% 42%,100% 50%,58% 58%,50% 100%,42% 58%,0 50%,42% 42%);box-shadow:none;filter:drop-shadow(0 0 4px var(--c))}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(.5)}45%{opacity:1;transform:scale(1)}55%{opacity:.9;transform:scale(1.15) rotate(20deg)}}
+.hero .runes span{position:absolute;font-family:'Cinzel','Times New Roman',serif;font-size:clamp(22px,3vw,40px);color:#7FF6FF;text-shadow:0 0 10px rgba(0,240,255,.7),0 0 24px rgba(0,240,255,.35);opacity:0;animation:runeFloat 7s ease-in-out infinite}
+@keyframes runeFloat{0%,100%{opacity:0;transform:translateY(14px)}40%,60%{opacity:.38}50%{opacity:.55;transform:translateY(-10px)}}
+@media (max-width:640px){.hero .runes span{font-size:18px}.hero .runes span:nth-child(n+7){display:none}}
+.box-beam{position:absolute;left:35.8%;bottom:57%;width:46%;height:75%;transform:translateX(-50%);transform-origin:50% 100%;background:linear-gradient(to top,rgba(140,250,255,.42),rgba(0,240,255,.12) 45%,transparent 85%);clip-path:polygon(44% 100%,56% 100%,100% 0,0 0);filter:blur(5px);pointer-events:none;animation:beamSway 6s ease-in-out infinite}
+@keyframes beamSway{0%,100%{transform:translateX(-50%) rotate(-4deg);opacity:.55}50%{transform:translateX(-50%) rotate(4deg);opacity:.95}}
+@keyframes doorFlicker{0%,71%,76%,100%{opacity:1}72%{opacity:.25}73%{opacity:1}74%{opacity:.45}}
+.hero .sub .ch{display:inline-block;animation:charFlicker var(--dur) steps(1) var(--dl) infinite}
+@keyframes charFlicker{0%,88%,100%{opacity:1}89%{opacity:.15}90%{opacity:1}92%{opacity:.35}93%{opacity:1}}
+.hero .clock .colon{display:inline-block;animation:colonBlink 1s steps(1) infinite}
+@keyframes colonBlink{50%{opacity:.15}}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -456,6 +479,10 @@ html[lang="en"] .hero .sub{font-size:clamp(20px,2.8vw,34px);letter-spacing:6px}
 
 <main id="top">
 <section class="hero">
+<div class="fog" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="stars" aria-hidden="true"></div>
+<div class="runes" aria-hidden="true"><span style="left:8%;top:22%;animation-delay:-0s">Π</span><span style="left:14%;top:58%;animation-delay:-1.4s">Α</span><span style="left:6%;top:78%;animation-delay:-2.8s">Ν</span><span style="left:91%;top:18%;animation-delay:-0.7s">Δ</span><span style="left:86%;top:46%;animation-delay:-2.1s">Ω</span><span style="left:93%;top:72%;animation-delay:-3.5s">Ρ</span><span style="left:20%;top:36%;animation-delay:-4.2s">Ξ</span><span style="left:80%;top:30%;animation-delay:-5.0s">Ψ</span><span style="left:12%;top:90%;animation-delay:-3.1s">Σ</span><span style="left:88%;top:88%;animation-delay:-1.8s">Φ</span></div>
+<div class="vignette" aria-hidden="true"></div>
 <div class="scanbar" aria-hidden="true"></div>
 <div class="door" aria-hidden="true">
 <svg viewBox="0 0 520 700" fill="none" preserveAspectRatio="xMidYMid meet">
@@ -468,11 +495,11 @@ html[lang="en"] .hero .sub{font-size:clamp(20px,2.8vw,34px);letter-spacing:6px}
 <div class="hero-main">
 <h1 class="sr-only"><span class="shop-name">潘多拉密室</span> · PANDORA ESCAPE</h1>
 <div class="status"><i class="blink"></i>STATUS: SUBJECTS DETECTED</div>
-<div class="hero-logo-wrap"><img class="hero-logo" src="logo-art.png" alt="潘多拉密室 PANDORA ESCAPE · 禁域" width="560" height="560"><span class="lt lt-glow" aria-hidden="true"><i></i></span><span class="lt" aria-hidden="true"><i></i></span><span class="box-glow" aria-hidden="true"></span><span class="box-core" aria-hidden="true"></span><span class="box-sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+<div class="hero-logo-wrap"><img class="hero-logo" src="logo-art.png" alt="潘多拉密室 PANDORA ESCAPE · 禁域" width="560" height="560"><span class="lt lt-glow" aria-hidden="true"><i></i></span><span class="lt" aria-hidden="true"><i></i></span><span class="box-beam" aria-hidden="true"></span><span class="box-glow" aria-hidden="true"></span><span class="box-core" aria-hidden="true"></span><span class="box-sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
 <p class="sub" data-i18n="hero_sub"></p>
 <div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:8px">
 <span class="clock-label">TIME REMAINING</span>
-<span class="clock" id="clock">60:00</span>
+<span class="clock" id="clock">60<span class="colon">:</span>00</span>
 <div class="clock-bar"><div id="clockBar"></div></div>
 </div>
 <p class="desc" data-i18n="hero_desc"></p>
@@ -859,7 +886,7 @@ var I18N = {
   var left = 3600;
   setInterval(function () {
     left = left > 0 ? left - 1 : 3600;
-    $('clock').textContent = pad(Math.floor(left / 60)) + ':' + pad(left % 60);
+    $('clock').innerHTML = pad(Math.floor(left / 60)) + '<span class="colon">:</span>' + pad(left % 60);
     $('clockBar').style.width = (left / 36) + '%';
   }, 1000);
 
@@ -1021,7 +1048,22 @@ var I18N = {
     $('hint').textContent = ready ? t.hint_ready : (slotOk ? t.hint_contact : t.hint_slot);
   }
 
-  function renderAll() { applyStatic(); renderMarquee(); renderFeatured(); renderCards(); render(); if (dlg && dlg.open) renderDlg(); }
+  (function makeStars() {
+    var box = document.querySelector('.hero .stars'); if (!box) return;
+    var cols = ['#7FF6FF', '#FF7BE6', '#FFFFFF', '#00F0FF', '#C9A7FF'], h = '';
+    for (var k = 0; k < 46; k++) {
+      var sp = k % 9 === 0, sz = sp ? 10 + Math.random() * 8 : 1.5 + Math.random() * 2.5;
+      h += '<i class="' + (sp ? 'sp' : '') + '" style="left:' + (Math.random() * 100).toFixed(1) + '%;top:' + (Math.random() * 100).toFixed(1) + '%;width:' + sz.toFixed(1) + 'px;height:' + sz.toFixed(1) + 'px;--c:' + cols[k % cols.length] + ';--t:' + (2.5 + Math.random() * 4).toFixed(2) + 's;animation-delay:-' + (Math.random() * 6).toFixed(2) + 's"></i>';
+    }
+    box.innerHTML = h;
+  })();
+  function splitSub() {
+    var e = document.querySelector('.hero .sub'); if (!e) return;
+    e.innerHTML = e.textContent.split('').map(function (c) {
+      return c === ' ' ? ' ' : '<span class="ch" style="--dl:-' + (Math.random() * 6).toFixed(2) + 's;--dur:' + (3.5 + Math.random() * 4).toFixed(2) + 's">' + esc(c) + '</span>';
+    }).join('');
+  }
+  function renderAll() { applyStatic(); splitSub(); renderMarquee(); renderFeatured(); renderCards(); render(); if (dlg && dlg.open) renderDlg(); }
 
   // ---- room detail dialog ----
   var dlg = $('roomDlg'), dlgRoom = null, dlgPrevOverflow = '';
