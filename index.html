@@ -360,6 +360,45 @@ html[lang="en"] .feat-body h3{font-family:'Orbitron','ZCOOL QingKe HuangYou',san
 @keyframes logoNeon{0%,100%{filter:drop-shadow(0 0 10px rgba(255,43,214,.35))}50%{filter:drop-shadow(0 0 22px rgba(255,43,214,.6)) drop-shadow(0 0 6px rgba(0,240,255,.35))}}
 .hero .door{top:auto;bottom:-60px;transform:translateX(-50%);height:640px}
 @media (max-width:640px){.hero-logo{margin-top:-24px}}
+/* the box in the logo keeps glowing */
+.box-glow{position:absolute;left:35.8%;top:41.5%;width:38%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(220,255,255,.55) 0%,rgba(0,240,255,.38) 16%,rgba(0,240,255,.12) 38%,transparent 62%);pointer-events:none;animation:boxGlow 2.6s ease-in-out infinite}
+.box-core{position:absolute;left:35.8%;top:42.5%;width:13%;height:5%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,.9) 0%,rgba(160,250,255,.6) 40%,transparent 72%);pointer-events:none;animation:boxCore 1.3s ease-in-out infinite alternate}
+@keyframes boxGlow{0%,100%{opacity:.55;transform:translate(-50%,-50%) scale(.88)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.12)}}
+@keyframes boxCore{from{opacity:.55}to{opacity:1}}
+.box-sparks{position:absolute;left:35.8%;top:41%;width:0;height:0;pointer-events:none}
+.box-sparks i{position:absolute;left:0;top:0;width:3px;height:3px;border-radius:50%;background:#C8FCFF;box-shadow:0 0 6px #00F0FF,0 0 12px rgba(0,240,255,.6);opacity:0;animation:boxSpark 2.8s ease-out infinite}
+.box-sparks i:nth-child(1){--x:-14px;animation-delay:0s}
+.box-sparks i:nth-child(2){--x:10px;animation-delay:.3s;animation-duration:3.2s}
+.box-sparks i:nth-child(3){--x:-4px;animation-delay:.6s}
+.box-sparks i:nth-child(4){--x:18px;animation-delay:.9s;animation-duration:2.4s}
+.box-sparks i:nth-child(5){--x:-20px;animation-delay:1.2s;animation-duration:3.4s}
+.box-sparks i:nth-child(6){--x:4px;animation-delay:1.5s}
+.box-sparks i:nth-child(7){--x:-10px;animation-delay:1.8s;animation-duration:2.6s}
+.box-sparks i:nth-child(8){--x:14px;animation-delay:2.1s;animation-duration:3s}
+.box-sparks i:nth-child(9){--x:-2px;animation-delay:2.4s;width:2px;height:2px}
+.box-sparks i:nth-child(10){--x:22px;animation-delay:2.6s;width:2px;height:2px}
+@keyframes boxSpark{0%{opacity:0;transform:translate(0,4px) scale(1)}15%{opacity:1}100%{opacity:0;transform:translate(var(--x),-70px) scale(.4)}}
+
+/* entering the site after the intro */
+.site-reveal{position:fixed;inset:0;z-index:90;background:#07050F;pointer-events:none;animation:revealDown 1s cubic-bezier(.7,0,.2,1) .05s forwards}
+.site-reveal::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:#FF2BD6;box-shadow:0 0 14px #FF2BD6,0 0 40px rgba(255,43,214,.8),0 -30px 60px rgba(0,240,255,.25)}
+@keyframes revealDown{from{transform:translateY(0)}to{transform:translateY(102%)}}
+html.pre-enter .hero-main>*,html.pre-enter .door,html.pre-enter .hud{opacity:0}
+html.enter .hero-logo-wrap{animation:neonOn 1.1s steps(1) .25s both}
+@keyframes neonOn{0%{opacity:0}12%{opacity:1}18%{opacity:.15}30%{opacity:1}38%{opacity:.35}46%,100%{opacity:1}}
+html.enter .hero .status{animation:heroUp .5s cubic-bezier(.2,.8,.2,1) .6s both}
+html.enter .hero h1{animation:glitchIn .8s steps(8) .75s both,glitch 4s 2s infinite}
+@keyframes glitchIn{0%{opacity:0;transform:translateX(-40px) skewX(-20deg);text-shadow:-14px 0 rgba(0,240,255,.9),14px 0 rgba(255,43,214,.9)}25%{opacity:1;transform:translateX(18px) skewX(10deg)}50%{transform:translateX(-8px);text-shadow:-8px 0 rgba(0,240,255,.9),8px 0 rgba(255,43,214,.9)}75%{transform:translateX(4px)}100%{opacity:1;transform:none;text-shadow:-3px 0 rgba(0,240,255,.75),3px 0 rgba(255,43,214,.75)}}
+html.enter .hero .sub{animation:heroUp .6s cubic-bezier(.2,.8,.2,1) 1.05s both,flicker 5s 2s infinite}
+html.enter .hero-main>div:nth-of-type(3){animation:heroUp .6s cubic-bezier(.2,.8,.2,1) 1.2s both}
+html.enter .hero .desc{animation:heroUp .6s cubic-bezier(.2,.8,.2,1) 1.35s both}
+html.enter .hero .cta-row{animation:heroUp .6s cubic-bezier(.2,.8,.2,1) 1.5s both}
+html.enter .hud{animation:heroFade .6s ease 1.4s both}
+html.enter .door{animation:heroFade .3s ease .9s both}
+html.enter .door path,html.enter .door circle{stroke-dasharray:2400;stroke-dashoffset:2400;animation:doorDraw 1.4s ease-out .9s forwards}
+@keyframes doorDraw{to{stroke-dashoffset:0}}
+@keyframes heroUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes heroFade{from{opacity:0}to{opacity:1}}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -408,7 +447,7 @@ html[lang="en"] .feat-body h3{font-family:'Orbitron','ZCOOL QingKe HuangYou',san
 <div class="hud l"><span style="color:var(--pink)"><span class="blink">●</span> REC  CAM_04</span><span>SECTOR // B-02</span></div>
 <div class="hud r"><span>SECURITY LV.5</span><span style="color:var(--cyan)">EXIT: 01 / LOCKED</span></div>
 <div class="hero-main">
-<div class="hero-logo-wrap"><img class="hero-logo" src="logo.png" alt="潘多拉密室 PANDORA ESCAPE · 禁域" width="560" height="560"></div>
+<div class="hero-logo-wrap"><img class="hero-logo" src="logo.png" alt="潘多拉密室 PANDORA ESCAPE · 禁域" width="560" height="560"><span class="box-glow" aria-hidden="true"></span><span class="box-core" aria-hidden="true"></span><span class="box-sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
 <div class="status"><i class="blink"></i>STATUS: SUBJECTS DETECTED</div>
 <h1 data-i18n="hero_h1"></h1>
 <p class="sub" data-i18n="hero_sub"></p>
@@ -805,12 +844,26 @@ var I18N = {
     $('clockBar').style.width = (left / 36) + '%';
   }, 1000);
 
+  var root0 = document.documentElement;
+  function enterSite(withSweep) {
+    root0.classList.remove('pre-enter');
+    root0.classList.add('enter');
+    if (withSweep) {
+      var sw = document.createElement('div');
+      sw.className = 'site-reveal';
+      document.body.appendChild(sw);
+      setTimeout(function () { if (sw.parentNode) sw.parentNode.removeChild(sw); }, 1200);
+    }
+    setTimeout(function () { root0.classList.remove('enter'); }, 2600);
+  }
   // ---- intro animation: the door opens (plays once per visit) ----
   (function () {
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var seen = false;
     try { seen = sessionStorage.getItem('introSeen') === '1'; } catch (e) {}
-    if (reduce || seen) return;
+    if (reduce) return;
+    if (seen) { enterSite(false); return; }
+    root0.classList.add('pre-enter');
     try { sessionStorage.setItem('introSeen', '1'); } catch (e) {}
     var t = T();
     var el = document.createElement('div');
@@ -836,6 +889,7 @@ var I18N = {
       if (el.parentNode) el.parentNode.removeChild(el);
       root.style.overflow = prev;
       left = 3600;
+      enterSite(true);
       document.removeEventListener('keydown', onKey);
     }
     function onKey(e) { if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') finish(); }
