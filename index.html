@@ -644,13 +644,24 @@ dialog#lightbox::backdrop{background:#000}
 /* desktop: photo fills the whole showcase edge to edge, focused on its subject */
 @media (min-width:700px){
   .dlg-poster.has-gallery{background:#000}
-  .swipe.fit .sw-track{height:min(66vh,560px) !important}
+  .swipe.fit .sw-track{height:min(62vh,480px) !important}
   .swipe.fit .sw-slide{height:100%;padding:0}
   .swipe.fit .sw-slide img{width:100% !important;height:100% !important;object-fit:cover !important;object-position:var(--fp,50% 50%);border:0;box-shadow:none}
   .dlg-poster.has-gallery::after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;background:linear-gradient(transparent,rgba(18,6,10,.95));pointer-events:none;z-index:1;top:auto;animation:none;transform:none}
   .swipe.fit .sw-nav{opacity:0}
   .swipe.fit:hover .sw-nav{opacity:1}
   .swipe.fit .sw-dots,.swipe.fit .sw-count,.dlg-poster.has-gallery .sw-full{z-index:3}
+}
+/* desktop: photo column on the left, text on the right */
+@media (min-width:860px){
+  dialog#roomDlg.with-gal{width:min(1080px,calc(100% - 32px))}
+  dialog#roomDlg.with-gal[open]{display:grid;grid-template-columns:360px minmax(0,1fr);grid-template-rows:auto auto 1fr auto;align-items:start}
+  #roomDlg.with-gal .dlg-close{grid-column:2;grid-row:1;justify-self:end;float:none;margin:12px 12px 0 0;position:sticky;top:12px}
+  #roomDlg.with-gal .dlg-poster{grid-column:1;grid-row:1 / span 3;position:sticky;top:0;align-self:start;border-bottom:0;border-right:1px solid var(--line)}
+  #roomDlg.with-gal .dlg-thumbs{grid-column:1;grid-row:4;display:none}
+  #roomDlg.with-gal .dlg-body{grid-column:2;grid-row:1 / span 3;padding-top:24px}
+  #roomDlg.with-gal .dlg-foot{grid-column:1 / span 2;grid-row:4}
+  #roomDlg.with-gal .dlg-poster.has-gallery::after{height:60px}
 }
 /* mobile sticky bar */
 .mbar{display:none}
@@ -893,7 +904,7 @@ var CONFIG = {
     { name: '观亡白楼', nameEn: 'Deathwatch Mansion', genre: '中式恐怖', genreEn: 'Chinese Folk Horror', icon: 'house', badge: '主打推荐', badgeEn: 'FEATURED',
       level: 4, thrill: 5, fear: 5, min: 2, max: 5, minutes: 80, price: 0, image: 'baiou-1.jpg', imagePos: '50% 58%',
       gallery: ['baiou-1.jpg', 'baiou-2.jpg', 'baiou-3.jpg', 'baiou-4.jpg', 'baiou-5.jpg', 'scare.jpg'],
-      focus: ['50% 74%', '50% 78%', '50% 80%', '50% 80%', '50% 42%', '60% 40%'],
+      focus: ['50% 60%', '55% 50%', '52% 50%', '40% 50%', '50% 50%', '42% 50%'],
       desc: "黑水镇首富白家，自大小姐白纤纤病逝后，老宅夜夜闹鬼。作为这一代的观亡人，你要走进白楼，开启观亡之境，查出十年前的真相。",
       descEn: "Ever since Miss Bai Xianxian died ten years ago, the Bai family mansion has been haunted every night. As this generation's Deathwatcher, you must enter the White Mansion, open the Deathwatch Realm and uncover what really happened.",
       epigraph: "观亡者，观亡者之心，破阴阳之隔，化生死之执念，了尘世之夙愿。",
@@ -1496,6 +1507,7 @@ var I18N = {
     }, 45);
   }
   function renderDlg() {
+    dlg.classList.toggle('with-gal', !!(CONFIG.rooms[dlgRoom] && CONFIG.rooms[dlgRoom].gallery));
     var t = T(), i = dlgRoom, r = CONFIG.rooms[i];
     if (!r) return;
     dlg.innerHTML =
