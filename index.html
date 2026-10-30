@@ -590,6 +590,16 @@ html[lang="en"] .bgm-btn.hint .lbl::after{content:" · tap to play"}
 .poster .code,.poster .lv,.poster .badge,.feat-poster .lv,.dlg-poster .meta,.dlg-poster .badge,.feat-ribbon{z-index:2;pointer-events:none}
 .dlg-poster .badge{bottom:auto;top:46px}
 @media (max-width:560px){#roomDlg .dlg-foot{flex-direction:column;align-items:stretch;gap:10px}#roomDlg .dlg-foot .btn{width:100%;white-space:nowrap}}
+/* booking page view */
+html:not(.view-book) #booking{display:none}
+.back-home{display:none}
+html.view-book main>section:not(#booking),html.view-book .bigmarq,html.view-book .mbar,html.view-book #featured{display:none !important}
+html.view-book #booking{border-top:0;padding-top:28px;min-height:calc(100vh - 140px);background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(200,16,46,.14),transparent 70%)}
+html.view-book .back-home{display:inline-flex;align-items:center;min-height:44px;margin-bottom:18px;font-family:var(--mono);font-size:14px;letter-spacing:1px;color:var(--muted);text-decoration:none}
+html.view-book .back-home:hover{color:var(--pink)}
+html.view-book .links .btn{display:none}
+@media (max-width:720px){html.view-book footer{padding-bottom:24px}}
+@media (max-width:560px){.opts.rooms{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.opt.room{padding:12px}.opt .rn{font-size:19px;letter-spacing:1px}}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -620,7 +630,7 @@ html[lang="en"] .bgm-btn.hint .lbl::after{content:" · tap to play"}
 <div class="lang" role="group" aria-label="Language / 语言">
 <button type="button" data-lang="zh" lang="zh-CN">中</button><button type="button" data-lang="en" lang="en">EN</button>
 </div>
-<a class="btn" href="#booking" data-i18n="nav_book"></a>
+<a class="btn" href="#book" data-i18n="nav_book"></a>
 </nav>
 </div></header>
 
@@ -649,7 +659,7 @@ html[lang="en"] .bgm-btn.hint .lbl::after{content:" · tap to play"}
 </div>
 <p class="desc" data-i18n="hero_desc"></p>
 <div class="cta-row">
-<a class="btn" href="#booking" data-i18n="cta_book"></a>
+<a class="btn" href="#book" data-i18n="cta_book"></a>
 <a class="btn-line" href="#themes" data-i18n="cta_rooms"></a>
 </div>
 </div>
@@ -681,6 +691,7 @@ html[lang="en"] .bgm-btn.hint .lbl::after{content:" · tap to play"}
 </div></section>
 
 <section class="block" id="booking"><div class="wrap">
+<a class="back-home" href="#top" data-i18n="back_home"></a>
 <p class="kicker">&gt; RUN booking.exe <span class="blink">█</span></p>
 <h2 class="title" data-i18n="book_title"></h2>
 <div class="progress" id="progress"></div>
@@ -755,7 +766,7 @@ html[lang="en"] .bgm-btn.hint .lbl::after{content:" · tap to play"}
 <section class="block"><div class="wrap final">
 <p class="mono" style="margin:0;color:var(--cyan);font-size:13px;letter-spacing:4px">READY?</p>
 <h2 data-i18n="final_h"></h2>
-<a class="btn" href="#booking" style="font-size:18px;padding:20px 44px" data-i18n="final_btn"></a>
+<a class="btn" href="#book" style="font-size:18px;padding:20px 44px" data-i18n="final_btn"></a>
 </div></section>
 </main>
 
@@ -773,7 +784,7 @@ html[lang="en"] .bgm-btn.hint .lbl::after{content:" · tap to play"}
 
 <button type="button" id="bgmBtn" class="bgm-btn" aria-pressed="false" aria-label="背景音乐"><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="lbl">音乐</span></button>
 <div class="mbar">
-<a class="btn" href="#booking" data-i18n="mbar_book"></a>
+<a class="btn" href="#book" data-i18n="mbar_book"></a>
 <a class="wa" id="waIcon" href="#" target="_blank" rel="noopener" data-i18n-aria="wa"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF2A3D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.6-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg></a>
 </div>
 
@@ -927,7 +938,7 @@ var I18N = {
     intro_term: ['&gt; 密室系统启动中……', '&gt; 侦测到闯入者…… <b class="ok">六间密室待命</b>', '&gt; 正在核对通关密码……', '&gt; 密码正确，门锁解除 <b class="ok">OK</b>'], intro_granted: '准许进入', intro_lock: '● 已上锁', intro_unlock: '○ 已解锁',
     intro_small: '进入密室', gate_title: '一旦打开，便无路可退', gate_go: '进入禁域 · 开启声音', gate_mute: '静音进入', gate_note: '建议戴上耳机，体验更佳', skip: '跳过 &gt;&gt;',
     details: '查看详情', d_story: '// 故事背景', d_hl: '// 游戏亮点', d_for: '// 适合谁', d_notice: '// 注意事项', d_close: '关闭', d_book: '预约这个主题 &gt;_', d_per: ' / 人', d_minutes: ' 分钟',
-    feat_ribbon: '本季主打', d_lore: '// 观亡之术', d_rituals: '// 五道法事', d_final: '最终仪式', d_final_p: '五道法事完成之后……真相只有走进白楼才能知道', d_rules: '// 入境须知', feat_kick: '// NOW SHOWING · 店长推荐', feat_book: '立即预约主打主题 &gt;_'
+    feat_ribbon: '本季主打', back_home: '← 返回首页', book_page_title: '在线预约', d_lore: '// 观亡之术', d_rituals: '// 五道法事', d_final: '最终仪式', d_final_p: '五道法事完成之后……真相只有走进白楼才能知道', d_rules: '// 入境须知', feat_kick: '// NOW SHOWING · 店长推荐', feat_book: '立即预约主打主题 &gt;_'
   },
   en: {
     page_title: '{shop} · Escape Room Booking',
@@ -980,7 +991,7 @@ var I18N = {
     intro_term: ['&gt; booting security system ...', '&gt; scanning subjects ... <b class="ok">6 ROOMS ONLINE</b>', '&gt; verifying access code ...', '&gt; access code ... <b class="ok">OK</b>'], intro_granted: 'ACCESS GRANTED', intro_lock: '● LOCKED', intro_unlock: '○ UNLOCKED',
     intro_small: 'ENTER THE ROOM', gate_title: 'Once opened, there is no way back', gate_go: 'Enter · Sound on', gate_mute: 'Enter without sound', gate_note: 'Headphones recommended', skip: 'Skip &gt;&gt;',
     details: 'View details', d_story: '// THE STORY', d_hl: '// HIGHLIGHTS', d_for: '// BEST FOR', d_notice: '// GOOD TO KNOW', d_close: 'Close', d_book: 'Book this room &gt;_', d_per: ' / player', d_minutes: ' min',
-    feat_ribbon: 'FEATURED', d_lore: '// THE ART OF DEATHWATCH', d_rituals: '// FIVE RITUALS', d_final: 'The final rite', d_final_p: 'What comes after the five rituals can only be found inside the mansion', d_rules: '// BEFORE YOU ENTER', feat_kick: '// NOW SHOWING · STAFF PICK', feat_book: 'Book the featured room &gt;_'
+    feat_ribbon: 'FEATURED', back_home: '← Back to home', book_page_title: 'Book online', d_lore: '// THE ART OF DEATHWATCH', d_rituals: '// FIVE RITUALS', d_final: 'The final rite', d_final_p: 'What comes after the five rituals can only be found inside the mansion', d_rules: '// BEFORE YOU ENTER', feat_kick: '// NOW SHOWING · STAFF PICK', feat_book: 'Book the featured room &gt;_'
   }
 };
 
@@ -1253,7 +1264,7 @@ var I18N = {
         '<p>' + esc(rd(r)) + '</p>' +
         '<div style="display:flex;flex-direction:column;gap:10px"><div class="meter"><span>' + t.difficulty + '</span>' + segs(r.thrill, 'c') + '</div><div class="meter"><span>' + t.fear + '</span>' + segs(r.fear, 'p') + '</div></div>' +
         '<div class="facts"><div><small>PLAYERS</small><span>' + r.min + '–' + r.max + '</span></div><div><small>TIME</small><span>' + r.minutes + 'min</span></div><div><small>PRICE</small><span style="color:var(--cyan)">' + priceText(r) + '</span></div></div>' +
-        '<div class="card-actions"><button type="button" class="more" data-detail="' + i + '">' + t.details + '</button><a class="ghost" href="#booking" data-room="' + i + '">' + t.book_room + '</a></div></div></article>';
+        '<div class="card-actions"><button type="button" class="more" data-detail="' + i + '">' + t.details + '</button><a class="ghost" href="#book" data-room="' + i + '">' + t.book_room + '</a></div></div></article>';
     }).join('');
   }
 
@@ -1304,7 +1315,7 @@ var I18N = {
         '<p class="story">' + esc(String((LANG === 'en' ? r.storyEn : r.story) || rd(r)).split('\n')[0]) + '</p>' +
         '<div class="feat-stats"><div class="meters"><div class="meter"><span>' + t.difficulty + '</span>' + segs(r.thrill, 'c') + '</div><div class="meter"><span>' + t.fear + '</span>' + segs(r.fear, 'p') + '</div></div>' +
         '<div class="facts"><div><small>PLAYERS</small><span>' + r.min + '–' + r.max + '</span></div><div><small>TIME</small><span>' + r.minutes + 'min</span></div><div><small>PRICE</small><span style="color:var(--cyan)">' + priceText(r) + '</span></div></div></div>' +
-        '<div class="feat-actions"><a class="btn" href="#booking" data-room="' + fi + '">' + t.feat_book + '</a><button type="button" class="more" data-detail="' + fi + '">' + t.details + '</button></div>' +
+        '<div class="feat-actions"><a class="btn" href="#book" data-room="' + fi + '">' + t.feat_book + '</a><button type="button" class="more" data-detail="' + fi + '">' + t.details + '</button></div>' +
       '</div></article>';
   }
 
@@ -1379,7 +1390,7 @@ var I18N = {
       return c === ' ' ? ' ' : '<span class="ch" style="--dl:-' + (Math.random() * 6).toFixed(2) + 's;--dur:' + (3.5 + Math.random() * 4).toFixed(2) + 's">' + esc(c) + '</span>';
     }).join('');
   }
-  function renderAll() { applyStatic(); splitSub(); if (typeof BGM !== 'undefined') BGM.ui(); renderMarquee(); renderFeatured(); renderCards(); render(); if (dlg && dlg.open) renderDlg(); }
+  function renderAll() { applyStatic(); if (root0.classList.contains('view-book')) document.title = T().book_page_title + ' · ' + shop(); splitSub(); if (typeof BGM !== 'undefined') BGM.ui(); renderMarquee(); renderFeatured(); renderCards(); render(); if (dlg && dlg.open) renderDlg(); }
 
   // ---- room detail dialog ----
   var dlg = $('roomDlg'), dlgRoom = null, dlgPrevOverflow = '';
@@ -1466,7 +1477,7 @@ var I18N = {
     if (gb) { var trk = dlg.querySelector('.sw-track'); if (trk) { var gi = [].indexOf.call(dlg.querySelectorAll('[data-gal]'), gb); trk.scrollTo({ left: gi * trk.clientWidth, behavior: 'smooth' }); } return; }
     if (e.target.closest('[data-dlg-book]')) {
       var i = dlgRoom;
-      closeDlg(function () { S.room = i; render(); var bk = $('booking'); if (bk) bk.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth' }); });
+      closeDlg(function () { S.room = i; render(); location.hash = 'book'; });
     }
   });
   document.addEventListener('click', function (e) {
@@ -1520,8 +1531,23 @@ var I18N = {
     S.slot = null; $('done').classList.remove('show'); $('bookLayout').style.display = ''; render();
   };
 
+
+  // ---- booking lives on its own page (#book); the music keeps playing ----
+  function setView() {
+    var h = location.hash, book = h === '#book';
+    var was = root0.classList.contains('view-book');
+    root0.classList.toggle('view-book', book);
+    document.title = book ? T().book_page_title + ' · ' + shop() : T().page_title.replace('{shop}', shop());
+    if (book && !was) { window.scrollTo({ top: 0, behavior: 'instant' }); requestAnimationFrame(function () { window.scrollTo({ top: 0, behavior: 'instant' }); }); }
+    if (!book && was) {
+      var target = h && h.length > 1 && /^#[A-Za-z][\w-]*$/.test(h) ? document.querySelector(h) : null;
+      requestAnimationFrame(function () { if (target) target.scrollIntoView({ behavior: 'instant' }); else window.scrollTo({ top: 0, behavior: 'instant' }); });
+    }
+  }
+  window.addEventListener('hashchange', setView);
   buildDays();
   renderAll();
+  setView();
   var mHash = location.hash.match(/^#room-(\d+)$/);
   if (mHash && CONFIG.rooms[+mHash[1] - 1]) openDlg(+mHash[1] - 1);
 })();
