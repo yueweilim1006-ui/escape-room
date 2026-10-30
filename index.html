@@ -655,7 +655,7 @@ dialog#lightbox::backdrop{background:#000}
 /* desktop: photo column on the left, text on the right */
 @media (min-width:860px){
   dialog#roomDlg.with-gal{width:min(1080px,calc(100% - 32px))}
-  dialog#roomDlg.with-gal[open]{display:grid;grid-template-columns:360px minmax(0,1fr);grid-template-rows:auto auto 1fr auto;align-items:start}
+  dialog#roomDlg.with-gal[open]{display:grid;grid-template-columns:360px minmax(0,1fr);grid-template-rows:auto auto auto auto;align-items:start}
   #roomDlg.with-gal .dlg-close{grid-column:2;grid-row:1;justify-self:end;float:none;margin:12px 12px 0 0;position:sticky;top:12px}
   #roomDlg.with-gal .dlg-poster{grid-column:1;grid-row:1 / span 3;position:sticky;top:0;align-self:start;border-bottom:0;border-right:1px solid var(--line)}
   #roomDlg.with-gal .dlg-thumbs{grid-column:1;grid-row:4;display:none}
@@ -665,6 +665,12 @@ dialog#lightbox::backdrop{background:#000}
   #roomDlg.with-gal .swipe.fit .sw-track{height:calc(100vh - 32px - 98px) !important;height:calc(100dvh - 32px - 98px) !important;max-height:600px}
   dialog#roomDlg.with-gal[open]{grid-template-columns:400px minmax(0,1fr)}
 }
+/* stills grid: fixed 3:2 frames */
+.stills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.still{display:block;padding:0;border:1px solid rgba(255,255,255,.12);border-radius:12px;overflow:hidden;aspect-ratio:3/2;background:#000;cursor:zoom-in;transition:transform .2s,border-color .2s,box-shadow .2s}
+.still img{display:block;width:100%;height:100%;object-fit:cover}
+.still:hover{transform:translateY(-3px);border-color:var(--pink);box-shadow:0 8px 24px rgba(200,16,46,.3)}
+@media (max-width:860px){.stills{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -927,7 +933,8 @@ var CONFIG = {
       noticeEn: "Adapted from ancient Chinese Deathwatcher legends. Includes darkness, live-actor chases and intense scares. Not recommended for pregnant guests, people with heart conditions or children under [12]. You need not believe in ghosts, but please keep a respectful heart." },
     { name: '纸人回魂', nameEn: 'Return of the Paper Dolls', genre: '中式恐怖', genreEn: 'Chinese Folk Horror', icon: 'paper', badge: '新主题', badgeEn: 'NEW',
       level: 4, thrill: 5, fear: 5, min: 2, max: 6, minutes: 60, price: 0, image: 'zhiren-1.jpg', imagePos: '50% 38%',
-      gallery: ['zhiren-1.jpg', 'zhiren-6.jpg', 'zhiren-8.jpg', 'zhiren-7.jpg', 'zhiren-9.jpg', 'zhiren-10.jpg', 'zhiren-2.jpg', 'zhiren-3.jpg', 'zhiren-4.jpg', 'zhiren-5.jpg'], focus: ['50% 40%', '45% 50%', '50% 50%', '50% 50%', '50% 50%', '50% 50%', '42% 40%', '52% 45%', '50% 45%', '50% 50%'],
+      gallery: ['zhiren-1.jpg', 'zhiren-6.jpg', 'zhiren-8.jpg', 'zhiren-7.jpg', 'zhiren-9.jpg', 'zhiren-10.jpg', 'zhiren-2.jpg', 'zhiren-3.jpg', 'zhiren-4.jpg', 'zhiren-5.jpg'],
+      stills: ['zhiren-6.jpg', 'zhiren-8.jpg', 'zhiren-7.jpg', 'zhiren-9.jpg', 'zhiren-10.jpg'], focus: ['50% 40%', '45% 50%', '50% 50%', '50% 50%', '50% 50%', '50% 50%', '42% 40%', '52% 45%', '50% 45%', '50% 50%'],
       desc: "老扎纸铺的纸人，眼睛从来不能点上。可是今晚，有人替它们点了睛。",
       descEn: "At the old paper-effigy shop, the dolls' eyes must never be painted in. Tonight, someone painted them.",
       story: "镇上的刘记扎纸铺开了七十年，铺里的规矩只有一条：纸人做好之后，绝不能点睛。点了睛的纸人就有了魂，会自己走出铺子，去找它们“认得的人”。\n老师傅头七那晚，铺子里所有纸人的眼睛都被人用朱砂点上了。你们被困在铺子里，四周的纸人一个比一个靠近。在鸡鸣之前，找出是谁点的睛，送它们回去。",
@@ -1007,7 +1014,7 @@ var I18N = {
     intro_term: ['&gt; 密室系统启动中……', '&gt; 侦测到闯入者…… <b class="ok">六间密室待命</b>', '&gt; 正在核对通关密码……', '&gt; 密码正确，门锁解除 <b class="ok">OK</b>'], intro_granted: '准许进入', intro_lock: '● 已上锁', intro_unlock: '○ 已解锁',
     intro_small: '进入密室', gate_title: '一旦打开，便无路可退', gate_go: '进入禁域 · 开启声音', gate_mute: '静音进入', gate_note: '建议戴上耳机，体验更佳', skip: '跳过 &gt;&gt;',
     details: '查看详情', d_story: '// 故事背景', d_hl: '// 游戏亮点', d_for: '// 适合谁', d_notice: '// 注意事项', d_close: '关闭', d_book: '预约这个主题 &gt;_', d_per: ' / 人', d_minutes: ' 分钟',
-    feat_ribbon: '本季主打', back_home: '← 返回首页', book_page_title: '在线预约', d_lore: '// 观亡之术', d_rituals: '// 五道法事', d_final: '最终仪式', d_final_p: '五道法事完成之后……真相只有走进白楼才能知道', d_rules: '// 入境须知', feat_kick: '// NOW SHOWING · 店长推荐', feat_book: '立即预约主打主题 &gt;_'
+    feat_ribbon: '本季主打', d_stills: '// 剧照', back_home: '← 返回首页', book_page_title: '在线预约', d_lore: '// 观亡之术', d_rituals: '// 五道法事', d_final: '最终仪式', d_final_p: '五道法事完成之后……真相只有走进白楼才能知道', d_rules: '// 入境须知', feat_kick: '// NOW SHOWING · 店长推荐', feat_book: '立即预约主打主题 &gt;_'
   },
   en: {
     page_title: '{shop} · Escape Room Booking',
@@ -1060,7 +1067,7 @@ var I18N = {
     intro_term: ['&gt; booting security system ...', '&gt; scanning subjects ... <b class="ok">6 ROOMS ONLINE</b>', '&gt; verifying access code ...', '&gt; access code ... <b class="ok">OK</b>'], intro_granted: 'ACCESS GRANTED', intro_lock: '● LOCKED', intro_unlock: '○ UNLOCKED',
     intro_small: 'ENTER THE ROOM', gate_title: 'Once opened, there is no way back', gate_go: 'Enter · Sound on', gate_mute: 'Enter without sound', gate_note: 'Headphones recommended', skip: 'Skip &gt;&gt;',
     details: 'View details', d_story: '// THE STORY', d_hl: '// HIGHLIGHTS', d_for: '// BEST FOR', d_notice: '// GOOD TO KNOW', d_close: 'Close', d_book: 'Book this room &gt;_', d_per: ' / player', d_minutes: ' min',
-    feat_ribbon: 'FEATURED', back_home: '← Back to home', book_page_title: 'Book online', d_lore: '// THE ART OF DEATHWATCH', d_rituals: '// FIVE RITUALS', d_final: 'The final rite', d_final_p: 'What comes after the five rituals can only be found inside the mansion', d_rules: '// BEFORE YOU ENTER', feat_kick: '// NOW SHOWING · STAFF PICK', feat_book: 'Book the featured room &gt;_'
+    feat_ribbon: 'FEATURED', d_stills: '// STILLS', back_home: '← Back to home', book_page_title: 'Book online', d_lore: '// THE ART OF DEATHWATCH', d_rituals: '// FIVE RITUALS', d_final: 'The final rite', d_final_p: 'What comes after the five rituals can only be found inside the mansion', d_rules: '// BEFORE YOU ENTER', feat_kick: '// NOW SHOWING · STAFF PICK', feat_book: 'Book the featured room &gt;_'
   }
 };
 
@@ -1527,6 +1534,7 @@ var I18N = {
           '<div class="dlg-title dlg-anim" style="--d:.35s"><h3 id="dlgName" aria-label="' + esc(rn(r)) + '">' + esc(rn(r)) + '</h3><span class="tag">' + esc(rg(r)) + '</span></div>' +
           (r.epigraph ? '<blockquote class="epigraph dlg-anim" style="--d:.45s">' + esc(LANG === 'en' ? r.epigraphEn : r.epigraph) + '</blockquote>' : '') +
           '<div class="dlg-sec dlg-anim" style="--d:.5s"><h4>' + t.d_story + '</h4>' + String(rs(r) || rd(r)).split('\n').map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') + '</div>' +
+          (r.stills ? '<div class="dlg-sec dlg-anim" style="--d:.56s"><h4>' + t.d_stills + '</h4><div class="stills">' + r.stills.map(function (src, k) { return '<button type="button" class="still" data-still="' + k + '" aria-label="' + esc(rn(r)) + ' ' + (k + 1) + '"><img src="' + esc(src) + '" alt="" loading="lazy"></button>'; }).join('') + '</div></div>' : '') +
           (r.lore ? '<div class="dlg-sec dlg-anim" style="--d:.58s"><h4>' + t.d_lore + '</h4><p>' + esc(LANG === 'en' ? r.loreEn : r.lore) + '</p></div>' : '') +
           (r.rituals ? '<div class="dlg-sec dlg-anim" style="--d:.62s"><h4>' + t.d_rituals + '</h4><ol class="rituals">' + (LANG === 'en' ? r.ritualsEn : r.rituals).map(function (x, k) { return '<li><b>' + ['壹','贰','叁','肆','伍','陆'][k] + '</b><span><strong>' + esc(x[0]) + '</strong>' + esc(x[1]) + '</span></li>'; }).join('') + '<li class="more"><b>？</b><span><strong>' + t.d_final + '</strong>' + t.d_final_p + '</span></li></ol></div>' : '') +
           ((rh(r) || []).length ? '<div class="dlg-sec dlg-anim" style="--d:.65s"><h4>' + t.d_hl + '</h4><ul>' + rh(r).map(function (h, k) { return '<li style="--d:' + (0.8 + k * 0.12).toFixed(2) + 's"><span>' + esc(h) + '</span></li>'; }).join('') + '</ul></div>' : '') +
@@ -1571,6 +1579,8 @@ var I18N = {
   dlg.addEventListener('close', onDlgClosed);
   dlg.addEventListener('click', function (e) {
     if (e.target === dlg || e.target.closest('[data-close]')) { closeDlg(); return; }
+    var stb = e.target.closest('[data-still]');
+    if (stb) { var rr = CONFIG.rooms[dlgRoom]; if (rr && rr.stills) openLightbox(rr.stills, +stb.getAttribute('data-still')); return; }
     var gb = e.target.closest('[data-gal]');
     if (gb) { var trk = dlg.querySelector('.sw-track'); if (trk) { var gi = [].indexOf.call(dlg.querySelectorAll('[data-gal]'), gb); swGo(trk, gi); } return; }
     if (e.target.closest('[data-dlg-book]')) {
