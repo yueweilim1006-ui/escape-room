@@ -666,7 +666,9 @@ dialog#lightbox::backdrop{background:#000}
   #roomDlg.with-gal .dlg-poster.has-gallery::after{height:60px}
   dialog#roomDlg.with-gal[open]{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
   #roomDlg.with-gal .swipe.fit .sw-slide{background:#000}
-  #roomDlg.with-gal .swipe.fit .sw-slide.tall img{object-fit:contain !important;object-position:50% 50%}
+  #roomDlg.with-gal .swipe.fit .sw-slide.tall img{object-fit:contain !important;object-position:50% 50%;position:relative;z-index:1;filter:drop-shadow(0 0 24px rgba(0,0,0,.85))}
+  #roomDlg.with-gal .swipe.fit .sw-slide.tall{position:relative;overflow:hidden}
+  #roomDlg.with-gal .swipe.fit .sw-slide.tall::before{content:"";position:absolute;inset:-40px;background:var(--bg) center/cover no-repeat;filter:blur(26px) brightness(.42) saturate(1.2);pointer-events:none}
 }
 /* stills grid: fixed 3:2 frames */
 .stills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
@@ -1394,7 +1396,7 @@ var I18N = {
     if (window.matchMedia('(min-width: 860px)').matches && box.closest('#roomDlg.with-gal')) {
       // desktop column: portrait photos fill the column; landscape photos fill a slightly shorter frame so only a little is trimmed at the sides
       tr.style.height = Math.round(cw * 0.625) + 'px';  // one wide 16:10 frame: wide photos fill it, upright photos sit centred on black
-      Array.prototype.forEach.call(tr.querySelectorAll('.sw-slide img'), function (im) { if (im.naturalWidth) im.parentNode.classList.toggle('tall', im.naturalHeight > im.naturalWidth); });
+      Array.prototype.forEach.call(tr.querySelectorAll('.sw-slide img'), function (im) { if (im.naturalWidth) { var tall = im.naturalHeight > im.naturalWidth; im.parentNode.classList.toggle('tall', tall); if (tall) im.parentNode.style.setProperty('--bg', 'url("' + im.getAttribute('src') + '")'); } });
     } else {
       tr.style.height = Math.round(cw * ratio) + 'px';
     }
