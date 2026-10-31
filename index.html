@@ -94,6 +94,13 @@ header.nav .wrap{display:flex;align-items:center;justify-content:space-between;g
 /* themes */
 .head-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:48px}
 .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px}
+#roomCards{grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+@media (max-width:1100px){#roomCards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:860px){#roomCards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){#roomCards{grid-template-columns:minmax(0,1fr)}}
+#roomCards .card h3{font-size:24px}
+#roomCards .card-body{padding:16px 16px 18px}
+#roomCards .card-actions .ghost{padding:10px 6px;font-size:13px}
 .card{position:relative;background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden;transition:border-color .25s,box-shadow .25s,transform .25s}
 .card:hover{border-color:var(--pink);box-shadow:0 0 36px rgba(255,42,61,.28);transform:translateY(-6px)}
 .poster{height:auto;aspect-ratio:5/7;background:#10050A;position:relative;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);overflow:hidden}
