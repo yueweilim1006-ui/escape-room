@@ -892,7 +892,7 @@ var CONFIG = {
   times: ['10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'],
   daysAhead: 14,
   // 主打推荐主题：填主题的编号（1–6），会放在主题档案最上面，预约时默认选它。填 0 表示不设主打。
-  featured: 4,
+  featured: 2,
   rooms: [
     { name: '人骨日记', nameEn: 'The Bone Diary', genre: '恐怖解谜', genreEn: 'Horror Mystery', icon: 'bone', badge: '人气', badgeEn: 'POPULAR',
       videos: [{ src: 'rengu-v1.mp4', poster: 'rengu-v1.jpg' }, { src: 'rengu-v2.mp4', poster: 'rengu-v2.jpg' }],
@@ -908,7 +908,7 @@ var CONFIG = {
       bestForEn: "Players who love a mystery and can handle a horror atmosphere. We suggest 3 or more.",
       notice: "场景昏暗，有骨骼标本和突发惊吓；孕妇、心脏病患者及 [12] 岁以下儿童不建议参加。",
       noticeEn: "Dark scenes, skeleton props and sudden scares. Not recommended for pregnant guests, people with heart conditions or children under [12]." },
-    { name: '恐怖游戏', nameEn: 'Horror Game', genre: '西式恐怖', genreEn: 'Gothic Horror', icon: 'game', badge: '烧脑', badgeEn: 'BRAIN BURNER',
+    { name: '恐怖游戏', nameEn: 'Horror Game', genre: '西式恐怖', genreEn: 'Gothic Horror', icon: 'game', badge: '主打推荐', badgeEn: 'FEATURED',
       level: 5, thrill: 5, fear: 5, min: 2, max: 6, minutes: 60, price: 0, image: 'horrorgame-1.jpg', imagePos: '50% 4%',
       gallery: ['horrorgame-1.jpg', 'horrorgame-p1.jpg', 'horrorgame-p2.jpg', 'horrorgame-p3.jpg', 'horrorgame-p4.jpg', 'horrorgame-p5.jpg', 'horrorgame-p6.jpg', 'horrorgame-p7.jpg', 'horrorgame-p8.jpg', 'horrorgame-p9.jpg', 'horrorgame-p10.jpg', 'horrorgame-p11.jpg', 'horrorgame-p12.jpg', 'horrorgame-p13.jpg', 'horrorgame-p14.jpg', 'horrorgame-p15.jpg', 'horrorgame-p16.jpg'], focus: ['50% 6%', '50% 40%', '45% 40%', '58% 40%', '50% 40%', '45% 40%', '50% 40%', '62% 40%', '35% 40%', '55% 40%', '50% 40%', '35% 40%', '50% 40%', '38% 40%', '40% 40%', '50% 40%', '50% 40%'],
       cardGallery: ['horrorgame-1.jpg', 'horrorgame-p4.jpg', 'horrorgame-p5.jpg', 'horrorgame-p10.jpg', 'horrorgame-p15.jpg'],  // homepage card: upright photos only
@@ -941,7 +941,7 @@ var CONFIG = {
       bestForEn: "Players who love ghosts and curses and want a real scare.",
       notice: "有恐怖元素和黑暗场景，不建议孕妇、心脏病患者及胆小者参加。",
       noticeEn: "Contains horror elements and dark scenes. Not recommended for pregnant players, anyone with heart conditions or the easily frightened." },
-    { name: '观亡白楼', nameEn: 'Deathwatch Mansion', genre: '中式恐怖', genreEn: 'Chinese Folk Horror', icon: 'house', badge: '主打推荐', badgeEn: 'FEATURED',
+    { name: '观亡白楼', nameEn: 'Deathwatch Mansion', genre: '中式恐怖', genreEn: 'Chinese Folk Horror', icon: 'house', badge: '口碑必玩', badgeEn: 'MUST PLAY',
       level: 4, thrill: 5, fear: 5, min: 2, max: 5, minutes: 80, price: 0, image: 'baiou-1.jpg', imagePos: '50% 58%',
       gallery: ['baiou-1.jpg', 'baiou-2.jpg', 'baiou-3.jpg', 'baiou-4.jpg', 'baiou-5.jpg', 'scare.jpg'],
       focus: ['50% 60%', '55% 50%', '52% 50%', '40% 50%', '50% 50%', '42% 50%'],
@@ -1453,7 +1453,7 @@ var I18N = {
     box.innerHTML = '<article class="feat" data-card="' + fi + '">' +
       '<span class="feat-ribbon"><i class="blink"></i>' + t.feat_ribbon + '</span>' +
       '<div class="feat-poster">' +
-        (r.gallery ? swipeHTML(r, false) : r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(rn(r)) + t.poster_alt + '"' + (r.imagePos ? ' style="object-position:' + r.imagePos + '"' : '') + '>' : '<span class="num outline" aria-hidden="true">' + pad(fi + 1) + '</span><div class="dlg-icon fx-' + (r.icon || 'house') + '">' + (ICONS[r.icon] || ICONS.house) + '</div>') +
+        (r.gallery ? swipeHTML(r.cardGallery ? Object.assign({}, r, { gallery: r.cardGallery }) : r, false) : r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(rn(r)) + t.poster_alt + '"' + (r.imagePos ? ' style="object-position:' + r.imagePos + '"' : '') + '>' : '<span class="num outline" aria-hidden="true">' + pad(fi + 1) + '</span><div class="dlg-icon fx-' + (r.icon || 'house') + '">' + (ICONS[r.icon] || ICONS.house) + '</div>') +
         '<span class="lv">LV.' + r.level + '</span>' +
       '</div>' +
       '<div class="feat-body">' +
