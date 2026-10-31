@@ -909,6 +909,7 @@ var CONFIG = {
     { name: '恐怖游戏', nameEn: 'Horror Game', genre: '西式恐怖', genreEn: 'Gothic Horror', icon: 'game', badge: '烧脑', badgeEn: 'BRAIN BURNER',
       level: 5, thrill: 5, fear: 5, min: 2, max: 6, minutes: 60, price: 0, image: 'horrorgame-1.jpg', imagePos: '50% 4%',
       gallery: ['horrorgame-1.jpg', 'horrorgame-p1.jpg', 'horrorgame-p2.jpg', 'horrorgame-p3.jpg', 'horrorgame-p4.jpg', 'horrorgame-p5.jpg', 'horrorgame-p6.jpg', 'horrorgame-p7.jpg', 'horrorgame-p8.jpg', 'horrorgame-p9.jpg', 'horrorgame-p10.jpg', 'horrorgame-p11.jpg', 'horrorgame-p12.jpg', 'horrorgame-p13.jpg', 'horrorgame-p14.jpg', 'horrorgame-p15.jpg', 'horrorgame-p16.jpg'], focus: ['50% 6%', '50% 40%', '45% 40%', '58% 40%', '50% 40%', '45% 40%', '50% 40%', '62% 40%', '35% 40%', '55% 40%', '50% 40%', '35% 40%', '50% 40%', '38% 40%', '40% 40%', '50% 40%', '50% 40%'],
+      cardGallery: ['horrorgame-1.jpg', 'horrorgame-p4.jpg', 'horrorgame-p5.jpg', 'horrorgame-p10.jpg', 'horrorgame-p15.jpg'],  // homepage card: upright photos only
       video: 'horrorgame-trailer.mp4', videoPoster: 'horrorgame-trailer.jpg',
       desc: "小镇郊外的亨利老宅，每晚都在举办一场名为“恐怖游戏”的宴会。今晚，邀请函送到了你们手上。",
       descEn: "Every night, the Henry mansion on the edge of town hosts a party called the Horror Game. Tonight, the invitation has come to you.",
@@ -1361,7 +1362,7 @@ var I18N = {
     var t = T();
     $('roomCards').innerHTML = CONFIG.rooms.map(function (r, i) {
       return '<article class="card" data-card="' + i + '"><div class="poster">' +
-        (r.gallery ? swipeHTML(r, false) : r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(rn(r)) + t.poster_alt + '"' + (r.imagePos ? ' style="object-position:' + r.imagePos + '"' : '') + '>' : '<span class="num outline" aria-hidden="true">' + pad(i + 1) + '</span>' + (ICONS[r.icon] || ICONS.house)) +
+        (r.gallery ? swipeHTML(r.cardGallery ? Object.assign({}, r, { gallery: r.cardGallery }) : r, false) : r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(rn(r)) + t.poster_alt + '"' + (r.imagePos ? ' style="object-position:' + r.imagePos + '"' : '') + '>' : '<span class="num outline" aria-hidden="true">' + pad(i + 1) + '</span>' + (ICONS[r.icon] || ICONS.house)) +
         '<span class="code">ROOM_' + pad(i + 1) + '</span><span class="lv">LV.' + r.level + '</span>' + (r.badge ? '<span class="badge">' + esc(LANG === 'en' ? r.badgeEn : r.badge) + '</span>' : '') + '</div>' +
         '<div class="card-body"><div class="card-top"><h3>' + esc(rn(r)) + '</h3><span class="tag">' + esc(rg(r)) + '</span></div>' +
         '<p>' + esc(rd(r)) + '</p>' +
