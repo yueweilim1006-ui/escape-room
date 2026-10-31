@@ -259,6 +259,15 @@ html[lang="en"] .final h2{font-size:clamp(36px,6vw,84px)}
 .card{cursor:pointer}
 .card-actions{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .card-actions .ghost{margin-top:0}
+/* compact card body (photo untouched) */
+.card-body{padding:18px 20px 20px;gap:12px}
+.card h3{font-size:28px}
+.card p{font-size:14px;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .facts{padding-top:10px;gap:6px}
+.card .meter{font-size:11px}
+.card .segs i{height:6px}
+.card-actions{margin-top:4px;gap:8px}
+.card-actions .ghost{padding:11px}
 .more{border:1px solid var(--line3);background:transparent;color:var(--text);font-family:var(--mono);font-weight:700;font-size:14px;padding:15px 8px;cursor:pointer;transition:border-color .2s,color .2s}
 .more:hover{border-color:var(--cyan);color:var(--cyan)}
 dialog#roomDlg{width:min(900px,calc(100% - 32px));max-height:calc(100% - 32px);padding:0;border:1px solid var(--pink);background:var(--panel-solid);color:var(--text);box-shadow:0 0 60px rgba(255,42,61,.3);overflow:auto;overscroll-behavior:contain}
