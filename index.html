@@ -895,7 +895,9 @@ var CONFIG = {
   featured: 4,
   rooms: [
     { name: '人骨日记', nameEn: 'The Bone Diary', genre: '恐怖解谜', genreEn: 'Horror Mystery', icon: 'bone', badge: '人气', badgeEn: 'POPULAR',
-      level: 4, thrill: 4, fear: 5, min: 2, max: 6, minutes: 60, price: 0, image: '',
+      videos: [{ src: 'rengu-v1.mp4', poster: 'rengu-v1.jpg' }, { src: 'rengu-v2.mp4', poster: 'rengu-v2.jpg' }],
+      level: 4, thrill: 4, fear: 5, min: 2, max: 6, minutes: 60, price: 0, image: 'rengu-1.jpg', imagePos: '50% 50%',
+      gallery: ['rengu-1.jpg'], focus: ['50% 50%'],
       desc: "一本用人骨做封面的日记，记下了一位法医最后七天的经历。翻开它，你就成了第八天的主角。",
       descEn: "A diary bound in human bone records a coroner's last seven days. Open it, and you become the subject of day eight.",
       story: "老法医陈默退休后独居在城郊，三个月前突然失踪。警方在他的地下工作室里，只找到一本封面用人骨拼成的日记，最后一页写着：“第八天，轮到读日记的人。”\n你们受托整理他的遗物。工作室的门一关上，标本柜里的骨头开始发出声响。顺着日记里的线索，找出陈默最后七天到底遇见了什么，在第八天结束前离开这里。",
@@ -1383,6 +1385,8 @@ var I18N = {
 
 
   // swipeable photo strip (phones swipe, mouse users get arrows)
+  // one or more room videos: r.videos [{src, poster}] or the single r.video / r.videoPoster
+  function roomVideos(r) { return r.videos || (r.video ? [{ src: r.video, poster: r.videoPoster }] : []); }
   function swipeHTML(r, fit) {
     var g = r.gallery, alt = esc(rn(r));
     return '<div class="swipe' + (fit ? ' fit' : '') + '" data-swipe aria-roledescription="carousel">' +
@@ -1565,11 +1569,11 @@ var I18N = {
     if (!r) return;
     dlg.innerHTML =
       '<button type="button" class="dlg-close" data-close aria-label="' + t.d_close + '">×</button>' +
-      '<div class="dlg-poster p-' + (r.icon || 'house') + (r.gallery ? ' has-gallery' : '') + (r.video ? ' has-video' : '') + '">' +
+      '<div class="dlg-poster p-' + (r.icon || 'house') + (r.gallery ? ' has-gallery' : '') + (roomVideos(r).length ? ' has-video' : '') + '">' +
         (r.gallery ? swipeHTML(r, true) : r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(rn(r)) + t.poster_alt + '"' + (r.imagePos ? ' style="object-position:' + r.imagePos + '"' : '') + '>' : '<span class="num outline" aria-hidden="true">' + pad(i + 1) + '</span><div class="dlg-icon fx-' + (r.icon || 'house') + '">' + (ICONS[r.icon] || ICONS.house) + '</div>') +
         '<span class="meta"><span style="color:var(--pink)">ROOM_' + pad(i + 1) + '</span><span class="lv">LV.' + r.level + '</span></span>' +
         (r.badge ? '<span class="badge">' + esc(LANG === 'en' ? r.badgeEn : r.badge) + '</span>' : '') +
-        (r.video ? '<div class="dlg-video"><h4>' + t.d_video + '</h4><video src="' + esc(r.video) + '" poster="' + esc(r.videoPoster || '') + '" controls playsinline preload="none"></video></div>' : '') +
+        (roomVideos(r).length ? '<div class="dlg-video"><h4>' + t.d_video + '</h4>' + roomVideos(r).map(function (v) { return '<video src="' + esc(v.src) + '" poster="' + esc(v.poster || '') + '" controls playsinline preload="none"></video>'; }).join('') + '</div>' : '') +
       '</div>' +
       (r.gallery && r.gallery.length > 1 ? '<div class="dlg-thumbs" role="group" aria-label="' + (LANG === 'en' ? 'Photos' : '照片') + '">' + r.gallery.map(function (g, k) { return '<button type="button" data-gal="' + esc(g) + '" aria-pressed="' + (k === 0) + '" aria-label="' + (k + 1) + '"><img src="' + esc(g.replace(/\.jpg$/, '-t.jpg')) + '" alt="" loading="lazy"></button>'; }).join('') + '</div>' : '') +
       '<div class="dlg-body">' +
