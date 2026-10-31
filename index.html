@@ -656,7 +656,7 @@ dialog#lightbox::backdrop{background:#000}
 }
 /* desktop: photo column on the left, text on the right */
 @media (min-width:860px){
-  dialog#roomDlg.with-gal{width:min(1080px,calc(100% - 32px))}
+  dialog#roomDlg.with-gal{width:min(1280px,calc(100% - 32px))}
   dialog#roomDlg.with-gal[open]{display:grid;grid-template-columns:360px minmax(0,1fr);grid-template-rows:auto auto auto auto;align-items:start}
   #roomDlg.with-gal .dlg-close{grid-column:2;grid-row:1;justify-self:end;float:none;margin:12px 12px 0 0;position:sticky;top:12px}
   #roomDlg.with-gal .dlg-poster{grid-column:1;grid-row:1 / span 3;position:sticky;top:0;align-self:start;border-bottom:0;border-right:1px solid var(--line)}
@@ -664,7 +664,9 @@ dialog#lightbox::backdrop{background:#000}
   #roomDlg.with-gal .dlg-body{grid-column:2;grid-row:1 / span 3;padding-top:24px}
   #roomDlg.with-gal .dlg-foot{grid-column:1 / span 2;grid-row:4}
   #roomDlg.with-gal .dlg-poster.has-gallery::after{height:60px}
-  dialog#roomDlg.with-gal[open]{grid-template-columns:460px minmax(0,1fr)}
+  dialog#roomDlg.with-gal[open]{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+  #roomDlg.with-gal .swipe.fit .sw-slide{background:#000}
+  #roomDlg.with-gal .swipe.fit .sw-slide.tall img{object-fit:contain !important;object-position:50% 50%}
 }
 /* stills grid: fixed 3:2 frames */
 .stills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
@@ -1391,7 +1393,8 @@ var I18N = {
     var cw = tr.clientWidth, ratio = img.naturalHeight / img.naturalWidth;
     if (window.matchMedia('(min-width: 860px)').matches && box.closest('#roomDlg.with-gal')) {
       // desktop column: portrait photos fill the column; landscape photos fill a slightly shorter frame so only a little is trimmed at the sides
-      tr.style.height = Math.min(520, Math.round(cw * ratio)) + 'px';  // tall photos fill the 520px column; wide photos show complete at full width
+      tr.style.height = Math.round(cw * 0.625) + 'px';  // one wide 16:10 frame: wide photos fill it, upright photos sit centred on black
+      Array.prototype.forEach.call(tr.querySelectorAll('.sw-slide img'), function (im) { if (im.naturalWidth) im.parentNode.classList.toggle('tall', im.naturalHeight > im.naturalWidth); });
     } else {
       tr.style.height = Math.round(cw * ratio) + 'px';
     }
