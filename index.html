@@ -672,6 +672,13 @@ dialog#lightbox::backdrop{background:#000}
 .still img{display:block;width:100%;height:100%;object-fit:cover}
 .still:hover{transform:translateY(-3px);border-color:var(--pink);box-shadow:0 8px 24px rgba(200,16,46,.3)}
 @media (max-width:860px){.stills{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
+/* room video under the photo */
+#roomDlg.with-gal .dlg-poster.has-video{position:relative}
+.dlg-video{position:relative;z-index:2;padding:16px;background:#0a0306;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.dlg-video h4{margin:0;font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--pink);font-weight:700}
+.dlg-video video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000;border:1px solid rgba(255,90,107,.3)}
+.dlg-poster.has-gallery::after{display:none}
+.dlg-poster.has-gallery .swipe::after{content:"";position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(transparent,rgba(18,6,10,.9));pointer-events:none;z-index:1}
 /* mobile sticky bar */
 .mbar{display:none}
 @media (max-width:720px){
@@ -889,6 +896,7 @@ var CONFIG = {
     { name: '恐怖游戏', nameEn: 'Horror Game', genre: '西式恐怖', genreEn: 'Gothic Horror', icon: 'game', badge: '烧脑', badgeEn: 'BRAIN BURNER',
       level: 5, thrill: 5, fear: 5, min: 2, max: 6, minutes: 60, price: 0, image: 'horrorgame-1.jpg', imagePos: '50% 4%',
       gallery: ['horrorgame-1.jpg'], focus: ['50% 6%'],
+      video: 'horrorgame-trailer.mp4', videoPoster: 'horrorgame-trailer.jpg',
       desc: "小镇郊外的亨利老宅，每晚都在举办一场名为“恐怖游戏”的宴会。今晚，邀请函送到了你们手上。",
       descEn: "Every night, the Henry mansion on the edge of town hosts a party called the Horror Game. Tonight, the invitation has come to you.",
       epigraph: "还差最后一部分血肉，永生就要实现了。",
@@ -1017,7 +1025,7 @@ var I18N = {
     intro_term: ['&gt; 密室系统启动中……', '&gt; 侦测到闯入者…… <b class="ok">六间密室待命</b>', '&gt; 正在核对通关密码……', '&gt; 密码正确，门锁解除 <b class="ok">OK</b>'], intro_granted: '准许进入', intro_lock: '● 已上锁', intro_unlock: '○ 已解锁',
     intro_small: '进入密室', gate_title: '一旦打开，便无路可退', gate_go: '进入禁域 · 开启声音', gate_mute: '静音进入', gate_note: '建议戴上耳机，体验更佳', skip: '跳过 &gt;&gt;',
     details: '查看详情', d_story: '// 故事背景', d_hl: '// 游戏亮点', d_for: '// 适合谁', d_notice: '// 注意事项', d_close: '关闭', d_book: '预约这个主题 &gt;_', d_per: ' / 人', d_minutes: ' 分钟',
-    feat_ribbon: '本季主打', d_stills: '// 剧照', back_home: '← 返回首页', book_page_title: '在线预约', d_lore: '// 观亡之术', d_rituals: '// 五道法事', d_final: '最终仪式', d_final_p: '五道法事完成之后……真相只有走进白楼才能知道', d_rules: '// 入境须知', feat_kick: '// NOW SHOWING · 店长推荐', feat_book: '立即预约主打主题 &gt;_'
+    feat_ribbon: '本季主打', d_video: '// 视频', d_stills: '// 剧照', back_home: '← 返回首页', book_page_title: '在线预约', d_lore: '// 观亡之术', d_rituals: '// 五道法事', d_final: '最终仪式', d_final_p: '五道法事完成之后……真相只有走进白楼才能知道', d_rules: '// 入境须知', feat_kick: '// NOW SHOWING · 店长推荐', feat_book: '立即预约主打主题 &gt;_'
   },
   en: {
     page_title: '{shop} · Escape Room Booking',
@@ -1070,7 +1078,7 @@ var I18N = {
     intro_term: ['&gt; booting security system ...', '&gt; scanning subjects ... <b class="ok">6 ROOMS ONLINE</b>', '&gt; verifying access code ...', '&gt; access code ... <b class="ok">OK</b>'], intro_granted: 'ACCESS GRANTED', intro_lock: '● LOCKED', intro_unlock: '○ UNLOCKED',
     intro_small: 'ENTER THE ROOM', gate_title: 'Once opened, there is no way back', gate_go: 'Enter · Sound on', gate_mute: 'Enter without sound', gate_note: 'Headphones recommended', skip: 'Skip &gt;&gt;',
     details: 'View details', d_story: '// THE STORY', d_hl: '// HIGHLIGHTS', d_for: '// BEST FOR', d_notice: '// GOOD TO KNOW', d_close: 'Close', d_book: 'Book this room &gt;_', d_per: ' / player', d_minutes: ' min',
-    feat_ribbon: 'FEATURED', d_stills: '// STILLS', back_home: '← Back to home', book_page_title: 'Book online', d_lore: '// THE ART OF DEATHWATCH', d_rituals: '// FIVE RITUALS', d_final: 'The final rite', d_final_p: 'What comes after the five rituals can only be found inside the mansion', d_rules: '// BEFORE YOU ENTER', feat_kick: '// NOW SHOWING · STAFF PICK', feat_book: 'Book the featured room &gt;_'
+    feat_ribbon: 'FEATURED', d_video: '// VIDEO', d_stills: '// STILLS', back_home: '← Back to home', book_page_title: 'Book online', d_lore: '// THE ART OF DEATHWATCH', d_rituals: '// FIVE RITUALS', d_final: 'The final rite', d_final_p: 'What comes after the five rituals can only be found inside the mansion', d_rules: '// BEFORE YOU ENTER', feat_kick: '// NOW SHOWING · STAFF PICK', feat_book: 'Book the featured room &gt;_'
   }
 };
 
@@ -1533,12 +1541,13 @@ var I18N = {
     if (!r) return;
     dlg.innerHTML =
       '<button type="button" class="dlg-close" data-close aria-label="' + t.d_close + '">×</button>' +
-      '<div class="dlg-poster p-' + (r.icon || 'house') + (r.gallery ? ' has-gallery' : '') + '">' +
+      '<div class="dlg-poster p-' + (r.icon || 'house') + (r.gallery ? ' has-gallery' : '') + (r.video ? ' has-video' : '') + '">' +
         (r.gallery ? swipeHTML(r, true) : r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(rn(r)) + t.poster_alt + '"' + (r.imagePos ? ' style="object-position:' + r.imagePos + '"' : '') + '>' : '<span class="num outline" aria-hidden="true">' + pad(i + 1) + '</span><div class="dlg-icon fx-' + (r.icon || 'house') + '">' + (ICONS[r.icon] || ICONS.house) + '</div>') +
         '<span class="meta"><span style="color:var(--pink)">ROOM_' + pad(i + 1) + '</span><span class="lv">LV.' + r.level + '</span></span>' +
         (r.badge ? '<span class="badge">' + esc(LANG === 'en' ? r.badgeEn : r.badge) + '</span>' : '') +
+        (r.video ? '<div class="dlg-video"><h4>' + t.d_video + '</h4><video src="' + esc(r.video) + '" poster="' + esc(r.videoPoster || '') + '" controls playsinline preload="none"></video></div>' : '') +
       '</div>' +
-      (r.gallery ? '<div class="dlg-thumbs" role="group" aria-label="' + (LANG === 'en' ? 'Photos' : '照片') + '">' + r.gallery.map(function (g, k) { return '<button type="button" data-gal="' + esc(g) + '" aria-pressed="' + (k === 0) + '" aria-label="' + (k + 1) + '"><img src="' + esc(g.replace(/\.jpg$/, '-t.jpg')) + '" alt="" loading="lazy"></button>'; }).join('') + '</div>' : '') +
+      (r.gallery && r.gallery.length > 1 ? '<div class="dlg-thumbs" role="group" aria-label="' + (LANG === 'en' ? 'Photos' : '照片') + '">' + r.gallery.map(function (g, k) { return '<button type="button" data-gal="' + esc(g) + '" aria-pressed="' + (k === 0) + '" aria-label="' + (k + 1) + '"><img src="' + esc(g.replace(/\.jpg$/, '-t.jpg')) + '" alt="" loading="lazy"></button>'; }).join('') + '</div>' : '') +
       '<div class="dlg-body">' +
         '<div class="dlg-main">' +
           '<div class="dlg-title dlg-anim" style="--d:.35s"><h3 id="dlgName" aria-label="' + esc(rn(r)) + '">' + esc(rn(r)) + '</h3><span class="tag">' + esc(rg(r)) + '</span></div>' +
@@ -1583,10 +1592,13 @@ var I18N = {
   }
   dlg.addEventListener('cancel', function (e) { e.preventDefault(); closeDlg(); });
   function onDlgClosed() {
+    dlg.querySelectorAll('video').forEach(function (v) { try { v.pause(); } catch (e) {} });
     document.documentElement.style.overflow = dlgPrevOverflow;
     if (/^#room-\d+$/.test(location.hash)) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
   }
   dlg.addEventListener('close', onDlgClosed);
+  dlg.addEventListener('play', function (e) { if (e.target.tagName === 'VIDEO' && BGM.isOn()) { dlg._bgmWasOn = true; BGM.stop(); } }, true);
+  dlg.addEventListener('pause', function (e) { if (e.target.tagName === 'VIDEO' && dlg._bgmWasOn) { dlg._bgmWasOn = false; BGM.start(); } }, true);
   dlg.addEventListener('click', function (e) {
     if (e.target === dlg || e.target.closest('[data-close]')) { closeDlg(); return; }
     var stb = e.target.closest('[data-still]');
