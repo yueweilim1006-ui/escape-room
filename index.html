@@ -1404,7 +1404,6 @@ var I18N = {
   function renderCards() {
     var t = T();
     $('roomCards').innerHTML = CONFIG.rooms.map(function (r, i) {
-      if (CONFIG.featured && i === CONFIG.featured - 1) return '';  // the featured room shows only in 本季主打, not in the grid
       return '<article class="card" data-card="' + i + '"><div class="poster">' +
         (r.gallery ? swipeHTML(r.cardGallery ? Object.assign({}, r, { gallery: r.cardGallery }) : r, false) : r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(rn(r)) + t.poster_alt + '"' + (r.imagePos ? ' style="object-position:' + r.imagePos + '"' : '') + '>' : '<span class="num outline" aria-hidden="true">' + pad(i + 1) + '</span>' + (ICONS[r.icon] || ICONS.house)) +
         '<span class="code">ROOM_' + pad(i + 1) + '</span><span class="lv">LV.' + r.level + '</span>' + (r.badge ? '<span class="badge">' + esc(LANG === 'en' ? r.badgeEn : r.badge) + '</span>' : '') + '</div>' +
