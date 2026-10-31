@@ -644,9 +644,9 @@ dialog#lightbox::backdrop{background:#000}
 /* desktop: photo fills the whole showcase edge to edge, focused on its subject */
 @media (min-width:700px){
   .dlg-poster.has-gallery{background:#000}
-  .swipe.fit .sw-track{height:min(62vh,480px) !important}
-  .swipe.fit .sw-slide{height:100%;padding:0}
-  .swipe.fit .sw-slide img{width:100% !important;height:100% !important;object-fit:cover !important;object-position:var(--fp,50% 50%);border:0;box-shadow:none}
+  .swipe.fit .sw-track{height:auto}
+  .swipe.fit .sw-slide{height:auto;padding:0}
+  .swipe.fit .sw-slide img{width:100% !important;height:auto !important;object-fit:fill !important;border:0;box-shadow:none}
   .dlg-poster.has-gallery::after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;background:linear-gradient(transparent,rgba(18,6,10,.95));pointer-events:none;z-index:1;top:auto;animation:none;transform:none}
   .swipe.fit .sw-nav{opacity:0}
   .swipe.fit:hover .sw-nav{opacity:1}
@@ -662,7 +662,6 @@ dialog#lightbox::backdrop{background:#000}
   #roomDlg.with-gal .dlg-body{grid-column:2;grid-row:1 / span 3;padding-top:24px}
   #roomDlg.with-gal .dlg-foot{grid-column:1 / span 2;grid-row:4}
   #roomDlg.with-gal .dlg-poster.has-gallery::after{height:60px}
-  #roomDlg.with-gal .swipe.fit .sw-track{height:calc(100vh - 32px - 98px) !important;height:calc(100dvh - 32px - 98px) !important;max-height:600px}
   dialog#roomDlg.with-gal[open]{grid-template-columns:400px minmax(0,1fr)}
 }
 /* stills grid: fixed 3:2 frames */
@@ -933,8 +932,7 @@ var CONFIG = {
       noticeEn: "Adapted from ancient Chinese Deathwatcher legends. Includes darkness, live-actor chases and intense scares. Not recommended for pregnant guests, people with heart conditions or children under [12]. You need not believe in ghosts, but please keep a respectful heart." },
     { name: '纸人回魂', nameEn: 'Return of the Paper Dolls', genre: '中式恐怖', genreEn: 'Chinese Folk Horror', icon: 'paper', badge: '新主题', badgeEn: 'NEW',
       level: 4, thrill: 5, fear: 5, min: 2, max: 6, minutes: 60, price: 0, image: 'zhiren-1.jpg', imagePos: '50% 38%',
-      gallery: ['zhiren-1.jpg', 'zhiren-6.jpg', 'zhiren-8.jpg', 'zhiren-7.jpg', 'zhiren-9.jpg', 'zhiren-10.jpg', 'zhiren-2.jpg', 'zhiren-3.jpg', 'zhiren-4.jpg', 'zhiren-5.jpg'],
-      stills: ['zhiren-6.jpg', 'zhiren-8.jpg', 'zhiren-7.jpg', 'zhiren-9.jpg', 'zhiren-10.jpg'], focus: ['50% 40%', '45% 50%', '50% 50%', '50% 50%', '50% 50%', '50% 50%', '42% 40%', '52% 45%', '50% 45%', '50% 50%'],
+      gallery: ['zhiren-1.jpg', 'zhiren-6.jpg', 'zhiren-8.jpg', 'zhiren-7.jpg', 'zhiren-9.jpg', 'zhiren-10.jpg', 'zhiren-2.jpg', 'zhiren-3.jpg', 'zhiren-4.jpg', 'zhiren-5.jpg'], focus: ['50% 40%', '45% 50%', '50% 50%', '50% 50%', '50% 50%', '50% 50%', '42% 40%', '52% 45%', '50% 45%', '50% 50%'],
       desc: "老扎纸铺的纸人，眼睛从来不能点上。可是今晚，有人替它们点了睛。",
       descEn: "At the old paper-effigy shop, the dolls' eyes must never be painted in. Tonight, someone painted them.",
       story: "镇上的刘记扎纸铺开了七十年，铺里的规矩只有一条：纸人做好之后，绝不能点睛。点了睛的纸人就有了魂，会自己走出铺子，去找它们“认得的人”。\n老师傅头七那晚，铺子里所有纸人的眼睛都被人用朱砂点上了。你们被困在铺子里，四周的纸人一个比一个靠近。在鸡鸣之前，找出是谁点的睛，送它们回去。",
@@ -1374,7 +1372,6 @@ var I18N = {
   function swFitHeight(tr) {
     // phones: the frame takes the height of the photo on show, so nothing is cropped and there are no bars
     var box = tr.parentNode; if (!box.classList.contains('fit')) return;
-    if (window.matchMedia('(min-width: 700px)').matches) { tr.style.height = ''; return; }
     var img = tr.children[swIndex(tr)] && tr.children[swIndex(tr)].querySelector('img');
     if (img && img.naturalWidth) tr.style.height = Math.round(tr.clientWidth * img.naturalHeight / img.naturalWidth) + 'px';
   }
