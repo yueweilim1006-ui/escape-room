@@ -647,6 +647,8 @@ dialog#lightbox::backdrop{background:#000}
   .swipe.fit .sw-track{height:auto}
   .swipe.fit .sw-slide{height:auto;padding:0}
   .swipe.fit .sw-slide img{width:100% !important;height:auto !important;object-fit:fill !important;border:0;box-shadow:none}
+  #roomDlg.with-gal .swipe.fit .sw-slide{height:100%}
+  #roomDlg.with-gal .swipe.fit .sw-slide img{height:100% !important;object-fit:cover !important;object-position:var(--fp,50% 50%)}
   .dlg-poster.has-gallery::after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;background:linear-gradient(transparent,rgba(18,6,10,.95));pointer-events:none;z-index:1;top:auto;animation:none;transform:none}
   .swipe.fit .sw-nav{opacity:0}
   .swipe.fit:hover .sw-nav{opacity:1}
@@ -1373,7 +1375,14 @@ var I18N = {
     // phones: the frame takes the height of the photo on show, so nothing is cropped and there are no bars
     var box = tr.parentNode; if (!box.classList.contains('fit')) return;
     var img = tr.children[swIndex(tr)] && tr.children[swIndex(tr)].querySelector('img');
-    if (img && img.naturalWidth) tr.style.height = Math.round(tr.clientWidth * img.naturalHeight / img.naturalWidth) + 'px';
+    if (!img || !img.naturalWidth) return;
+    var cw = tr.clientWidth, ratio = img.naturalHeight / img.naturalWidth;
+    if (window.matchMedia('(min-width: 860px)').matches && box.closest('#roomDlg.with-gal')) {
+      // desktop column: portrait photos fill the column; landscape photos fill a slightly shorter frame so only a little is trimmed at the sides
+      tr.style.height = Math.round(ratio >= 1 ? Math.min(600, cw * ratio) : cw * 1.05) + 'px';
+    } else {
+      tr.style.height = Math.round(cw * ratio) + 'px';
+    }
   }
   function swipeSync(track) {
     var idx = swIndex(track), box = track.parentNode;
