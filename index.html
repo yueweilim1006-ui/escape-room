@@ -1391,7 +1391,7 @@ var I18N = {
     var cw = tr.clientWidth, ratio = img.naturalHeight / img.naturalWidth;
     if (window.matchMedia('(min-width: 860px)').matches && box.closest('#roomDlg.with-gal')) {
       // desktop column: portrait photos fill the column; landscape photos fill a slightly shorter frame so only a little is trimmed at the sides
-      tr.style.height = '520px';  // every photo the same height in the desktop column
+      tr.style.height = Math.min(520, Math.round(cw * ratio)) + 'px';  // tall photos fill the 520px column; wide photos show complete at full width
     } else {
       tr.style.height = Math.round(cw * ratio) + 'px';
     }
