@@ -730,7 +730,12 @@ dialog#roomDlg::backdrop{background:#000}
 #roomDlg .dlg-foot{z-index:6;background:rgba(14,4,8,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
 #roomDlg .dlg-video{background:rgba(10,3,6,.7)}
 @media (min-width:860px){
-  dialog#roomDlg.with-gal[open]{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);column-gap:28px;padding:0 max(28px,calc((100vw - 1240px)/2))}
+  /* two independent columns (floats) so a long photo + video column can never be cut off */
+  dialog#roomDlg.with-gal[open]{display:block;padding:0 max(28px,calc((100vw - 1240px)/2))}
+  #roomDlg.with-gal .dlg-close{float:right;position:sticky;top:12px;margin:12px 0 -56px 0}
+  #roomDlg.with-gal .dlg-poster{float:left;width:calc(52.4% - 14px);position:relative;top:auto}
+  #roomDlg.with-gal .dlg-body{margin-left:calc(52.4% + 14px) !important}
+  #roomDlg.with-gal .dlg-foot{clear:both}
   #roomDlg.with-gal .dlg-poster{border-right:0;margin-top:28px;border:1px solid rgba(255,255,255,.08);box-shadow:0 20px 60px rgba(0,0,0,.6)}
   #roomDlg.with-gal .dlg-body{margin:28px 0 28px;border:1px solid rgba(255,255,255,.07)}
   #roomDlg.with-gal .dlg-foot{margin:0 calc(-1 * max(28px,calc((100vw - 1240px)/2)));padding-left:max(28px,calc((100vw - 1240px)/2));padding-right:max(28px,calc((100vw - 1240px)/2))}
