@@ -720,14 +720,6 @@ dialog#lightbox::backdrop{background:#000}
 .card:hover h3{color:var(--accent);text-shadow:0 0 18px color-mix(in srgb,var(--accent) 55%,transparent)}
 .card h3{transition:color .3s,text-shadow .3s}
 @media (hover:none){.card{border-color:color-mix(in srgb,var(--accent) 38%,var(--line));box-shadow:0 0 26px color-mix(in srgb,var(--accent) 20%,transparent)}}
-/* flashlight: the page sits in darkness except where the pointer shines */
-#torch{position:fixed;inset:0;z-index:15;pointer-events:none;opacity:0;transition:opacity .8s;
-  background:radial-gradient(circle var(--tr,240px) at var(--tx,50%) var(--ty,40%),rgba(255,236,214,.05) 0,transparent 38%,rgba(2,0,3,.35) 62%,rgba(2,0,3,.66) 100%);animation:torchFlicker 9s steps(1) infinite}
-#torch.on{opacity:1}
-html.view-book #torch{opacity:0}
-@keyframes torchFlicker{0%,100%{filter:none}43%{filter:brightness(1.6)}43.6%{filter:none}44.2%{filter:brightness(1.4)}44.8%{filter:none}81%{filter:brightness(1.5)}81.5%{filter:none}}
-@media (hover:none){#torch{--tr:200px;background:radial-gradient(circle var(--tr) at var(--tx,50%) var(--ty,42%),transparent 45%,rgba(2,0,3,.22) 70%,rgba(2,0,3,.4) 100%)}}
-@media (prefers-reduced-motion:reduce){#torch{animation:none}}
 </style>
 </head>
 <body>
@@ -752,7 +744,6 @@ html.view-book #torch{opacity:0}
 </div></header>
 
 <div class="site-fog" aria-hidden="true"><i></i><i></i><i></i></div>
-<div id="torch" aria-hidden="true"></div>
 <main id="top">
 <section class="hero">
 <div class="fog" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -1804,22 +1795,5 @@ var I18N = {
 })();
 </script>
 
-<script>
-(function () {
-  var t = document.getElementById('torch'); if (!t) return;
-  var tx = innerWidth / 2, ty = innerHeight * 0.4, x = tx, y = ty, raf = 0;
-  function loop() { x += (tx - x) * 0.18; y += (ty - y) * 0.18; t.style.setProperty('--tx', x.toFixed(1) + 'px'); t.style.setProperty('--ty', y.toFixed(1) + 'px'); raf = (Math.abs(tx - x) + Math.abs(ty - y) > 0.5) ? requestAnimationFrame(loop) : 0; }
-  function aim(cx, cy) { tx = cx; ty = cy; if (!raf) raf = requestAnimationFrame(loop); }
-  addEventListener('pointermove', function (e) { aim(e.clientX, e.clientY); }, { passive: true });
-  addEventListener('pointerdown', function (e) { aim(e.clientX, e.clientY); }, { passive: true });
-  addEventListener('touchmove', function (e) { var p = e.touches[0]; if (p) aim(p.clientX, p.clientY); }, { passive: true });
-  // switch on once the intro and gate are gone
-  var tries = 0, iv = setInterval(function () {
-    var blocking = document.querySelector('#gate:not([hidden]), #intro:not(.gone), #scare');
-    if (!blocking || ++tries > 60) { t.classList.add('on'); clearInterval(iv); }
-  }, 500);
-  t.style.setProperty('--tx', x + 'px'); t.style.setProperty('--ty', y + 'px');
-})();
-</script>
 </body>
 </html>
