@@ -710,6 +710,24 @@ dialog#lightbox::backdrop{background:#000}
   footer{padding-bottom:90px}
   .ticket{position:static}
 }
+
+/* per-room glow colour */
+.card{--accent:#FF2A3D}
+.card .poster::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--accent);box-shadow:0 0 14px var(--accent),0 0 30px var(--accent);opacity:.85;z-index:2;pointer-events:none}
+.card .poster img{transition:transform .7s cubic-bezier(.2,.7,.2,1),filter .5s}
+.card:hover{border-color:var(--accent);box-shadow:0 0 44px color-mix(in srgb,var(--accent) 42%,transparent),0 0 0 1px color-mix(in srgb,var(--accent) 60%,transparent)}
+.card:hover .poster img{transform:scale(1.06);filter:brightness(1.12) saturate(1.1)}
+.card:hover h3{color:var(--accent);text-shadow:0 0 18px color-mix(in srgb,var(--accent) 55%,transparent)}
+.card h3{transition:color .3s,text-shadow .3s}
+@media (hover:none){.card{border-color:color-mix(in srgb,var(--accent) 38%,var(--line));box-shadow:0 0 26px color-mix(in srgb,var(--accent) 20%,transparent)}}
+/* flashlight: the page sits in darkness except where the pointer shines */
+#torch{position:fixed;inset:0;z-index:15;pointer-events:none;opacity:0;transition:opacity .8s;
+  background:radial-gradient(circle var(--tr,240px) at var(--tx,50%) var(--ty,40%),rgba(255,236,214,.05) 0,transparent 38%,rgba(2,0,3,.35) 62%,rgba(2,0,3,.66) 100%);animation:torchFlicker 9s steps(1) infinite}
+#torch.on{opacity:1}
+html.view-book #torch{opacity:0}
+@keyframes torchFlicker{0%,100%{filter:none}43%{filter:brightness(1.6)}43.6%{filter:none}44.2%{filter:brightness(1.4)}44.8%{filter:none}81%{filter:brightness(1.5)}81.5%{filter:none}}
+@media (hover:none){#torch{--tr:200px;background:radial-gradient(circle var(--tr) at var(--tx,50%) var(--ty,42%),transparent 45%,rgba(2,0,3,.22) 70%,rgba(2,0,3,.4) 100%)}}
+@media (prefers-reduced-motion:reduce){#torch{animation:none}}
 </style>
 </head>
 <body>
@@ -734,6 +752,7 @@ dialog#lightbox::backdrop{background:#000}
 </div></header>
 
 <div class="site-fog" aria-hidden="true"><i></i><i></i><i></i></div>
+<div id="torch" aria-hidden="true"></div>
 <main id="top">
 <section class="hero">
 <div class="fog" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -901,7 +920,7 @@ var CONFIG = {
   // 主打推荐主题：填主题的编号（1–6），会放在主题档案最上面，预约时默认选它。填 0 表示不设主打。
   featured: 8,
   rooms: [
-    { name: '人骨日记', nameEn: 'The Bone Diary', genre: '恐怖解谜', genreEn: 'Horror Mystery', icon: 'bone', badge: '人气', badgeEn: 'POPULAR',
+    { name: '人骨日记', accent: '#2EE6A6', nameEn: 'The Bone Diary', genre: '恐怖解谜', genreEn: 'Horror Mystery', icon: 'bone', badge: '人气', badgeEn: 'POPULAR',
       videos: [{ src: 'rengu-v1.mp4', poster: 'rengu-v1.jpg' }, { src: 'rengu-v2.mp4', poster: 'rengu-v2.jpg' }],
       level: 4, thrill: 4, fear: 5, min: 2, max: 6, minutes: 60, price: 0, image: 'rengu-1.jpg', imagePos: '50% 50%',
       gallery: ['rengu-1.jpg', 'rengu-p1.jpg', 'rengu-p2.jpg', 'rengu-p3.jpg', 'rengu-p4.jpg', 'rengu-p5.jpg', 'rengu-p6.jpg', 'rengu-p7.jpg', 'rengu-p8.jpg', 'rengu-p9.jpg'], focus: ['50% 50%', '50% 50%', '50% 50%', '50% 50%', '50% 50%', '50% 50%', '50% 50%', '50% 50%', '50% 50%', '50% 50%'],
@@ -915,7 +934,7 @@ var CONFIG = {
       bestForEn: "Players who love a mystery and can handle a horror atmosphere. We suggest 3 or more.",
       notice: "场景昏暗，有骨骼标本、突发惊吓和体感机关（上升、移动）；孕妇、心脏病患者、容易晕眩者及 [12] 岁以下儿童不建议参加。",
       noticeEn: "Dark scenes, skeleton props, sudden scares and motion rigs that make you feel you are rising and moving. Not recommended for pregnant guests, people with heart conditions or motion sickness, or children under [12]." },
-    { name: '祷告日', nameEn: 'Day of Prayer', genre: '宗教恐怖', genreEn: 'Religious Horror', icon: 'game', badge: '新主题', badgeEn: 'NEW',
+    { name: '祷告日', accent: '#9EC3FF', nameEn: 'Day of Prayer', genre: '宗教恐怖', genreEn: 'Religious Horror', icon: 'game', badge: '新主题', badgeEn: 'NEW',
       level: 5, thrill: 5, fear: 5, min: 2, max: 6, minutes: 60, price: 0, image: 'daogao-1.jpg', imagePos: '50% 30%',
       gallery: ['daogao-1.jpg', 'daogao-p1.jpg', 'daogao-p2.jpg', 'daogao-p3.jpg', 'daogao-p4.jpg', 'daogao-p5.jpg', 'daogao-p6.jpg', 'daogao-p7.jpg', 'daogao-p8.jpg', 'daogao-p9.jpg', 'daogao-p10.jpg', 'daogao-p11.jpg', 'daogao-p12.jpg', 'daogao-p13.jpg', 'daogao-p14.jpg', 'daogao-p15.jpg'], focus: ['50% 30%', '50% 45%', '50% 45%', '50% 45%', '50% 45%', '50% 45%', '50% 45%', '50% 45%', '50% 45%', '50% 45%', '50% 45%', '50% 45%', '50% 45%', '50% 45%', '50% 45%', '50% 45%'],
       cardGallery: ['daogao-1.jpg', 'daogao-p3.jpg', 'daogao-p13.jpg', 'daogao-p15.jpg'],  // homepage card: upright photos only
@@ -932,7 +951,7 @@ var CONFIG = {
       bestForEn: "Players who love Western religious horror and exorcism stories.",
       notice: "有恐怖元素、NPC 互动、大型体感机关（旋转、倾斜）和黑暗场景，不建议孕妇、心脏病患者、容易晕眩者及胆小者参加。",
       noticeEn: "Contains horror elements, live actors, large motion rigs that spin and tilt, and dark scenes. Not recommended for pregnant players, anyone with heart conditions or motion sickness, or the easily frightened." },
-    { name: '怪诞', nameEn: 'Grotesque', genre: '诅咒恐怖', genreEn: 'Curse Horror', icon: 'detective', badge: '新主题', badgeEn: 'NEW',
+    { name: '怪诞', accent: '#FF2D6F', nameEn: 'Grotesque', genre: '诅咒恐怖', genreEn: 'Curse Horror', icon: 'detective', badge: '新主题', badgeEn: 'NEW',
       level: 4, thrill: 4, fear: 5, min: 3, max: 8, minutes: 75, price: 0, image: 'guaidan-1.jpg', imagePos: '50% 40%',
       gallery: ['guaidan-1.jpg', 'guaidan-p1.jpg', 'guaidan-p2.jpg', 'guaidan-p3.jpg', 'guaidan-p4.jpg', 'guaidan-p5.jpg', 'guaidan-p6.jpg', 'guaidan-p7.jpg', 'guaidan-p8.jpg', 'guaidan-p9.jpg', 'guaidan-p10.jpg', 'guaidan-p11.jpg', 'guaidan-p12.jpg', 'guaidan-p13.jpg', 'guaidan-p14.jpg', 'guaidan-p15.jpg', 'guaidan-p16.jpg'], focus: ['50% 40%', '50% 40%', '50% 40%', '50% 40%', '50% 40%', '50% 40%', '50% 40%', '50% 40%', '50% 40%', '50% 40%', '50% 40%', '50% 40%', '50% 40%', '50% 40%', '50% 40%', '50% 40%', '50% 40%'],
       cardGallery: ['guaidan-1.jpg', 'guaidan-p2.jpg', 'guaidan-p9.jpg', 'guaidan-p12.jpg', 'guaidan-p13.jpg', 'guaidan-p15.jpg', 'guaidan-p16.jpg'],  // homepage card: upright photos only
@@ -948,7 +967,7 @@ var CONFIG = {
       bestForEn: "Players who love ghosts and curses and want a real scare.",
       notice: "有恐怖元素、马车体感机关和黑暗场景，不建议孕妇、心脏病患者、容易晕眩者及胆小者参加。",
       noticeEn: "Contains horror elements, a horse-carriage motion rig and dark scenes. Not recommended for pregnant players, anyone with heart conditions or motion sickness, or the easily frightened." },
-    { name: '观亡白楼', nameEn: 'Deathwatch Mansion', genre: '中式恐怖', genreEn: 'Chinese Folk Horror', icon: 'house', badge: '口碑必玩', badgeEn: 'MUST PLAY',
+    { name: '观亡白楼', accent: '#E8E1D4', nameEn: 'Deathwatch Mansion', genre: '中式恐怖', genreEn: 'Chinese Folk Horror', icon: 'house', badge: '口碑必玩', badgeEn: 'MUST PLAY',
       level: 4, thrill: 5, fear: 5, min: 2, max: 5, minutes: 80, price: 0, image: 'baiou-1.jpg', imagePos: '50% 58%',
       gallery: ['baiou-1.jpg', 'baiou-2.jpg', 'baiou-3.jpg', 'baiou-4.jpg', 'baiou-5.jpg', 'scare.jpg'],
       focus: ['50% 60%', '55% 50%', '52% 50%', '40% 50%', '50% 50%', '42% 50%'],
@@ -970,7 +989,7 @@ var CONFIG = {
       bestForEn: "Fans of Chinese folk horror who can handle live-actor chases and close-up scares. Five players, one per element, is ideal.",
       notice: "本主题根据中国古代观亡人传说改编，含黑暗环境、真人追逐与强烈惊吓；孕妇、心脏病患者及 [12] 岁以下儿童不建议参加。可以不信鬼神，但请常怀敬畏之心。",
       noticeEn: "Adapted from ancient Chinese Deathwatcher legends. Includes darkness, live-actor chases and intense scares. Not recommended for pregnant guests, people with heart conditions or children under [12]. You need not believe in ghosts, but please keep a respectful heart." },
-    { name: '纸人回魂', nameEn: 'Return of the Paper Dolls', genre: '中式恐怖', genreEn: 'Chinese Folk Horror', icon: 'paper', badge: '新主题', badgeEn: 'NEW',
+    { name: '纸人回魂', accent: '#8EF06E', nameEn: 'Return of the Paper Dolls', genre: '中式恐怖', genreEn: 'Chinese Folk Horror', icon: 'paper', badge: '新主题', badgeEn: 'NEW',
       level: 4, thrill: 5, fear: 5, min: 2, max: 6, minutes: 60, price: 0, image: 'zhiren-1.jpg', imagePos: '50% 38%',
       gallery: ['zhiren-1.jpg', 'zhiren-6.jpg', 'zhiren-8.jpg', 'zhiren-7.jpg', 'zhiren-9.jpg', 'zhiren-10.jpg', 'zhiren-2.jpg', 'zhiren-3.jpg', 'zhiren-4.jpg', 'zhiren-5.jpg'], focus: ['50% 72%', '45% 50%', '50% 50%', '50% 50%', '50% 50%', '50% 50%', '42% 40%', '52% 45%', '50% 45%', '50% 50%'],
       desc: "老扎纸铺的纸人，眼睛从来不能点上。可是今晚，有人替它们点了睛——满屋的纸人随处可见，而其中有一个，会和你说话。",
@@ -983,7 +1002,7 @@ var CONFIG = {
       bestForEn: "Chinese horror fans who want to test their nerve. We suggest 3 or more, with at least one brave teammate.",
       notice: "场景昏暗，含真人追逐和强烈惊吓；孕妇、心脏病患者及 [12] 岁以下儿童不建议参加。",
       noticeEn: "Dark scenes with live-actor chases and strong scares. Not recommended for pregnant guests, people with heart conditions or children under [12]." },
-    { name: '善恶', nameEn: 'Good & Evil', genre: '泰式恐怖', genreEn: 'Thai Horror', icon: 'house', badge: '封魔·序章', badgeEn: 'PROLOGUE',
+    { name: '善恶', accent: '#E3A72F', nameEn: 'Good & Evil', genre: '泰式恐怖', genreEn: 'Thai Horror', icon: 'house', badge: '封魔·序章', badgeEn: 'PROLOGUE',
       level: 4, thrill: 4, fear: 4, min: 2, max: 6, minutes: 45, price: 0, image: 'shane-1.jpg', imagePos: '50% 35%',
       gallery: ['shane-1.jpg', 'shane-p1.jpg', 'shane-p2.jpg', 'shane-p3.jpg', 'shane-p4.jpg', 'shane-p5.jpg', 'shane-p6.jpg'], focus: ['50% 35%', '50% 45%', '50% 45%', '50% 45%', '50% 45%', '50% 45%', '50% 45%'],
       cardGallery: ['shane-1.jpg'],  // homepage card: upright photos only
@@ -1000,7 +1019,7 @@ var CONFIG = {
       bestForEn: "Players who love Thai horror and religious supernatural themes.",
       notice: "有恐怖元素、开局单人环节、移动汽车与平移座椅等体感机关和黑暗场景，不建议孕妇、心脏病患者、容易晕眩者及胆小者参加。",
       noticeEn: "Contains horror elements, a solo opening, motion rigs such as a moving car and sliding seats, and dark scenes. Not recommended for pregnant players, anyone with heart conditions or motion sickness, or the easily frightened." },
-    { name: '请鬼', nameEn: 'Summoning', genre: '中式恐怖', genreEn: 'Chinese Folk Horror', icon: 'paper', badge: '新主题', badgeEn: 'NEW',
+    { name: '请鬼', accent: '#FF3B30', nameEn: 'Summoning', genre: '中式恐怖', genreEn: 'Chinese Folk Horror', icon: 'paper', badge: '新主题', badgeEn: 'NEW',
       level: 4, thrill: 4, fear: 5, min: 2, max: 8, minutes: 60, price: 0, image: 'qinggui-1.jpg', imagePos: '50% 45%',
       gallery: ['qinggui-1.jpg', 'qinggui-p1.jpg', 'qinggui-p2.jpg', 'qinggui-p3.jpg', 'qinggui-p4.jpg', 'qinggui-p5.jpg', 'qinggui-p6.jpg', 'qinggui-p7.jpg'], focus: ['50% 45%', '50% 45%', '50% 45%', '50% 45%', '50% 45%', '50% 45%', '50% 45%', '50% 45%'],
       desc: "70 年代末，台湾桃园。一群年轻人半夜闯进荒废已久的鬼宅，围着圆桌玩起了“笔仙”——指针，动了。体感机关让你感觉在上升，完成某个环节的一瞬间，追逐就开始了。",
@@ -1015,7 +1034,7 @@ var CONFIG = {
       bestForEn: "Players who want Chinese folk horror, an immersive story and live-actor chases. The script has 8 roles.",
       notice: "有恐怖元素、NPC 追逐、体感机关（上升）、单人支线和黑暗场景，不建议孕妇、心脏病患者、容易晕眩者及胆小者参加。",
       noticeEn: "Contains horror elements, live-actor chases, motion rigs that make you feel you are rising, solo missions and dark scenes. Not recommended for pregnant players, anyone with heart conditions or motion sickness, or the easily frightened." },
-    { name: '恐怖游戏', nameEn: 'Horror Game', genre: '西式恐怖', genreEn: 'Gothic Horror', icon: 'game', badge: '主打推荐', badgeEn: 'FEATURED',
+    { name: '恐怖游戏', accent: '#FF2A3D', nameEn: 'Horror Game', genre: '西式恐怖', genreEn: 'Gothic Horror', icon: 'game', badge: '主打推荐', badgeEn: 'FEATURED',
       level: 5, thrill: 5, fear: 5, min: 2, max: 6, minutes: 60, price: 0, image: 'horrorgame-1.jpg', imagePos: '50% 4%',
       gallery: ['horrorgame-1.jpg', 'horrorgame-p1.jpg', 'horrorgame-p2.jpg', 'horrorgame-p3.jpg', 'horrorgame-p4.jpg', 'horrorgame-p5.jpg', 'horrorgame-p6.jpg', 'horrorgame-p7.jpg', 'horrorgame-p8.jpg', 'horrorgame-p9.jpg', 'horrorgame-p10.jpg', 'horrorgame-p11.jpg', 'horrorgame-p12.jpg', 'horrorgame-p13.jpg', 'horrorgame-p14.jpg', 'horrorgame-p15.jpg', 'horrorgame-p16.jpg'], focus: ['50% 6%', '50% 40%', '45% 40%', '58% 40%', '50% 40%', '45% 40%', '50% 40%', '62% 40%', '35% 40%', '55% 40%', '50% 40%', '35% 40%', '50% 40%', '38% 40%', '40% 40%', '50% 40%', '50% 40%'],
       cardGallery: ['horrorgame-1.jpg', 'horrorgame-p4.jpg', 'horrorgame-p5.jpg', 'horrorgame-p10.jpg', 'horrorgame-p15.jpg'],  // homepage card: upright photos only
@@ -1411,7 +1430,7 @@ var I18N = {
   function renderCards() {
     var t = T();
     $('roomCards').innerHTML = CONFIG.rooms.map(function (r, i) {
-      return '<article class="card" data-card="' + i + '"><div class="poster">' +
+      return '<article class="card" data-card="' + i + '"' + (r.accent ? ' style="--accent:' + esc(r.accent) + '"' : '') + '><div class="poster">' +
         (r.gallery ? swipeHTML(r.cardGallery ? Object.assign({}, r, { gallery: r.cardGallery }) : r, false) : r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(rn(r)) + t.poster_alt + '"' + (r.imagePos ? ' style="object-position:' + r.imagePos + '"' : '') + '>' : '<span class="num outline" aria-hidden="true">' + pad(i + 1) + '</span>' + (ICONS[r.icon] || ICONS.house)) +
         '<span class="code">ROOM_' + pad(i + 1) + '</span><span class="lv">LV.' + r.level + '</span>' + (r.badge ? '<span class="badge">' + esc(LANG === 'en' ? r.badgeEn : r.badge) + '</span>' : '') + '</div>' +
         '<div class="card-body"><div class="card-top"><h3>' + esc(rn(r)) + '</h3><span class="tag">' + esc(rg(r)) + '</span></div>' +
@@ -1782,6 +1801,24 @@ var I18N = {
   setView();
   var mHash = location.hash.match(/^#room-(\d+)$/);
   if (mHash && CONFIG.rooms[+mHash[1] - 1]) openDlg(+mHash[1] - 1);
+})();
+</script>
+
+<script>
+(function () {
+  var t = document.getElementById('torch'); if (!t) return;
+  var tx = innerWidth / 2, ty = innerHeight * 0.4, x = tx, y = ty, raf = 0;
+  function loop() { x += (tx - x) * 0.18; y += (ty - y) * 0.18; t.style.setProperty('--tx', x.toFixed(1) + 'px'); t.style.setProperty('--ty', y.toFixed(1) + 'px'); raf = (Math.abs(tx - x) + Math.abs(ty - y) > 0.5) ? requestAnimationFrame(loop) : 0; }
+  function aim(cx, cy) { tx = cx; ty = cy; if (!raf) raf = requestAnimationFrame(loop); }
+  addEventListener('pointermove', function (e) { aim(e.clientX, e.clientY); }, { passive: true });
+  addEventListener('pointerdown', function (e) { aim(e.clientX, e.clientY); }, { passive: true });
+  addEventListener('touchmove', function (e) { var p = e.touches[0]; if (p) aim(p.clientX, p.clientY); }, { passive: true });
+  // switch on once the intro and gate are gone
+  var tries = 0, iv = setInterval(function () {
+    var blocking = document.querySelector('#gate:not([hidden]), #intro:not(.gone), #scare');
+    if (!blocking || ++tries > 60) { t.classList.add('on'); clearInterval(iv); }
+  }, 500);
+  t.style.setProperty('--tx', x + 'px'); t.style.setProperty('--ty', y + 'px');
 })();
 </script>
 </body>
