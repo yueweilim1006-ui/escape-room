@@ -492,8 +492,8 @@ html[lang="en"] .hero .sub{font-size:clamp(20px,2.8vw,34px);letter-spacing:6px}
 @media (max-width:640px){.hero .eyes span:nth-child(n+4),.hero .whispers span:nth-child(n+4),.hero .drips i:nth-child(even){display:none}.hero-logo-wrap{margin-top:16px}}
 /* jump scare after entering */
 #scare{position:fixed;inset:0;z-index:120;background:#000;overflow:hidden;cursor:pointer;animation:scareOut .6s ease 2.5s forwards}
-#scare .shot{position:absolute;inset:0;background:url(scare.jpg) 62% 40%/cover no-repeat;animation:scareIn .9s cubic-bezier(.15,1.5,.35,1) both,scareShake .07s steps(2) 8}
-#scare .slice{position:absolute;inset:0;background:url(scare.jpg) 62% 40%/cover no-repeat;opacity:0;mix-blend-mode:screen;animation:scareSlice .55s steps(1) .05s both}
+#scare .shot{position:absolute;inset:0;background:var(--sc,url(scare.jpg)) var(--sp,62% 40%)/cover no-repeat;animation:scareIn .9s cubic-bezier(.15,1.5,.35,1) both,scareShake .07s steps(2) 8}
+#scare .slice{position:absolute;inset:0;background:var(--sc,url(scare.jpg)) var(--sp,62% 40%)/cover no-repeat;opacity:0;mix-blend-mode:screen;animation:scareSlice .55s steps(1) .05s both}
 #scare .slice.a{filter:hue-rotate(160deg) saturate(3);clip-path:inset(28% 0 52% 0)}
 #scare .slice.b{filter:hue-rotate(-60deg) saturate(3);clip-path:inset(58% 0 26% 0);animation-delay:.18s}
 #scare .flash{position:absolute;inset:0;background:radial-gradient(ellipse at 60% 45%,rgba(255,255,255,.9),rgba(255,42,61,.5) 45%,rgba(0,0,0,0) 80%);animation:scareFlash .45s ease-out both;pointer-events:none}
@@ -720,6 +720,28 @@ dialog#lightbox::backdrop{background:#000}
 .card:hover h3{color:var(--accent);text-shadow:0 0 18px color-mix(in srgb,var(--accent) 55%,transparent)}
 .card h3{transition:color .3s,text-shadow .3s}
 @media (hover:none){.card{border-color:color-mix(in srgb,var(--accent) 38%,var(--line));box-shadow:0 0 26px color-mix(in srgb,var(--accent) 20%,transparent)}}
+
+/* room details: full-screen, the room's poster fills the background like a film page */
+dialog#roomDlg,dialog#roomDlg.with-gal{width:100vw;max-width:100vw;height:100vh;height:100dvh;max-height:none;margin:0;inset:0;border:0;box-shadow:none;
+  background:radial-gradient(ellipse at 50% 35%,rgba(8,2,5,.25) 0%,rgba(8,2,5,.62) 70%,rgba(8,2,5,.85) 100%),var(--dbg,none) center 30%/cover no-repeat,#0A0306}
+dialog#roomDlg::backdrop{background:#000}
+#roomDlg .dlg-poster{background:rgba(0,0,0,.35)}
+#roomDlg .dlg-body{background:rgba(14,4,8,.58);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+#roomDlg .dlg-foot{z-index:6;background:rgba(14,4,8,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+#roomDlg .dlg-video{background:rgba(10,3,6,.7)}
+@media (min-width:860px){
+  dialog#roomDlg.with-gal[open]{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);column-gap:28px;padding:0 max(28px,calc((100vw - 1240px)/2))}
+  #roomDlg.with-gal .dlg-poster{border-right:0;margin-top:28px;border:1px solid rgba(255,255,255,.08);box-shadow:0 20px 60px rgba(0,0,0,.6)}
+  #roomDlg.with-gal .dlg-body{margin:28px 0 28px;border:1px solid rgba(255,255,255,.07)}
+  #roomDlg.with-gal .dlg-foot{margin:0 calc(-1 * max(28px,calc((100vw - 1240px)/2)));padding-left:max(28px,calc((100vw - 1240px)/2));padding-right:max(28px,calc((100vw - 1240px)/2))}
+  #roomDlg .dlg-close{margin-right:0}
+}
+
+/* room cards rise out of the dark one after another as they scroll into view */
+#roomCards .card.pre{opacity:0}
+#roomCards .card.in{animation:cardIn 1s cubic-bezier(.2,.7,.2,1) var(--cd,0ms) backwards}
+@keyframes cardIn{0%{opacity:0;transform:translateY(46px) scale(.97);filter:brightness(0) blur(6px)}35%{opacity:1;filter:brightness(.35) blur(2px)}48%{filter:brightness(1.7)}54%{filter:brightness(.3)}66%{filter:brightness(1.35)}74%{filter:brightness(.8)}100%{opacity:1;transform:none;filter:none}}
+@media (prefers-reduced-motion:reduce){#roomCards .card.pre{opacity:1}#roomCards .card.in{animation:none}}
 </style>
 </head>
 <body>
@@ -1331,9 +1353,19 @@ var I18N = {
     var sc = document.createElement('div');
     sc.id = 'scare';
     sc.setAttribute('role', 'dialog');
-    sc.setAttribute('aria-label', en ? 'Deathwatch Mansion' : '观亡白楼');
+    // a different room jumps out each visit (never the same one twice in a row)
+    var pool = [['观亡白楼', 'scare.jpg', '62% 40%'], ['恐怖游戏', 'horrorgame-1.jpg', '50% 45%'], ['怪诞', 'guaidan-1.jpg', '50% 30%'], ['人骨日记', 'rengu-p1.jpg', '50% 55%'],
+      ['祷告日', 'daogao-p3.jpg', '72% 42%'], ['纸人回魂', 'zhiren-1.jpg', '50% 35%'], ['善恶', 'shane-p1.jpg', '55% 58%'], ['请鬼', 'qinggui-1.jpg', '50% 50%']];
+    var last = ''; try { last = localStorage.getItem('scareLast') || ''; } catch (e) {}
+    var opts = pool.filter(function (p) { return p[0] !== last && CONFIG.rooms.some(function (r) { return r.name === p[0]; }); });
+    var pick = opts[Math.floor(Math.random() * opts.length)] || pool[0];
+    try { localStorage.setItem('scareLast', pick[0]); } catch (e) {}
+    var room = CONFIG.rooms.filter(function (r) { return r.name === pick[0]; })[0];
+    var rname = room ? rn(room) : pick[0];
+    sc.style.setProperty('--sc', 'url("' + pick[1] + '")'); sc.style.setProperty('--sp', pick[2]);
+    sc.setAttribute('aria-label', rname);
     sc.innerHTML = '<div class="shot"></div><div class="slice a"></div><div class="slice b"></div><div class="vig"></div><div class="flash"></div>' +
-      '<div class="cap">' + (en ? 'DEATHWATCH MANSION · DARE TO ENTER?' : '观亡白楼 · 你敢进来吗？') + '<small>' + (en ? 'TAP ANYWHERE TO CLOSE' : '点击任意处关闭') + '</small></div>';
+      '<div class="cap">' + esc(en ? rname.toUpperCase() + ' · DARE TO ENTER?' : rname + ' · 你敢进来吗？') + '<small>' + (en ? 'TAP ANYWHERE TO CLOSE' : '点击任意处关闭') + '</small></div>';
     document.body.appendChild(sc);
     BGM.stinger();
     var prevOv = root0.style.overflow; root0.style.overflow = 'hidden';
@@ -1614,6 +1646,7 @@ var I18N = {
   }
   function renderDlg() {
     dlg.classList.toggle('with-gal', !!(CONFIG.rooms[dlgRoom] && CONFIG.rooms[dlgRoom].gallery));
+    (function (r) { var bg = r && (r.image || (r.gallery && r.gallery[0])); if (bg) dlg.style.setProperty('--dbg', 'url("' + bg + '")'); else dlg.style.removeProperty('--dbg'); })(CONFIG.rooms[dlgRoom]);
     var t = T(), i = dlgRoom, r = CONFIG.rooms[i];
     if (!r) return;
     dlg.innerHTML =
@@ -1795,5 +1828,24 @@ var I18N = {
 })();
 </script>
 
+
+<script>
+(function () {
+  var box = document.getElementById('roomCards'); if (!box || !('IntersectionObserver' in window)) return;
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var io = new IntersectionObserver(function (ents) {
+    var k = 0;
+    ents.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var c = e.target; io.unobserve(c);
+      c.style.setProperty('--cd', (k++ * 140) + 'ms');
+      c.classList.remove('pre'); c.classList.add('in');
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  function arm() { Array.prototype.forEach.call(box.querySelectorAll('.card:not(.in):not(.pre)'), function (c) { c.classList.add('pre'); io.observe(c); }); }
+  arm();
+  new MutationObserver(arm).observe(box, { childList: true });
+})();
+</script>
 </body>
 </html>
