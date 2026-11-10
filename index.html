@@ -1360,9 +1360,9 @@ var I18N = {
     sc.id = 'scare';
     sc.setAttribute('role', 'dialog');
     // a different room jumps out each visit (never the same one twice in a row)
-    var pool = [['观亡白楼', 'scare.jpg', '62% 40%'], ['纸人回魂', 'zhiren-1.jpg', '50% 35%'], ['人骨日记', 'rengu-1.jpg', '45% 55%']];
+    var pool = [['观亡白楼', 'scare-baiou.jpg', '62% 45%']];
     var last = ''; try { last = localStorage.getItem('scareLast') || ''; } catch (e) {}
-    var opts = pool.filter(function (p) { return p[0] !== last && CONFIG.rooms.some(function (r) { return r.name === p[0]; }); });
+    var opts = pool.filter(function (p) { return (pool.length < 2 || p[0] !== last) && CONFIG.rooms.some(function (r) { return r.name === p[0]; }); });
     var pick = opts[Math.floor(Math.random() * opts.length)] || pool[0];
     try { localStorage.setItem('scareLast', pick[0]); } catch (e) {}
     var room = CONFIG.rooms.filter(function (r) { return r.name === pick[0]; })[0];
